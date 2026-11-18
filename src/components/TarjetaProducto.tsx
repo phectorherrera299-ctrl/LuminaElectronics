@@ -30,7 +30,6 @@ export const TarjetaProducto = ({ producto }: PropiedadesTarjeta) => {
             alt={producto.nombre}
             className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
           />
-
           <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 items-center">
             {producto.descuento && (
               <span className="px-2 py-0.5 text-xs font-semibold rounded-md bg-error text-white shadow-xs">
@@ -41,7 +40,6 @@ export const TarjetaProducto = ({ producto }: PropiedadesTarjeta) => {
               {stockInfo.texto}
             </span>
           </div>
-
           <button
             type="button"
             aria-label="Agregar a lista de deseos"
@@ -63,7 +61,6 @@ export const TarjetaProducto = ({ producto }: PropiedadesTarjeta) => {
             </svg>
           </button>
         </div>
-
         <div className="p-4 space-y-2">
           <div className="flex items-center justify-between text-xs text-secondary-500">
             <span className="font-medium uppercase tracking-wider text-secondary-400">
@@ -76,7 +73,6 @@ export const TarjetaProducto = ({ producto }: PropiedadesTarjeta) => {
               </span>
             )}
           </div>
-
           <h3 className="font-heading font-semibold text-secondary-900 text-sm leading-snug line-clamp-2">
             {producto.nombre}
           </h3>
@@ -86,7 +82,6 @@ export const TarjetaProducto = ({ producto }: PropiedadesTarjeta) => {
           </p>
         </div>
       </div>
-
       <div className="p-4 pt-0 border-t border-secondary-100 mt-2 flex items-center justify-between gap-2">
         <div>
           {producto.descuento ? (
@@ -105,7 +100,6 @@ export const TarjetaProducto = ({ producto }: PropiedadesTarjeta) => {
           )}
           <span className="block text-[10px] text-secondary-400 uppercase font-medium">USD</span>
         </div>
-
         <button
           type="button"
           className="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-primary-50 text-primary-600 hover:bg-primary-500 hover:text-white transition-colors cursor-pointer"
