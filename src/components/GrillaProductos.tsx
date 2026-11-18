@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { Producto } from "../types/Producto";
+import { TarjetaProducto } from "./TarjetaProducto";
 import { set } from "react-hook-form";
 
 interface PropiedadesGrilla {
@@ -34,4 +35,59 @@ export const GrillaProductos = ({ productos }: PropiedadesGrilla) => {
       </div>
     );
   }
+  return (
+    <section className="space-y-8">
+      <div className="flex items-center justify-between text-xs text-secondary-500">
+        <span>
+          Mostrando{" "}
+          <strong className="text-secondary-900">
+            {productosVisibles.length}
+          </strong>{" "}
+          de <strong className="text-secondary-900">{productos.length}</strong>{" "}
+          productos
+        </span>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {productosVisibles.map((producto) => (
+          <TarjetaProducto key={producto.id} producto={producto} />
+        ))}
+      </div>
+      {totalPaginas > 1 && (
+        <div className="flex items-center justify-center gap-2 pt-6 border-t border-secondary-200">
+          <button
+            type="button"
+            onClick={() => cambiarPagina(paginaActual - 1)}
+            disabled={paginaActual === 1}
+            className="px-3 py-1.5 text-xs font-medium rounded-lg border border-secondary-200 text-secondary-700 hover:bg-secondary-50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+          >
+            Anterior
+          </button>
+          {Array.from({ length: totalPaginas }, (_, i) => i + 1).map(
+            (numeroPagina) => (
+              <button
+                key={numeroPagina}
+                type="button"
+                onClick={() => cambiarPagina(numeroPagina)}
+                className={`w-8 h-8 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
+                  paginaActual === numeroPagina
+                    ? "bg-primary-500 text-white"
+                    : "text-secondary-700 hover:bg-secondary-100"
+                }`}
+              >
+                {numeroPagina}
+              </button>
+            ),
+          )}
+          <button
+            type="button"
+            onClick={() => cambiarPagina(paginaActual + 1)}
+            disabled={paginaActual === totalPaginas}
+            className="px-3 py-1.5 text-xs font-medium rounded-lg border border-secondary-200 text-secondary-700 hover:bg-secondary-50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+          >
+            Siguiente
+          </button>
+        </div>
+      )}
+    </section>
+  );
 };
