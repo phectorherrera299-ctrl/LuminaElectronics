@@ -33,15 +33,23 @@ function VistaCatalogo() {
 
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <header className="mb-8">
+      <header className="mb-6">
         <h1 className="text-3xl font-heading font-bold text-secondary-900">
           Catálogo de Productos
         </h1>
         <p className="text-secondary-500 text-sm mt-1">
-          Explora nuestra selección de dispositivos y accesorios de última
-          generación.
+          Explora nuestra selección de dispositivos y accesorios de última generación.
         </p>
       </header>
+      <BuscadorCategorias
+        busqueda={busqueda}
+        alCambiarBusqueda={setBusqueda}
+        categoriaSeleccionada={categoriaSeleccionada}
+        alSeleccionarCategoria={setCategoriaSeleccionada}
+        criterioOrden={criterioOrden}
+        alCambiarOrden={setCriterioOrden}
+      />
+
       <GrillaProductos productos={productos} />
     </main>
   );
@@ -54,7 +62,6 @@ function App() {
         <VistaCatalogo />
       </div>
     </ProveedorProductos>
-  );
+  )
 }
-
-export default App;
+export default App
