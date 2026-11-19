@@ -1,7 +1,6 @@
 import { useState } from "react";
 import type { Producto } from "../types/Producto";
 import { TarjetaProducto } from "./TarjetaProducto";
-import { set } from "react-hook-form";
 
 interface PropiedadesGrilla {
   productos: Producto[];
