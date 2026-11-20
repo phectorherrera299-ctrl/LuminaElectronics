@@ -67,6 +67,29 @@ export const FiltrosLaterales = ({
           })}
         </div>
       </div>
+      <div>
+        <div className="flex items-center justify-between mb-2">
+          <h3 className="text-xs font-bold text-secondary-900 uppercase tracking-wider">
+            Precio Máximo
+          </h3>
+          <span className="text-xs font-bold text-primary-600 font-heading">
+            ${precioMaximo.toLocaleString()} USD
+          </span>
+        </div>
+        <input
+          type="range"
+          min={50}
+          max={precioLimite}
+          step={50}
+          value={precioMaximo}
+          onChange={(e) => alCambiarPrecioMaximo(Number(e.target.value))}
+          className="w-full accent-primary-500 cursor-pointer"
+        />
+        <div className="flex justify-between text-[10px] text-secondary-400 mt-1">
+          <span>$50</span>
+          <span>${precioLimite.toLocaleString()}</span>
+        </div>
+      </div>
     </aside>
   );
 };
