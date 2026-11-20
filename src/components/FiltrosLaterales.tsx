@@ -104,7 +104,46 @@ export const FiltrosLaterales = ({
             />
             <span>Solo productos en stock</span>
           </label>
+          <label className="flex items-center gap-2.5 text-xs text-secondary-700 hover:text-secondary-900 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={soloConDescuento}
+              onChange={(e) => alCambiarSoloConDescuento(e.target.checked)}
+              className="w-4 h-4 rounded border-secondary-300 text-primary-500 focus:ring-primary-200 cursor-pointer"
+            />
+            <span>Solo con descuento activo</span>
+          </label>
         </div>
+      </div>
+      <div>
+        <h3 className="text-xs font-bold text-secondary-900 uppercase tracking-wider mb-3">
+          Calificación Mínima
+        </h3>
+        <div className="flex gap-2">
+          {[4.5, 4.0].map((calif) => {
+            const activo = calificacionMinima === calif;
+            return (
+              <button
+                key={calif}
+                type="button"
+                onClick={() => alCambiarCalificacionMinima(activo ? 0 : calif)}
+                className={`px-3 py-1.5 text-xs font-semibold rounded-lg border transition-all cursor-pointer ${
+                  activo
+                    ? "bg-primary-50 border-primary-500 text-primary-600"
+                    : "border-secondary-200 text-secondary-600 hover:bg-secondary-50"
+                }`}
+              >
+                ★ {calif}+
+              </button>
+            );
+          })}
+        </div>
+      </div>
+      <div className="p-4 rounded-xl bg-primary-50/60 border border-primary-100 text-xs space-y-1">
+        <span className="font-bold text-primary-900 block">Lumina Care</span>
+        <p className="text-secondary-600 text-[11px] leading-relaxed">
+          Garantía extendida de hasta 3 años con cobertura accidental directa.
+        </p>
       </div>
     </aside>
   );
