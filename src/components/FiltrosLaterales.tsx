@@ -90,6 +90,22 @@ export const FiltrosLaterales = ({
           <span>${precioLimite.toLocaleString()}</span>
         </div>
       </div>
+      <div>
+        <h3 className="text-xs font-bold text-secondary-900 uppercase tracking-wider mb-3">
+          Disponibilidad
+        </h3>
+        <div className="space-y-2">
+          <label className="flex items-center gap-2.5 text-xs text-secondary-700 hover:text-secondary-900 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={soloEnStock}
+              onChange={(e) => alCambiarSoloEnStock(e.target.checked)}
+              className="w-4 h-4 rounded border-secondary-300 text-primary-500 focus:ring-primary-200 cursor-pointer"
+            />
+            <span>Solo productos en stock</span>
+          </label>
+        </div>
+      </div>
     </aside>
   );
 };
