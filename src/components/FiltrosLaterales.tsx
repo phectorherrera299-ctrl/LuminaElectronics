@@ -31,7 +31,7 @@ export const FiltrosLaterales = ({
 }: PropiedadesFiltrosLaterales) => {
   return (
     <aside className="w-full lg:w-64 bg-white rounded-2xl border border-secondary-200 p-5 space-y-6 h-fit">
-      <div className="flex items-center justify-between pb-3 border-b border-secondary-100">
+      <div className="flex items-center justify-between pb-3 border-b border-secondary-300">
         <h2 className="font-heading font-bold text-secondary-900 text-base">
           Filtros
         </h2>
@@ -45,7 +45,7 @@ export const FiltrosLaterales = ({
       </div>
       <div>
         <h3 className="text-xs font-bold text-secondary-900 uppercase tracking-wider mb-3">
-          Marcas
+          Marcas Disponibles
         </h3>
         <div className="space-y-2">
           {marcasDisponibles.map((marca) => {

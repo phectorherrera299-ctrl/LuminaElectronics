@@ -5,11 +5,12 @@ import { BuscadorCategorias } from './components/BuscadorCategorias'
 import { FiltrosLaterales } from './components/FiltrosLaterales'
 
 const PRECIO_LIMITE = 2500
-function VistaCatalogo() {
+  function VistaCatalogo() {
   const { productos } = useProductos()
   const [busqueda, setBusqueda] = useState('')
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('Todos')
   const [criterioOrden, setCriterioOrden] = useState('populares')
+
   const [marcasSeleccionadas, setMarcasSeleccionadas] = useState<string[]>([])
   const [precioMaximo, setPrecioMaximo] = useState(PRECIO_LIMITE)
   const [soloEnStock, setSoloEnStock] = useState(false)
