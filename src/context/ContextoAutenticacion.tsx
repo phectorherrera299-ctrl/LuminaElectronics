@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import type { ReactNode } from "react";
 
 export type RolUsuario = "Invitado" | "Admin";
@@ -26,7 +26,11 @@ const USUARIO_DEFECTO: UsuarioSesion = {
   rol: "Invitado",
 };
 
-export const ProveedorAutenticacion = ({children}:{children: ReactNode;}) => {
+export const ProveedorAutenticacion = ({
+  children,
+}: {
+  children: ReactNode;
+}) => {
   const [usuario, setUsuario] = useState<UsuarioSesion>(() => {
     const guardado = localStorage.getItem(CLAVE_LOCALSTORAGE_AUTH);
     if (guardado) {
@@ -54,4 +58,25 @@ export const ProveedorAutenticacion = ({children}:{children: ReactNode;}) => {
       setUsuario(USUARIO_DEFECTO);
     }
   };
+  return (
+    <ContextoAutenticacion.Provider
+      value={{
+        usuario,
+        cambiarRol,
+        esAdmin: usuario.rol === "Admin",
+      }}
+    >
+      {children}
+    </ContextoAutenticacion.Provider>
+  );
+};
+
+export const useAutenticacion = () => {
+  const contexto = useContext(ContextoAutenticacion);
+  if (!contexto) {
+    throw new Error(
+      "useAutenticacion debe usarse dentro de un ProveedorAutenticacion",
+    );
+  }
+  return contexto;
 };
