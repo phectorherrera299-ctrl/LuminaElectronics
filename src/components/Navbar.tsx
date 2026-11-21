@@ -166,6 +166,40 @@ export const Navbar = ({
               </span>
             )}
           </button>
+          <div className="hidden sm:flex items-center gap-2 pl-2 border-l border-secondary-200">
+            <div className="w-8 h-8 rounded-full bg-secondary-200 overflow-hidden flex items-center justify-center text-secondary-700 font-bold text-xs">
+              {usuario.nombre.charAt(0)}
+            </div>
+            <div className="text-left text-xs">
+              <span className="font-semibold text-secondary-900 block leading-tight">
+                {usuario.nombre}
+              </span>
+              <span className="text-[10px] text-secondary-500 block leading-tight">
+                {usuario.rol}
+              </span>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => setMenuAbierto(!menuAbierto)}
+            className="md:hidden p-2 text-secondary-600 hover:text-secondary-900 cursor-pointer"
+            aria-label="Abrir menú"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.8}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+              />
+            </svg>
+          </button>
         </div>
       </nav>
     </header>
