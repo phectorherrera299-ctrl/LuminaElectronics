@@ -73,6 +73,48 @@ export const Navbar = ({
             >
               Nosotros
             </button>
+            <button
+              type="button"
+              onClick={() => manejarNavegacion("admin")}
+              className={`transition-colors cursor-pointer ${
+                seccionActiva === "admin"
+                  ? "text-primary-600 font-bold"
+                  : "text-secondary-600 hover:text-secondary-900"
+              }`}
+            >
+              Admin Panel
+              {esAdmin && (
+                <span className="ml-1.5 px-1.5 py-0.5 text-[9px] bg-primary-100 text-primary-700 rounded-md">
+                  PRO
+                </span>
+              )}
+            </button>
+          </div>
+        </div>
+        <div className="flex items-center gap-3">
+          <div className="flex items-center bg-secondary-100 p-0.5 rounded-xl text-xs font-semibold">
+            <button
+              type="button"
+              onClick={() => cambiarRol("Invitado")}
+              className={`px-3 py-1 rounded-lg transition-all cursor-pointer ${
+                !esAdmin
+                  ? "bg-white text-secondary-900 shadow-xs"
+                  : "text-secondary-500 hover:text-secondary-900"
+              }`}
+            >
+              Invitado
+            </button>
+            <button
+              type="button"
+              onClick={() => cambiarRol('Admin')}
+              className={`px-3 py-1 rounded-lg transition-all cursor-pointer ${
+                esAdmin
+                  ? 'bg-primary-500 text-white shadow-xs'
+                  : 'text-secondary-500 hover:text-secondary-900'
+              }`}
+            >
+              Admin
+            </button>
           </div>
         </div>
       </nav>
