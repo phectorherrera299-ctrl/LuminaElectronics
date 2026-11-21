@@ -50,6 +50,30 @@ export const Navbar = ({
               </span>
             </div>
           </button>
+          <div className="hidden md:flex items-center gap-6 text-xs font-semibold">
+            <button
+              type="button"
+              onClick={() => manejarNavegacion("catalogo")}
+              className={`transition-colors cursor-pointer ${
+                seccionActiva === "catalogo"
+                  ? "text-primary-600 font-bold"
+                  : "text-secondary-600 hover:text-secondary-900"
+              }`}
+            >
+              Catálogo
+            </button>
+            <button
+              type="button"
+              onClick={() => manejarNavegacion("nosotros")}
+              className={`transition-colors cursor-pointer ${
+                seccionActiva === "nosotros"
+                  ? "text-primary-600 font-bold"
+                  : "text-secondary-600 hover:text-secondary-900"
+              }`}
+            >
+              Nosotros
+            </button>
+          </div>
         </div>
       </nav>
     </header>
