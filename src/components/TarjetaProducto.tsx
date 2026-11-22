@@ -1,25 +1,37 @@
-import type { Producto } from "../types/Producto"
+import type { Producto } from "../types/Producto";
+import { useDeseos } from "../context/ContextoDeseos";
 
 interface PropiedadesTarjeta {
-  producto: Producto
+  producto: Producto;
 }
 
 export const TarjetaProducto = ({ producto }: PropiedadesTarjeta) => {
   const precioFinal = producto.descuento
     ? (producto.precio * (1 - producto.descuento / 100)).toFixed(2)
-    : producto.precio.toFixed(2)
+    : producto.precio.toFixed(2);
 
   const estadoStock = () => {
     if (producto.stock === 0) {
-      return { texto: 'Agotado', clase: 'bg-error/10 text-error border-error/20' }
+      return {
+        texto: "Agotado",
+        clase: "bg-error/10 text-error border-error/20",
+      };
     }
     if (producto.stock <= 3) {
-      return { texto: `Bajo Stock (${producto.stock})`, clase: 'bg-warning/10 text-warning border-warning/20' }
+      return {
+        texto: `Bajo Stock (${producto.stock})`,
+        clase: "bg-warning/10 text-warning border-warning/20",
+      };
     }
-    return { texto: 'En Stock', clase: 'bg-tertiary-50 text-tertiary-700 border-tertiary-200' }
-  }
+    return {
+      texto: "En Stock",
+      clase: "bg-tertiary-50 text-tertiary-700 border-tertiary-200",
+    };
+  };
 
-  const stockInfo = estadoStock()
+  const { alternarDeseo, esDeseo } = useDeseos();
+  const marcadoFavorito = esDeseo(producto.id);
+  const stockInfo = estadoStock();
 
   return (
     <article className="group bg-white rounded-2xl border border-secondary-200 overflow-hidden shadow-xs hover:shadow-md transition-all duration-300 flex flex-col justify-between">
@@ -36,22 +48,29 @@ export const TarjetaProducto = ({ producto }: PropiedadesTarjeta) => {
                 -{producto.descuento}%
               </span>
             )}
-            <span className={`px-2 py-0.5 text-xs font-medium rounded-md border ${stockInfo.clase}`}>
+            <span
+              className={`px-2 py-0.5 text-xs font-medium rounded-md border ${stockInfo.clase}`}
+            >
               {stockInfo.texto}
             </span>
           </div>
           <button
             type="button"
+            onClick={() => alternarDeseo(producto.id)}
             aria-label="Agregar a lista de deseos"
-            className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur-xs flex items-center justify-center text-secondary-500 hover:text-error hover:bg-white shadow-xs transition-colors cursor-pointer"
+            className={`absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur-xs flex items-center justify-center shadow-xs transition-all cursor-pointer ${
+              marcadoFavorito
+                ? "text-error scale-110"
+                : "text-secondary-500 hover:text-error hover:bg-white"
+            }`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              fill="none"
+              fill={marcadoFavorito ? "currentColor" : "none"}
               viewBox="0 0 24 24"
               strokeWidth={1.8}
               stroke="currentColor"
-              className="w-4 h-4"
+              className="w-4 h-4 transition-colors"
             >
               <path
                 strokeLinecap="round"
@@ -98,7 +117,9 @@ export const TarjetaProducto = ({ producto }: PropiedadesTarjeta) => {
               ${precioFinal}
             </span>
           )}
-          <span className="block text-[10px] text-secondary-400 uppercase font-medium">USD</span>
+          <span className="block text-[10px] text-secondary-400 uppercase font-medium">
+            USD
+          </span>
         </div>
         <button
           type="button"
@@ -108,5 +129,5 @@ export const TarjetaProducto = ({ producto }: PropiedadesTarjeta) => {
         </button>
       </div>
     </article>
-  )
-}
+  );
+};
