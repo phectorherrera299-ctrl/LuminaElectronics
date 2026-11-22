@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 
 interface TipoContextoDeseos {
@@ -24,4 +24,41 @@ export const ProveedorDeseos = ({ children }: { children: ReactNode }) => {
     }
     return [];
   });
+
+  useEffect(() => {
+    localStorage.setItem(CLAVE_LOCALSTORAGE_DESEOS, JSON.stringify(deseos));
+  }, [deseos]);
+
+  const alternarDeseo = (idProducto: string) => {
+    setDeseos((previos) =>
+      previos.includes(idProducto)
+        ? previos.filter((id) => id !== idProducto)
+        : [...previos, idProducto],
+    );
+  };
+
+  const esDeseo = (idProducto: string) => {
+    return deseos.includes(idProducto);
+  };
+
+  return (
+    <ContextoDeseos.Provider
+      value={{
+        deseos,
+        alternarDeseo,
+        esDeseo,
+        cantidadDeseos: deseos.length,
+      }}
+    >
+      {children}
+    </ContextoDeseos.Provider>
+  );
+};
+
+export const useDeseos = () => {
+  const contexto = useContext(ContextoDeseos);
+  if (!contexto) {
+    throw new Error("useDeseos debe usarse dentro de un ProveedorDeseos");
+  }
+  return contexto;
 };
