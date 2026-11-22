@@ -2,9 +2,11 @@ import {createContext, useContext, useEffect, useState } from "react";
 import type { Producto } from "../types/Producto";
 import type { ReactNode } from "react";
 import { productosIniciales } from "../data/ProductosIniciales";
+import { obtenerProductosApi } from "../services/ApiProductos";
 
 interface TipoContextProductos {
   productos: Producto[];
+  cargando: boolean
   agregarProducto: (producto: Producto) => void;
   editarProducto: (id: string, productoActualizado: Partial<Producto>) => void;
   eliminarProducto: (id: string) => void;
@@ -18,6 +20,7 @@ const ContextoProductos = createContext<TipoContextProductos | undefined>(
 const CLAVE_LOCALSTORAGE = "lumina_productos";
 
 export const ProveedorProductos = ({ children }: { children: ReactNode }) => {
+  const [cargando, setCargando] = useState(false)
   const [productos, setProductos] = useState<Producto[]>(() => {
     const datosGuardados = localStorage.getItem(CLAVE_LOCALSTORAGE);
     if (datosGuardados) {
@@ -30,6 +33,23 @@ export const ProveedorProductos = ({ children }: { children: ReactNode }) => {
     return productosIniciales;
   });
 
+  useEffect(() => {
+    const sincronizarConApi = async () => {
+      const datosGuardados = localStorage.getItem(CLAVE_LOCALSTORAGE)
+      if (!datosGuardados || JSON.parse(datosGuardados).length <= productosIniciales.length){
+        setCargando (true)
+        const productosApi = await obtenerProductosApi()
+        if (productosApi.length > 0){
+          const listaCombinada = [...productosIniciales, ...productosApi]
+          setProductos(listaCombinada)
+          localStorage.setItem(CLAVE_LOCALSTORAGE, JSON.stringify(listaCombinada))
+        }
+        setCargando(false)
+      }
+    }
+    sincronizarConApi()
+  }, [])
+  
   useEffect(() =>{
     localStorage.setItem(CLAVE_LOCALSTORAGE, JSON.stringify(productos))
   }, [productos])
@@ -56,6 +76,7 @@ export const ProveedorProductos = ({ children }: { children: ReactNode }) => {
     <ContextoProductos.Provider
         value={{
             productos,
+            cargando,
             agregarProducto,
             editarProducto,
             eliminarProducto,
