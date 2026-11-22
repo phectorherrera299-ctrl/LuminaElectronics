@@ -5,6 +5,8 @@ import { BuscadorCategorias } from "./components/BuscadorCategorias";
 import { FiltrosLaterales } from "./components/FiltrosLaterales";
 import { ProveedorAutenticacion } from "./context/ContextoAutenticacion";
 import { Navbar } from "./components/Navbar";
+import { ProveedorDeseos, useDeseos } from "./context/ContextoDeseos";
+import { useAutenticacion } from "./context/ContextoAutenticacion";
 
 const PRECIO_LIMITE = 2500;
 function VistaCatalogo() {
@@ -130,26 +132,62 @@ function VistaCatalogo() {
     </main>
   );
 }
-function App() {
-  const [seccion, setSeccion] = useState("catalogo");
 
+function ContenidoPrincipal() {
+  const [seccion, setSeccion] = useState("catalogo");
+  const { cantidadDeseos } = useDeseos();
+  const { esAdmin } = useAutenticacion();
+  return (
+    <div className="min-h-screen bg-neutral-50">
+      <Navbar
+        seccionActiva={seccion}
+        alNavegar={setSeccion}
+        cantidadDeseos={cantidadDeseos}
+      />
+      {seccion === "catalogo" && <VistaCatalogo />}
+      {seccion === "nosotros" && (
+        <div className="text-center py-20 font-heading text-secondary-500">
+          Página Nosotros
+        </div>
+      )}
+      {seccion === "admin" &&
+        (esAdmin ? (
+          <div className="text-center py-20 font-heading text-secondary-900">
+            ¡Bienvenido al Panel de Administración!
+          </div>
+        ) : (
+          <div className="max-w-md mx-auto my-20 p-8 bg-white rounded-2xl border border-secondary-200 text-center space-y-4 shadow-sm">
+            <div className="w-12 h-12 mx-auto rounded-full bg-error/10 text-error flex items-center justify-center font-bold text-xl">
+              ✕
+            </div>
+            <h2 className="text-xl font-heading font-bold text-secondary-900">
+              Acceso Restringido
+            </h2>
+            <p className="text-xs text-secondary-500">
+              Esta sección está reservada exclusivamente para administradores.
+              Por favor, cambia tu rol a <strong>Admin</strong> desde la barra
+              superior para continuar.
+            </p>
+            <button
+              type="button"
+              onClick={() => setSeccion("catalogo")}
+              className="px-4 py-2 bg-primary-500 text-white text-xs font-semibold rounded-xl hover:bg-primary-600 cursor-pointer"
+            >
+              Volver al Catálogo
+            </button>
+          </div>
+        ))}
+    </div>
+  );
+}
+
+function App() {
   return (
     <ProveedorAutenticacion>
       <ProveedorProductos>
-        <div className="min-h-screen bg-neutral-50">
-          <Navbar seccionActiva={seccion} alNavegar={setSeccion} />
-          {seccion === "catalogo" && <VistaCatalogo />}
-          {seccion === "nosotros" && (
-            <div className="text-center py-20 font-heading text-secondary-500">
-              Página Nosotros
-            </div>
-          )}
-          {seccion === "admin" && (
-            <div className="text-center py-20 font-heading text-secondary-500">
-              Panel de Administración
-            </div>
-          )}
-        </div>
+        <ProveedorDeseos>
+          <ContenidoPrincipal/>
+        </ProveedorDeseos>
       </ProveedorProductos>
     </ProveedorAutenticacion>
   );
