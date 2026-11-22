@@ -1,58 +1,67 @@
-import { useState, useMemo } from 'react'
-import { ProveedorProductos, useProductos } from './context/ProductosContext'
-import { GrillaProductos } from './components/GrillaProductos'
-import { BuscadorCategorias } from './components/BuscadorCategorias'
-import { FiltrosLaterales } from './components/FiltrosLaterales'
+import { useState, useMemo } from "react";
+import { ProveedorProductos, useProductos } from "./context/ProductosContext";
+import { GrillaProductos } from "./components/GrillaProductos";
+import { BuscadorCategorias } from "./components/BuscadorCategorias";
+import { FiltrosLaterales } from "./components/FiltrosLaterales";
+import { ProveedorAutenticacion } from "./context/ContextoAutenticacion";
+import { Navbar } from "./components/Navbar";
 
-const PRECIO_LIMITE = 2500
-  function VistaCatalogo() {
-  const { productos } = useProductos()
-  const [busqueda, setBusqueda] = useState('')
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('Todos')
-  const [criterioOrden, setCriterioOrden] = useState('populares')
+const PRECIO_LIMITE = 2500;
+function VistaCatalogo() {
+  const { productos } = useProductos();
+  const [busqueda, setBusqueda] = useState("");
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("Todos");
+  const [criterioOrden, setCriterioOrden] = useState("populares");
 
-  const [marcasSeleccionadas, setMarcasSeleccionadas] = useState<string[]>([])
-  const [precioMaximo, setPrecioMaximo] = useState(PRECIO_LIMITE)
-  const [soloEnStock, setSoloEnStock] = useState(false)
-  const [soloConDescuento, setSoloConDescuento] = useState(false)
-  const [calificacionMinima, setCalificacionMinima] = useState(0)
+  const [marcasSeleccionadas, setMarcasSeleccionadas] = useState<string[]>([]);
+  const [precioMaximo, setPrecioMaximo] = useState(PRECIO_LIMITE);
+  const [soloEnStock, setSoloEnStock] = useState(false);
+  const [soloConDescuento, setSoloConDescuento] = useState(false);
+  const [calificacionMinima, setCalificacionMinima] = useState(0);
+
   const marcasDisponibles = useMemo(() => {
-    const conjunto = new Set<string>()
+    const conjunto = new Set<string>();
     productos.forEach((p) => {
-      if (p.marca) conjunto.add(p.marca)
-    })
-    return Array.from(conjunto)
-  }, [productos])
+      if (p.marca) conjunto.add(p.marca);
+    });
+    return Array.from(conjunto);
+  }, [productos]);
+
   const alternarMarca = (marca: string) => {
     setMarcasSeleccionadas((previas) =>
-      previas.includes(marca) ? previas.filter((m) => m !== marca) : [...previas, marca]
-    )
-  }
+      previas.includes(marca)
+        ? previas.filter((m) => m !== marca)
+        : [...previas, marca],
+    );
+  };
   const reiniciarFiltros = () => {
-    setMarcasSeleccionadas([])
-    setPrecioMaximo(PRECIO_LIMITE)
-    setSoloEnStock(false)
-    setSoloConDescuento(false)
-    setCalificacionMinima(0)
-  }
+    setMarcasSeleccionadas([]);
+    setPrecioMaximo(PRECIO_LIMITE);
+    setSoloEnStock(false);
+    setSoloConDescuento(false);
+    setCalificacionMinima(0);
+  };
   const productosFiltrados = useMemo(() => {
     return productos
       .filter((producto) => {
         const coincideBusqueda =
           producto.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
-          producto.descripcion.toLowerCase().includes(busqueda.toLowerCase())
+          producto.descripcion.toLowerCase().includes(busqueda.toLowerCase());
         const coincideCategoria =
-          categoriaSeleccionada === 'Todos' || producto.categoria === categoriaSeleccionada
+          categoriaSeleccionada === "Todos" ||
+          producto.categoria === categoriaSeleccionada;
         const coincideMarca =
           marcasSeleccionadas.length === 0 ||
-          (producto.marca && marcasSeleccionadas.includes(producto.marca))
-        const coincidePrecio = producto.precio <= precioMaximo
-        const coincideStock = !soloEnStock || producto.stock > 0
+          (producto.marca && marcasSeleccionadas.includes(producto.marca));
+        const coincidePrecio = producto.precio <= precioMaximo;
+        const coincideStock = !soloEnStock || producto.stock > 0;
         const coincideDescuento =
-          !soloConDescuento || (producto.descuento !== undefined && producto.descuento > 0)
+          !soloConDescuento ||
+          (producto.descuento !== undefined && producto.descuento > 0);
         const coincideCalificacion =
           calificacionMinima === 0 ||
-          (producto.calificacion !== undefined && producto.calificacion >= calificacionMinima)
+          (producto.calificacion !== undefined &&
+            producto.calificacion >= calificacionMinima);
         return (
           coincideBusqueda &&
           coincideCategoria &&
@@ -61,13 +70,13 @@ const PRECIO_LIMITE = 2500
           coincideStock &&
           coincideDescuento &&
           coincideCalificacion
-        )
+        );
       })
       .sort((a, b) => {
-        if (criterioOrden === 'menor-precio') return a.precio - b.precio
-        if (criterioOrden === 'mayor-precio') return b.precio - a.precio
-        return (b.calificacion || 0) - (a.calificacion || 0)
-      })
+        if (criterioOrden === "menor-precio") return a.precio - b.precio;
+        if (criterioOrden === "mayor-precio") return b.precio - a.precio;
+        return (b.calificacion || 0) - (a.calificacion || 0);
+      });
   }, [
     productos,
     busqueda,
@@ -77,8 +86,8 @@ const PRECIO_LIMITE = 2500
     precioMaximo,
     soloEnStock,
     soloConDescuento,
-    calificacionMinima
-  ])
+    calificacionMinima,
+  ]);
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <header className="mb-6">
@@ -86,7 +95,8 @@ const PRECIO_LIMITE = 2500
           Catálogo de Productos
         </h1>
         <p className="text-secondary-500 text-sm mt-1">
-          Explora nuestra selección de dispositivos y accesorios de última generación.
+          Explora nuestra selección de dispositivos y accesorios de última
+          generación.
         </p>
       </header>
       <BuscadorCategorias
@@ -118,15 +128,30 @@ const PRECIO_LIMITE = 2500
         </div>
       </div>
     </main>
-  )
+  );
 }
 function App() {
+  const [seccion, setSeccion] = useState("catalogo");
+
   return (
-    <ProveedorProductos>
-      <div className="min-h-screen bg-neutral-50">
-        <VistaCatalogo />
-      </div>
-    </ProveedorProductos>
-  )
+    <ProveedorAutenticacion>
+      <ProveedorProductos>
+        <div className="min-h-screen bg-neutral-50">
+          <Navbar seccionActiva={seccion} alNavegar={setSeccion} />
+          {seccion === "catalogo" && <VistaCatalogo />}
+          {seccion === "nosotros" && (
+            <div className="text-center py-20 font-heading text-secondary-500">
+              Página Nosotros
+            </div>
+          )}
+          {seccion === "admin" && (
+            <div className="text-center py-20 font-heading text-secondary-500">
+              Panel de Administración
+            </div>
+          )}
+        </div>
+      </ProveedorProductos>
+    </ProveedorAutenticacion>
+  );
 }
-export default App
+export default App;
