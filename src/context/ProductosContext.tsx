@@ -1,4 +1,4 @@
-import { Children, createContext, useContext, useEffect, useState } from "react";
+import {createContext, useContext, useEffect, useState } from "react";
 import type { Producto } from "../types/Producto";
 import type { ReactNode } from "react";
 import { productosIniciales } from "../data/ProductosIniciales";
