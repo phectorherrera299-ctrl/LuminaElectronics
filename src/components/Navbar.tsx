@@ -202,6 +202,31 @@ export const Navbar = ({
           </button>
         </div>
       </nav>
+      {menuAbierto && (
+        <div className="md:hidden border-t border-secondary-200 bg-white px-4 py-3 space-y-2">
+          <button
+            type="button"
+            onClick={() => manejarNavegacion("catalogo")}
+            className="block w-full text-left py-2 text-sm font-semibold text-secondary-700 hover:text-primary-600 cursor-pointer"
+          >
+            Catálogo
+          </button>
+          <button
+            type="button"
+            onClick={() => manejarNavegacion("nosotros")}
+            className="block w-full text-left py-2 text-sm font-semibold text-secondary-700 hover:text-primary-600 cursor-pointer"
+          >
+            Nosotros
+          </button>
+          <button
+            type="button"
+            onClick={() => manejarNavegacion("admin")}
+            className="block w-full text-left py-2 text-sm font-semibold text-secondary-700 hover:text-primary-600 cursor-pointer"
+          >
+            Admin Panel
+          </button>
+        </div>
+      )}
     </header>
   );
 };
