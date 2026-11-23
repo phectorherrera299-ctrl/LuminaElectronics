@@ -119,6 +119,52 @@ export const Footer = ({ alNavegar }: PropiedadesFooter) => {
               </li>
             </ul>
           </div>
+          <div className="lg:col-span-4 space-y-3">
+            <h3 className="font-heading font-bold text-secondary-900 text-xs uppercase tracking-wider">
+              Newsletter
+            </h3>
+            <p className="text-xs text-secondary-500">
+              Suscríbete para recibir lanzamientos exclusivos y cupones de
+              descuento.
+            </p>
+            <form onSubmit={manejarSuscripcion} className="flex gap-2 pt-1">
+              <input
+                type="email"
+                required
+                value={correo}
+                onChange={(e) => setCorreo(e.target.value)}
+                placeholder="tu@email.com"
+                className="flex-1 px-3 py-2 text-xs bg-secondary-50 border border-secondary-200 rounded-xl text-secondary-900 placeholder:text-secondary-400 focus:outline-none focus:border-primary-500 focus:bg-white transition-all"
+              />
+              <button
+                type="submit"
+                className="px-4 py-2 bg-primary-500 hover:bg-primary-600 text-white font-semibold text-xs rounded-xl transition-colors cursor-pointer shadow-xs"
+              >
+                Suscribir
+              </button>
+            </form>
+            {suscrito && (
+              <p className="text-[11px] font-semibold text-tertiary-600 animate-fade-in">
+                ✓ ¡Gracias por suscribirte a Lumina!
+              </p>
+            )}
+          </div>
+        </div>
+        <div className="mt-12 pt-6 border-t border-secondary-100 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-secondary-400">
+          <p>
+            © {new Date().getFullYear()} Lumina Commerce. Todos los derechos
+            reservados.
+          </p>
+          <div className="flex items-center gap-4">
+            <span className="font-semibold text-secondary-600">
+              Proyecto Académico RollingCode
+            </span>
+            <span className="hidden sm:inline">•</span>
+            <span className="inline-flex items-center gap-1.5 text-secondary-500">
+              <span className="w-1.5 h-1.5 rounded-full bg-tertiary-500" />
+              Sistema Operativo v2.4
+            </span>
+          </div>
         </div>
       </div>
     </footer>
