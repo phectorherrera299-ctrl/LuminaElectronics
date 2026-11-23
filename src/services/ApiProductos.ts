@@ -54,7 +54,7 @@ export const obtenerProductosApi = async (): Promise<Producto[]> => {
       categoria: mapearCategoria(item.category),
       imagen: item.thumbnail,
       descripcion: item.description,
-      stock: item.stock,
+      stock: Math.min(item.stock, 12),
       descuento: item.discountPercentage
         ? Math.round(item.discountPercentage)
         : undefined,
