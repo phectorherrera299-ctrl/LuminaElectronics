@@ -100,6 +100,25 @@ export const Footer = ({ alNavegar }: PropiedadesFooter) => {
               </li>
             </ul>
           </div>
+          <div className="lg:col-span-2 space-y-3">
+            <h3 className="font-heading font-bold text-secondary-900 text-xs uppercase tracking-wider">
+              Soporte &amp; Legal
+            </h3>
+            <ul className="space-y-2 text-xs text-secondary-500">
+              <li className="hover:text-secondary-900 cursor-pointer transition-colors">
+                Centro de Ayuda
+              </li>
+              <li className="hover:text-secondary-900 cursor-pointer transition-colors">
+                Garantías &amp; Devoluciones
+              </li>
+              <li className="hover:text-secondary-900 cursor-pointer transition-colors">
+                Términos y Condiciones
+              </li>
+              <li className="hover:text-secondary-900 cursor-pointer transition-colors">
+                Política de Privacidad
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </footer>
