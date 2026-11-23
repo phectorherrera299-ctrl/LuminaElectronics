@@ -50,6 +50,22 @@ export const MetricasAdmin = ({
             USD en stock activo
           </span>
         </div>
+        <div className="bg-white p-5 rounded-2xl border border-secondary-200 shadow-xs space-y-1">
+          <span className="text-xs font-semibold text-secondary-500 uppercase tracking-wider block">
+            Pedidos Nuevos
+          </span>
+          <div className="flex items-baseline gap-2">
+            <span className="text-2xl font-heading font-bold text-secondary-900">
+              184
+            </span>
+            <span className="text-[11px] text-primary-600 font-bold">
+              26 hoy
+            </span>
+          </div>
+          <span className="text-[11px] text-secondary-400 block">
+            Pendientes de despacho
+          </span>
+        </div>
       </div>
     </section>
   );
