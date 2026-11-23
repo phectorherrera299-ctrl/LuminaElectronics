@@ -66,6 +66,22 @@ export const MetricasAdmin = ({
             Pendientes de despacho
           </span>
         </div>
+        <div className="bg-white p-5 rounded-2xl border border-secondary-200 shadow-xs space-y-1">
+          <span className="text-xs font-semibold text-secondary-500 uppercase tracking-wider block">
+            Catálogo Activo
+          </span>
+          <div className="flex items-baseline gap-2">
+            <span className="text-2xl font-heading font-bold text-secondary-900">
+              {productos.length}
+            </span>
+            <span className="text-[11px] text-secondary-500">
+              en inventario
+            </span>
+          </div>
+          <span className="text-[11px] text-error font-semibold block">
+            {productosBajoStock} con bajo stock
+          </span>
+        </div>
       </div>
     </section>
   );
