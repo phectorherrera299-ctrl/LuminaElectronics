@@ -69,6 +69,34 @@ export const TablaProductosAdmin = ({
             tienda.
           </p>
         </div>
+        <button
+          type="button"
+          onClick={alCrearNuevo}
+          className="px-4 py-2.5 bg-primary-500 hover:bg-primary-600 text-white text-xs font-semibold rounded-xl shadow-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer self-start sm:self-auto"
+        >
+          <span>+</span>
+          <span>Nuevo Producto</span>
+        </button>
+      </div>
+      <div className="flex flex-col sm:flex-row gap-3">
+        <div className="relative flex-1">
+          <input
+            type="text"
+            value={busqueda}
+            onChange={(e) => setBusqueda(e.target.value)}
+            placeholder="Buscar por ID o Nombre..."
+            className="w-full pl-3 pr-8 py-2 text-xs bg-secondary-50 border border-secondary-200 rounded-xl text-secondary-900 focus:outline-none focus:border-primary-500 focus:bg-white transition-all"
+          />
+          {busqueda && (
+            <button
+              type="button"
+              onClick={() => setBusqueda("")}
+              className="absolute inset-y-0 right-0 pr-2.5 flex items-center text-xs text-secondary-400 hover:text-secondary-700 cursor-pointer"
+            >
+              ✕
+            </button>
+          )}
+        </div>
       </div>
     </section>
   );
