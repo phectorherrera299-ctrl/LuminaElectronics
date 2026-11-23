@@ -51,4 +51,25 @@ export const TablaProductosAdmin = ({
       eliminarProducto(id);
     }
   };
+
+  return (
+    <section className="bg-white rounded-2xl border border-secondary-200 p-6 space-y-5 shadow-xs">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+        <div>
+          <div className="flex items-center gap-2">
+            <h2 className="text-lg font-heading font-bold text-secondary-900">
+              Gestion de Productos
+            </h2>
+            <span className="px-2 py-0.5 text-xs font-semibold rounded-md bg-secondary-100 text-secondary-700">
+              {productosFiltrados.length} items
+            </span>
+          </div>
+          <p>
+            Control de existencias, catalogación SKU y disponibilidad directa en
+            tienda.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
 };
