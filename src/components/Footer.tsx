@@ -25,7 +25,7 @@ export const Footer = ({ alNavegar }: PropiedadesFooter) => {
   };
 
   return (
-    <footer  className="bg-white border-t border-secondary-200 mt-20">
+    <footer className="bg-white border-t border-secondary-200 mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-12">
           <div className="lg:col-span-4 space-y-4">
@@ -37,9 +37,28 @@ export const Footer = ({ alNavegar }: PropiedadesFooter) => {
                 Lumina Commerce
               </span>
             </div>
+            <p className="text-xs text-secondary-500 leading-relaxed max-w-sm">
+              Vanguardia tecnológica en componentes de cómputo, dispositivos
+              inteligentes y sonido premium. Diseñado con precisión y despacho
+              prioritario.
+            </p>
+            <div className="flex items-center gap-2 pt-2 text-secondary-400">
+              <div className="w-8 h-5 rounded border border-secondary-200 flex items-center justify-center text-[9px] font-bold">
+                VISA
+              </div>
+              <div className="w-8 h-5 rounded border border-secondary-200 flex items-center justify-center text-[9px] font-bold">
+                MC
+              </div>
+              <div className="w-8 h-5 rounded border border-secondary-200 flex items-center justify-center text-[9px] font-bold">
+                AMEX
+              </div>
+              <div className="w-8 h-5 rounded border border-secondary-200 flex items-center justify-center text-[9px] font-bold">
+                PP
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </footer>
-  )
-}
+  );
+};
