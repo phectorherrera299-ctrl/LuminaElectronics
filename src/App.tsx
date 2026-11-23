@@ -8,6 +8,7 @@ import { Navbar } from "./components/Navbar";
 import { ProveedorDeseos, useDeseos } from "./context/ContextoDeseos";
 import { useAutenticacion } from "./context/ContextoAutenticacion";
 import { Footer } from "./components/Footer";
+import { MetricasAdmin } from "./components/MetricasAdmin";
 
 const PRECIO_LIMITE = 2500;
 function VistaCatalogo() {
@@ -138,6 +139,7 @@ function ContenidoPrincipal() {
   const [seccion, setSeccion] = useState("catalogo");
   const { cantidadDeseos } = useDeseos();
   const { esAdmin } = useAutenticacion();
+  const { productos } = useProductos();
   return (
     <div className="min-h-screen bg-neutral-50">
       <Navbar
@@ -153,9 +155,9 @@ function ContenidoPrincipal() {
       )}
       {seccion === "admin" &&
         (esAdmin ? (
-          <div className="text-center py-20 font-heading text-secondary-900">
-            ¡Bienvenido al Panel de Administración!
-          </div>
+          <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+            <MetricasAdmin productos={productos} />
+          </main>
         ) : (
           <div className="max-w-md mx-auto my-20 p-8 bg-white rounded-2xl border border-secondary-200 text-center space-y-4 shadow-sm">
             <div className="w-12 h-12 mx-auto rounded-full bg-error/10 text-error flex items-center justify-center font-bold text-xl">
