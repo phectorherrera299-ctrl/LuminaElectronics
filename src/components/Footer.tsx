@@ -57,6 +57,49 @@ export const Footer = ({ alNavegar }: PropiedadesFooter) => {
               </div>
             </div>
           </div>
+          <div className="lg:col-span-2 space-y-3">
+            <h3 className="font-heading font-bold text-secondary-900 text-xs uppercase tracking-wider">
+              Navegación
+            </h3>
+            <ul className="space-y-2 text-xs text-secondary-500">
+              <li>
+                <button
+                  type="button"
+                  onClick={() => irA("catalogo")}
+                  className="hover:text-primary-600 transition-colors cursor-pointer"
+                >
+                  Catálogo Completo
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => irA("catalogo")}
+                  className="hover:text-primary-600 transition-colors cursor-pointer"
+                >
+                  Ofertas Especiales
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => irA("nosotros")}
+                  className="hover:text-primary-600 transition-colors cursor-pointer"
+                >
+                  Sobre Lumina
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => irA("admin")}
+                  className="hover:text-primary-600 transition-colors cursor-pointer"
+                >
+                  Panel Administrativo
+                </button>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </footer>
