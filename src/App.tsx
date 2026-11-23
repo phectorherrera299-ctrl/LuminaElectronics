@@ -7,6 +7,7 @@ import { ProveedorAutenticacion } from "./context/ContextoAutenticacion";
 import { Navbar } from "./components/Navbar";
 import { ProveedorDeseos, useDeseos } from "./context/ContextoDeseos";
 import { useAutenticacion } from "./context/ContextoAutenticacion";
+import { Footer } from "./components/Footer";
 
 const PRECIO_LIMITE = 2500;
 function VistaCatalogo() {
@@ -177,6 +178,7 @@ function ContenidoPrincipal() {
             </button>
           </div>
         ))}
+      <Footer alNavegar={setSeccion} />
     </div>
   );
 }
@@ -186,7 +188,7 @@ function App() {
     <ProveedorAutenticacion>
       <ProveedorProductos>
         <ProveedorDeseos>
-          <ContenidoPrincipal/>
+          <ContenidoPrincipal />
         </ProveedorDeseos>
       </ProveedorProductos>
     </ProveedorAutenticacion>
