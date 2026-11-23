@@ -42,4 +42,13 @@ export const TablaProductosAdmin = ({
       return coincideTexto && coincideCategoria;
     });
   }, [productos, busqueda, categoriaSeleccionada]);
+
+  const confirmarYEliminar = (id: string, nombre: string) => {
+    const seguro = window.confirm(
+      `¿Estas seguro de que deseas eliminar "${nombre}" (${id} del inventario)`,
+    );
+    if (seguro) {
+      eliminarProducto(id);
+    }
+  };
 };
