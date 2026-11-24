@@ -107,6 +107,7 @@ export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
           </div>
         </div>
       </section>
+
       <section className="space-y-6">
         <div>
           <span className="text-[11px] font-bold text-primary-500 uppercase tracking-wider block">
@@ -119,6 +120,56 @@ export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
             Diseñamos Lumina pensando en escalabilidad productiva, no solo en un
             prototipo estético. Cuatro pilares estructuran nuestro stack.
           </p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="bg-white p-6 rounded-2xl border border-secondary-200 shadow-xs space-y-2">
+            <div className="w-9 h-9 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center font-bold text-sm">
+              ⚡
+            </div>
+            <h3 className="font-heading font-bold text-sm text-secondary-900">
+              Rendimiento React
+            </h3>
+            <p className="text-xs text-secondary-500 leading-relaxed">
+              Virtualización de catálogos masivos y optimización de render con
+              hooks de estado y memoización para garantizar 60 FPS estables.
+            </p>
+          </div>
+          <div className="bg-white p-6 rounded-2xl border border-secondary-200 shadow-xs space-y-2">
+            <div className="w-9 h-9 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center font-bold text-sm">
+              🏗️
+            </div>
+            <h3 className="font-heading font-bold text-sm text-secondary-900">
+              Arquitectura Limpia
+            </h3>
+            <p className="text-xs text-secondary-500 leading-relaxed">
+              Separación modular entre capas de datos, tipos tipados en
+              TypeScript y componentes atómicos reutilizables.
+            </p>
+          </div>
+          <div className="bg-white p-6 rounded-2xl border border-secondary-200 shadow-xs space-y-2">
+            <div className="w-9 h-9 rounded-xl bg-tertiary-50 text-tertiary-600 flex items-center justify-center font-bold text-sm">
+              ♿
+            </div>
+            <h3 className="font-heading font-bold text-sm text-secondary-900">
+              Accesibilidad Total
+            </h3>
+            <p className="text-xs text-secondary-500 leading-relaxed">
+              Soporte nativo para lectores de pantalla, navegación fluida por
+              teclado y contraste cromático conforme a normas WCAG 2.1 AA.
+            </p>
+          </div>
+          <div className="bg-white p-6 rounded-2xl border border-secondary-200 shadow-xs space-y-2">
+            <div className="w-9 h-9 rounded-xl bg-secondary-100 text-secondary-700 flex items-center justify-center font-bold text-sm">
+              🎯
+            </div>
+            <h3 className="font-heading font-bold text-sm text-secondary-900">
+              UX Sin Fricción
+            </h3>
+            <p className="text-xs text-secondary-500 leading-relaxed">
+              Respuestas instantáneas al vuelo, filtros combinados sin recargas
+              y un checkout con validación interactiva paso a paso.
+            </p>
+          </div>
         </div>
       </section>
     </main>
