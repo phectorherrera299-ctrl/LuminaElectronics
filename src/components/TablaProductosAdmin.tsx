@@ -122,11 +122,65 @@ export const TablaProductosAdmin = ({
             </tr>
           </thead>
           <tbody className="divide-y divide-secondary-100 text-secondary-700">
-            <tr>
-              <td colSpan={6} className="py-8 text-center text-secondary-400">
-                No se encontraron productos que coincidan con la búsqueda.
-              </td>
-            </tr>
+            {productosFiltrados.length === 0 ? (
+              <tr>
+                <td colSpan={6} className="py-8 text-center text-secondary-400">
+                  No se encontraron productos que coincidan con la búsqueda.
+                </td>
+              </tr>
+            ) : (
+              productosFiltrados.map((prod) => (
+                <tr
+                  key={prod.id}
+                  className="hover:bg-secondary-50/60 transition-colors"
+                >
+                  <td className="py-3 px-4 font-mono font-bold text-primary-600 text-[11px]">
+                    {prod.id}
+                  </td>
+                  <td className="py-3 px-4">
+                    <div className="flex items-center gap-3">
+                      <img
+                        src={prod.imagen}
+                        alt={prod.nombre}
+                        className="w-10 h-10 rounded-lg object-cover bg-secondary-100 shrink-0 border border-secondary-100"
+                      />
+                      <div className="max-w-xs">
+                        <span className="font-semibold text-secondary-900 block truncate">
+                          {prod.nombre}
+                        </span>
+                        <span className="text-[10px] text-secondary-400 block truncate">
+                          {prod.marca || "Lumina"}
+                        </span>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="py-3 px-4">
+                    <span className="px-2 py-0.5 rounded-md bg-secondary-100 text-secondary-700 text-[10px] font-semibold">
+                      {prod.categoria}
+                    </span>
+                  </td>
+                  <td className="py-3 px-4 font-bold text-secondary-900 font-heading">
+                    ${prod.precio.toFixed(2)}
+                  </td>
+                  <td className="py-3 px-4">
+                    {prod.stock === 0 ? (
+                      <span className="px-2 py-0.5 rounded-md bg-error/10 text-error text-[10px] font-semibold">
+                        Agotado (0)
+                      </span>
+                    ) : prod.stock <= 3 ? (
+                      <span className="px-2 py-0.5 rounded-md bg-warning/10 text-warning text-[10px] font-semibold">
+                        Bajo ({prod.stock})
+                      </span>
+                    ) : (
+                      <span className="px-2 py-0.5 rounded-md bg-tertiary-50 text-tertiary-700 text-[10px] font-semibold">
+                        {prod.stock} unids.
+                      </span>
+                    )}
+                  </td>
+                  <td className="py-3 px-4 text-right"></td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
