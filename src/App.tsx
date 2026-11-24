@@ -11,6 +11,7 @@ import { Footer } from "./components/Footer";
 import { MetricasAdmin } from "./components/MetricasAdmin";
 import { TablaProductosAdmin } from "./components/TablaProductosAdmin";
 import { Pagina404 } from "./pages/Pagina404";
+import { PaginaNosotros } from "./pages/PaginaSobreNosotros";
 
 const PRECIO_LIMITE = 2500;
 function VistaCatalogo() {
@@ -138,7 +139,7 @@ function VistaCatalogo() {
 }
 
 function ContenidoPrincipal() {
-  const [seccion, setSeccion] = useState("404");
+  const [seccion, setSeccion] = useState("catalogo");
   const { cantidadDeseos } = useDeseos();
   const { esAdmin } = useAutenticacion();
   const { productos } = useProductos();
@@ -150,11 +151,7 @@ function ContenidoPrincipal() {
         cantidadDeseos={cantidadDeseos}
       />
       {seccion === "catalogo" && <VistaCatalogo />}
-      {seccion === "nosotros" && (
-        <div className="text-center py-20 font-heading text-secondary-500">
-          Página Nosotros
-        </div>
-      )}
+      {seccion === "nosotros" && <PaginaNosotros alNavegar={setSeccion} />}
       {seccion === "admin" &&
         (esAdmin ? (
           <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
@@ -186,7 +183,9 @@ function ContenidoPrincipal() {
             </button>
           </div>
         ))}
-      {seccion === "404" && <Pagina404 alNavegar={setSeccion} productos={productos} />}
+      {seccion === "404" && (
+        <Pagina404 alNavegar={setSeccion} productos={productos} />
+      )}
       <Footer alNavegar={setSeccion} />
     </div>
   );
