@@ -105,12 +105,10 @@ export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
             <span className="w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse" />
             PROYECTO FINAL ACADÉMICO • RollingCode School • Cohorte 2026
           </div>
-
           <h1 className="text-4xl sm:text-5xl font-heading font-extrabold text-secondary-900 tracking-tight leading-[1.15]">
             Construyendo la nueva experiencia del{" "}
             <span className="text-primary-500">comercio digital</span>.
           </h1>
-
           <p className="text-secondary-600 text-sm sm:text-base leading-relaxed max-w-xl">
             Lumina Commerce nace de la visión de repensar el retail de
             tecnología de alto desempeño. Una síntesis de arquitectura frontend
@@ -118,7 +116,6 @@ export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
             tiempo real concebida con los estándares más exigentes de la
             industria.
           </p>
-
           <div className="flex flex-wrap items-center gap-3 pt-2">
             <button
               type="button"
@@ -331,7 +328,6 @@ export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
           ))}
         </div>
       </section>
-
       <section className="space-y-6 pt-4 border-t border-secondary-200/60">
         <div>
           <span className="text-[11px] font-bold text-primary-500 uppercase tracking-wider block">
@@ -345,7 +341,6 @@ export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
             ágiles Scrum en RollingCode School.
           </p>
         </div>
-
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {ETAPAS.map((etapa) => (
             <div
@@ -372,6 +367,36 @@ export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
                 <span>✓</span>
                 <span>{etapa.estado}</span>
               </div>
+            </div>
+          ))}
+        </div>
+      </section>
+      <section className="space-y-6 pt-4 border-t border-secondary-200/60">
+        <div className="text-center max-w-xl mx-auto space-y-1">
+          <span className="text-[11px] font-bold text-primary-500 uppercase tracking-wider block">
+            Arquitectura de Software
+          </span>
+          <h2 className="text-2xl font-heading font-bold text-secondary-900">
+            Tech Stack de Lumina
+          </h2>
+          <p className="text-xs text-secondary-500">
+            Selección tecnológica orientada a mantenibilidad, desarrollo en
+            equipo y performance sin compromisos.
+          </p>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+          {TECCNOLOGIAS.map((tech) => (
+            <div
+              key={tech.nombre}
+              className="bg-white p-4 rounded-2xl border border-secondary-200 shadow-xs text-center space-y-1 hover:border-primary-300 transition-colors"
+            >
+              <span className="text-2xl block mb-1">{tech.icono}</span>
+              <span className="font-heading font-bold text-xs text-secondary-900 block truncate">
+                {tech.nombre}
+              </span>
+              <span className="text-[10px] text-secondary-400 block truncate">
+                {tech.detalle}
+              </span>
             </div>
           ))}
         </div>
