@@ -64,6 +64,46 @@ export const Pagina404 = ({ alNavegar }: PropiedadesPagina404) => {
           Buscar
         </button>
       </form>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto pt-4 text-left">
+        <button
+          type="button"
+          onClick={() => irA("catalogo")}
+          className="p-4 bg-white rounded-2xl border border-secondary-200 hover:border-primary-300 hover:shadow-sm transition-all group cursor-pointer"
+        >
+          <span className="text-lg block mb-2">🛍️</span>
+          <h2 className="font-heading font-bold text-xs text-secondary-900 group-hover:text-primary-600 transition-colors flex items-center justify-between">
+            <span>Catálogo Principal</span>
+            <span>→</span>
+          </h2>
+          <p className="text-[11px] text-secondary-400 mt-1">
+            Explora miles de componentes, rigs y periféricos certificados.
+          </p>
+        </button>
+        <button
+          type="button"
+          onClick={() => irA("catalogo")}
+          className="p-4 bg-white rounded-2xl border border-secondary-200 hover:border-primary-300 hover:shadow-sm transition-all group cursor-pointer"
+        >
+          <span className="text-lg block mb-2">🔥</span>
+          <h2 className="font-heading font-bold text-xs text-secondary-900 group-hover:text-primary-600 transition-colors flex items-center justify-between">
+            <span>Ofertas Destacadas</span>
+            <span>→</span>
+          </h2>
+          <p className="text-[11px] text-secondary-400 mt-1">
+            Descubre drops semanales y rebajas de hasta un 35% de descuento.
+          </p>
+        </button>
+
+        <div className="p-4 bg-white rounded-2xl border border-secondary-200 text-left">
+          <span className="text-lg block mb-2">💬</span>
+          <h2 className="font-heading font-bold text-xs text-secondary-900">
+            Soporte Lumina
+          </h2>
+          <p className="text-[11px] text-secondary-400 mt-1">
+            Chatea con especialistas técnicos para resolver tus dudas de compra.
+          </p>
+        </div>
+      </div>
     </main>
   );
 };
