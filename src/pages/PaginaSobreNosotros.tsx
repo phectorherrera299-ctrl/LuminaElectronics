@@ -45,6 +45,50 @@ const MIEMBROS_EQUIPO: MiembroEquipo[] = [
   },
 ];
 
+const ETAPAS = [
+  {
+    numero: "01",
+    semanas: "Semanas 1 - 3",
+    titulo: "Investigación & UX",
+    detalle:
+      "Benchmarking, arquitectura de información, entrevistas a usuarios, definición de buyer personas y creación de wireframes de baja fidelidad.",
+    estado: "Completado",
+  },
+  {
+    numero: "02",
+    semanas: "Semanas 4 - 6",
+    titulo: "Design System & Tokens",
+    detalle:
+      "Construcción de escala de colores semántica, escala tipográfica escalable, kit de iconos y componentes atómicos en Figma y Tailwind.",
+    estado: "Completado",
+  },
+  {
+    numero: "03",
+    semanas: "Semanas 7 - 10",
+    titulo: "Frontend & API Integration",
+    detalle:
+      "Desarrollo en React con consumo de inventario asíncrono, panel administrativo con CRUD completo y autenticación por roles.",
+    estado: "Completado",
+  },
+  {
+    numero: "04",
+    semanas: "Semanas 11 - 12",
+    titulo: "Testing & Despliegue",
+    detalle:
+      "Auditoría de rendimiento Lighthouse, resolución de edge cases, tests de regresión y despliegue continuo en infraestructura serverless.",
+    estado: "En Producción",
+  },
+];
+
+const TECCNOLOGIAS = [
+  { nombre: "React 19", detalle: "Core UI", icono: "⚛️" },
+  { nombre: "Tailwind CSS", detalle: "Design Tokens", icono: "🎨" },
+  { nombre: "TypeScript", detalle: "Type Safety", icono: "🛡️" },
+  { nombre: "Vite", detalle: "Build Tool", icono: "⚡" },
+  { nombre: "REST API", detalle: "Backend & Storage", icono: "🌐" },
+  { nombre: "GitHub", detalle: "CI/DevOps", icono: "🐙" },
+];
+
 export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
   const irA = (seccion: string) => {
     if (alNavegar) {
@@ -251,7 +295,6 @@ export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
                     {miembro.etiquetaRol}
                   </span>
                 </div>
-
                 <div className="p-5 space-y-3">
                   <div>
                     <h3 className="font-heading font-bold text-base text-secondary-900 leading-tight">
@@ -261,11 +304,9 @@ export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
                       {miembro.rol}
                     </span>
                   </div>
-
                   <p className="text-xs text-secondary-500 leading-relaxed line-clamp-3">
                     {miembro.descripcion}
                   </p>
-
                   <div className="flex flex-wrap gap-1.5 pt-1">
                     {miembro.tecnologias.map((tech) => (
                       <span
@@ -278,7 +319,6 @@ export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
                   </div>
                 </div>
               </div>
-
               <div className="p-5 pt-3 border-t border-secondary-100 flex items-center justify-between text-xs text-secondary-400">
                 <span className="flex items-center gap-1 text-[11px]">
                   📍 {miembro.ubicacion}
