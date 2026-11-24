@@ -138,7 +138,7 @@ function VistaCatalogo() {
 }
 
 function ContenidoPrincipal() {
-  const [seccion, setSeccion] = useState("catalogo");
+  const [seccion, setSeccion] = useState("404");
   const { cantidadDeseos } = useDeseos();
   const { esAdmin } = useAutenticacion();
   const { productos } = useProductos();
@@ -186,7 +186,7 @@ function ContenidoPrincipal() {
             </button>
           </div>
         ))}
-      {seccion === "404" && <Pagina404 alNavegar={setSeccion} />}
+      {seccion === "404" && <Pagina404 alNavegar={setSeccion} productos={productos} />}
       <Footer alNavegar={setSeccion} />
     </div>
   );
