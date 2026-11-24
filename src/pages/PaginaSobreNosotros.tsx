@@ -150,7 +150,7 @@ export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
                   99.8%
                 </span>
                 <span className="text-[11px] font-semibold text-secondary-500 uppercase tracking-wider block">
-                  Lighthouse Perf.
+                  Rendimiento del faro.
                 </span>
               </div>
               <div className="p-4 rounded-2xl bg-secondary-50 border border-secondary-100 space-y-1">
@@ -399,6 +399,58 @@ export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
               </span>
             </div>
           ))}
+        </div>
+      </section>
+      <section className="bg-gradient-to-r from-primary-900 to-secondary-900 rounded-3xl p-8 sm:p-12 text-white shadow-xl relative overflow-hidden">
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div className="lg:col-span-8 space-y-4">
+            <span className="text-[10px] font-bold tracking-widest uppercase text-primary-300 block">
+              AGRADECIMIENTOS ACADÉMICOS
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-heading font-extrabold text-white">
+              Gracias al equipo docente de RollingCode School
+            </h2>
+            <p className="text-xs sm:text-sm text-secondary-300 leading-relaxed max-w-2xl">
+              Este proyecto representa la culminación de meses de mentoría
+              constante, código colaborativo y ejecución de desafíos reales. Un
+              agradecimiento especial a los profesores y tutores que guiaron la
+              arquitectura, nos desafiaron a seguir las mejores prácticas de la
+              industria y fomentaron el trabajo en equipo con rigor profesional.
+            </p>
+            <div className="flex flex-wrap items-center gap-4 pt-2 text-xs text-secondary-300">
+              <span className="flex items-center gap-1.5 font-semibold">
+                <span className="text-tertiary-400">✓</span> Bootcamp FullStack
+              </span>
+              <span>•</span>
+              <span className="flex items-center gap-1.5 font-semibold">
+                <span className="text-tertiary-400">✓</span> +100 Horas de
+                Código
+              </span>
+              <span>•</span>
+              <span className="flex items-center gap-1.5 font-semibold">
+                <span className="text-tertiary-400">✓</span> Mentores Demo
+                Senior
+              </span>
+            </div>
+          </div>
+          <div className="lg:col-span-4 bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/15 text-center space-y-3">
+            <span className="text-2xl block">📦</span>
+            <h3 className="font-heading font-bold text-sm text-white">
+              ¿Te interesa el código?
+            </h3>
+            <p className="text-[11px] text-secondary-300 leading-relaxed">
+              El repositorio cuenta con documentación, esquemas de base de datos
+              y guía de instalación con TypeScript y Vite.
+            </p>
+            <a
+              href="https://github.com"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-block w-full py-2.5 px-4 rounded-xl bg-white text-secondary-900 font-semibold text-xs hover:bg-secondary-100 transition-colors shadow-sm"
+            >
+              Ver Repositorio en GitHub ↗
+            </a>
+          </div>
         </div>
       </section>
     </main>
