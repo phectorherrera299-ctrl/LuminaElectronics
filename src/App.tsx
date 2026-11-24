@@ -10,6 +10,7 @@ import { useAutenticacion } from "./context/ContextoAutenticacion";
 import { Footer } from "./components/Footer";
 import { MetricasAdmin } from "./components/MetricasAdmin";
 import { TablaProductosAdmin } from "./components/TablaProductosAdmin";
+import { Pagina404 } from "./pages/Pagina404";
 
 const PRECIO_LIMITE = 2500;
 function VistaCatalogo() {
@@ -159,12 +160,8 @@ function ContenidoPrincipal() {
           <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
             <MetricasAdmin productos={productos} />
             <TablaProductosAdmin
-              alCrearNuevo={() =>
-                alert("solo para ver si funciona")
-              }
-              alEditarProducto={(prod) =>
-                alert("solo para ver si funciona")
-              }
+              alCrearNuevo={() => alert("solo para ver si funciona")}
+              alEditarProducto={(prod) => alert("solo para ver si funciona")}
             />
           </main>
         ) : (
@@ -189,6 +186,7 @@ function ContenidoPrincipal() {
             </button>
           </div>
         ))}
+      {seccion === "404" && <Pagina404 alNavegar={setSeccion} />}
       <Footer alNavegar={setSeccion} />
     </div>
   );
