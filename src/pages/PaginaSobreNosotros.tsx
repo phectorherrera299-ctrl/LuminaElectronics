@@ -1,6 +1,47 @@
 interface PropiedadesPaginaNosotros {
   alNavegar?: (seccion: string) => void;
 }
+
+interface MiembroEquipo {
+  nombre: string;
+  rol: string;
+  etiquetaRol: string;
+  foto: string;
+  descripcion: string;
+  tecnologias: string[];
+  ubicacion: string;
+}
+
+const MIEMBROS_EQUIPO: MiembroEquipo[] = [
+  {
+    nombre: "Hector Herrera",
+    rol: "Frontend Architect & UI",
+    etiquetaRol: "Lead",
+    foto: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80",
+    descripcion: "Especialista en interfaces reactivas con React 18, gestión global del estado y microinteracciones de alto impacto visual.",
+    tecnologias: ["React", "Tailwind", "TypeScript", "Zustand"],
+    ubicacion: "Tucumán, AR"
+  },
+  {
+    nombre: "Guadalupe Andriani",
+    rol: "Backend & DB Architect",
+    etiquetaRol: "Arch",
+    foto: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&auto=format&fit=crop&q=80",
+    descripcion: "Construcción de arquitecturas data-driven en React, persistencia segura en LocalStorage y sincronización de datos de stock.",
+    tecnologias: ["Node.js", "Express", "PostgreSQL", "JWT"],
+    ubicacion: "Tucumán, AR"
+  },
+  {
+    nombre: "Daniel Barraza",
+    rol: "FullStack & QA Lead",
+    etiquetaRol: "QA/Dev",
+    foto: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&auto=format&fit=crop&q=80",
+    descripcion: "Implementación de buenas prácticas y tests unitarios con GitHub Actions y gestión del control de versiones del equipo.",
+    tecnologias: ["React", "Jest", "Cypress", "CI/CD"],
+    ubicacion: "Tucumán, AR"
+  }
+];
+
 export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
   const irA = (seccion: string) => {
     if (alNavegar) {
