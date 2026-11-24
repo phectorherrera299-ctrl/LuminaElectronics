@@ -7,7 +7,7 @@ interface PropiedadesTablaAdmin {
   alEditarProducto: (producto: Producto) => void;
 }
 
-const CATEGORIA_FILTRO = [
+const CATEGORIAS_FILTRO = [
   "Todas",
   "Computacion",
   "Audio",
@@ -97,6 +97,38 @@ export const TablaProductosAdmin = ({
             </button>
           )}
         </div>
+        <select
+          value={categoriaSeleccionada}
+          onChange={(e) => setCategoriaSeleccionada(e.target.value)}
+          className="px-3 py-2 text-xs bg-secondary-50 border border-secondary-200 rounded-xl text-secondary-900 focus:outline-none focus:border-primary-500 focus:bg-white transition-all cursor-pointer"
+        >
+          {CATEGORIAS_FILTRO.map((cat) => (
+            <option key={cat} value={cat}>
+              {cat === "Todas" ? "Todas las Categorías" : cat}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="overflow-x-auto border border-secondary-100 rounded-xl">
+        <table className="w-full text-left text-xs">
+          <thead className="bg-secondary-50 text-secondary-500 uppercase tracking-wider font-semibold border-b border-secondary-100">
+            <tr>
+              <th className="py-3 px-4">ID / SKU</th>
+              <th className="py-3 px-4">Producto</th>
+              <th className="py-3 px-4">Categoría</th>
+              <th className="py-3 px-4">Precio Unitario</th>
+              <th className="py-3 px-4">Stock</th>
+              <th className="py-3 px-4 text-right">Acciones</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-secondary-100 text-secondary-700">
+            <tr>
+              <td colSpan={6} className="py-8 text-center text-secondary-400">
+                No se encontraron productos que coincidan con la búsqueda.
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </section>
   );
