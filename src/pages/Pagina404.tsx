@@ -1,12 +1,16 @@
 import { useState, type FormEvent } from "react";
 import type { Producto } from "../types/Producto";
+import { TarjetaProducto } from "../components/TarjetaProducto";
 
 interface PropiedadesPagina404 {
   alNavegar?: (seccion: string) => void;
   productos?: Producto[];
 }
 
-export const Pagina404 = ({ alNavegar }: PropiedadesPagina404) => {
+export const Pagina404 = ({
+  alNavegar,
+  productos = [],
+}: PropiedadesPagina404) => {
   const [terminoBusqueda, setTerminoBusqueda] = useState("");
 
   const irA = (seccion: string) => {
@@ -15,6 +19,7 @@ export const Pagina404 = ({ alNavegar }: PropiedadesPagina404) => {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
+
   const manejarBusqueda = (e: FormEvent) => {
     e.preventDefault();
     if (terminoBusqueda.trim()) {
@@ -22,10 +27,10 @@ export const Pagina404 = ({ alNavegar }: PropiedadesPagina404) => {
     }
   };
 
-  const productosSugerids = productos.slice(0, 3);
+  const productosSugeridos = productos.slice(0, 3);
 
   return (
-    <main className="max-w-4xl mx-auto px-4 sm:px-6 py-16 text-center space-y-8 animate-fade-in">
+    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-16 animate-fade-in">
       <div className="max-w-4xl mx-auto text-center space-y-8">
         <div className="space-y-4">
           <div className="relative inline-block">
@@ -51,9 +56,10 @@ export const Pagina404 = ({ alNavegar }: PropiedadesPagina404) => {
           <p className="text-sm text-secondary-500 max-w-md mx-auto leading-relaxed">
             Ups, parece que esta señal se perdió en el ciberespacio. El
             producto, categoría o enlace que buscas no existe o ha sido
-            reubicado en nuestra última actualización.
+            reubicado en nuestra última actualización de inventario.
           </p>
         </div>
+
         <form
           onSubmit={manejarBusqueda}
           className="max-w-md mx-auto flex gap-2"
@@ -62,16 +68,17 @@ export const Pagina404 = ({ alNavegar }: PropiedadesPagina404) => {
             type="text"
             value={terminoBusqueda}
             onChange={(e) => setTerminoBusqueda(e.target.value)}
-            placeholder="Buscar laptops, GPU, periféricos..."
+            placeholder="Buscar laptops, GPU, periféricos o categorías..."
             className="flex-1 px-4 py-2.5 text-xs sm:text-sm bg-white border border-secondary-200 rounded-xl text-secondary-900 placeholder:text-secondary-400 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all shadow-xs"
           />
           <button
             type="submit"
             className="px-5 py-2.5 bg-primary-500 hover:bg-primary-600 text-white font-semibold text-xs sm:text-sm rounded-xl transition-colors cursor-pointer shadow-xs"
           >
-            Buscar
+            Buscar →
           </button>
         </form>
+
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto pt-4 text-left">
           <button
             type="button"
@@ -87,6 +94,7 @@ export const Pagina404 = ({ alNavegar }: PropiedadesPagina404) => {
               Explora miles de componentes, rigs y periféricos certificados.
             </p>
           </button>
+
           <button
             type="button"
             onClick={() => irA("catalogo")}
@@ -108,12 +116,12 @@ export const Pagina404 = ({ alNavegar }: PropiedadesPagina404) => {
               Soporte Lumina
             </h2>
             <p className="text-[11px] text-secondary-400 mt-1">
-              Chatea con especialistas técnicos para resolver tus dudas de
-              compra.
+              Chatea con especialistas técnicos para localizar tu compra.
             </p>
           </div>
         </div>
       </div>
+
       {productosSugeridos.length > 0 && (
         <section className="space-y-6 pt-8 border-t border-secondary-200/60">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
@@ -132,6 +140,27 @@ export const Pagina404 = ({ alNavegar }: PropiedadesPagina404) => {
             >
               Ver todo el catálogo →
             </button>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {productosSugeridos.map((prod) => (
+              <TarjetaProducto key={prod.id} producto={prod} />
+            ))}
+          </div>
+
+          <div className="pt-6 grid grid-cols-1 sm:grid-cols-3 gap-4 text-center text-xs text-secondary-500 border-t border-secondary-100">
+            <div className="flex items-center justify-center gap-2">
+              <span>🛡️</span>
+              <span>Garantía oficial Lumina 12 meses</span>
+            </div>
+            <div className="flex items-center justify-center gap-2">
+              <span>🚚</span>
+              <span>Despacho express a todo el país</span>
+            </div>
+            <div className="flex items-center justify-center gap-2">
+              <span>🔒</span>
+              <span>Checkout encriptado punto a punto</span>
+            </div>
           </div>
         </section>
       )}
