@@ -164,7 +164,7 @@ export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
             prototipo estético. Cuatro pilares estructuran nuestro stack.
           </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="bg-white p-6 rounded-2xl border border-secondary-200 shadow-xs space-y-2">
             <div className="w-9 h-9 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center font-bold text-sm">
               ⚡
@@ -234,7 +234,62 @@ export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
             3 Desarrolladores Principales
           </span>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {MIEMBROS_EQUIPO.map((miembro) => (
+            <div
+              key={miembro.nombre}
+              className="bg-white rounded-2xl border border-secondary-200 overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col justify-between group"
+            >
+              <div>
+                <div className="relative aspect-4/3 w-full bg-secondary-100 overflow-hidden">
+                  <img
+                    src={miembro.foto}
+                    alt={miembro.nombre}
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <span className="absolute top-3 right-3 px-2 py-0.5 text-[10px] font-bold rounded-md bg-secondary-900/80 backdrop-blur-xs text-white">
+                    {miembro.etiquetaRol}
+                  </span>
+                </div>
+
+                <div className="p-5 space-y-3">
+                  <div>
+                    <h3 className="font-heading font-bold text-base text-secondary-900 leading-tight">
+                      {miembro.nombre}
+                    </h3>
+                    <span className="text-xs font-semibold text-primary-600 block mt-0.5">
+                      {miembro.rol}
+                    </span>
+                  </div>
+
+                  <p className="text-xs text-secondary-500 leading-relaxed line-clamp-3">
+                    {miembro.descripcion}
+                  </p>
+
+                  <div className="flex flex-wrap gap-1.5 pt-1">
+                    {miembro.tecnologias.map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-2 py-0.5 text-[10px] font-medium bg-secondary-50 text-secondary-600 rounded-md border border-secondary-200"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-5 pt-3 border-t border-secondary-100 flex items-center justify-between text-xs text-secondary-400">
+                <span className="flex items-center gap-1 text-[11px]">
+                  📍 {miembro.ubicacion}
+                </span>
+                <span className="text-secondary-400 font-bold hover:text-primary-600 cursor-pointer transition-colors">
+                  ↗
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
       </section>
     </main>
   );
