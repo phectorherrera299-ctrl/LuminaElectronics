@@ -49,6 +49,63 @@ export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
             </a>
           </div>
         </div>
+        <div className="lg:col-span-5">
+          <div className="bg-white rounded-3xl border border-secondary-200 p-6 shadow-sm space-y-6">
+            <div className="flex items-center justify-between pb-3 border-b border-secondary-100">
+              <span className="text-xs font-bold text-secondary-900 font-heading">
+                Ficha Técnica del Proyecto
+              </span>
+              <span className="px-2 py-0.5 rounded-md bg-tertiary-50 text-tertiary-700 text-[10px] font-bold">
+                AUDITORÍA V2.4
+              </span>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="p-4 rounded-2xl bg-secondary-50 border border-secondary-100 space-y-1">
+                <span className="text-2xl sm:text-3xl font-heading font-extrabold text-primary-600 block">
+                  99.8%
+                </span>
+                <span className="text-[11px] font-semibold text-secondary-500 uppercase tracking-wider block">
+                  Lighthouse Perf.
+                </span>
+              </div>
+              <div className="p-4 rounded-2xl bg-secondary-50 border border-secondary-100 space-y-1">
+                <span className="text-2xl sm:text-3xl font-heading font-extrabold text-secondary-900 block">
+                  &lt; 180ms
+                </span>
+                <span className="text-[11px] font-semibold text-secondary-500 uppercase tracking-wider block">
+                  Tiempo de Carga
+                </span>
+              </div>
+              <div className="p-4 rounded-2xl bg-secondary-50 border border-secondary-100 space-y-1">
+                <span className="text-2xl sm:text-3xl font-heading font-extrabold text-secondary-900 block">
+                  32+
+                </span>
+                <span className="text-[11px] font-semibold text-secondary-500 uppercase tracking-wider block">
+                  Componentes UI
+                </span>
+              </div>
+              <div className="p-4 rounded-2xl bg-secondary-50 border border-secondary-100 space-y-1">
+                <span className="text-2xl sm:text-3xl font-heading font-extrabold text-tertiary-600 block">
+                  100%
+                </span>
+                <span className="text-[11px] font-semibold text-secondary-500 uppercase tracking-wider block">
+                  Responsive Web
+                </span>
+              </div>
+            </div>
+            <div className="pt-2">
+              <div className="flex justify-between text-[11px] text-secondary-500 mb-1">
+                <span>Pruebas Unitarias &amp; Cobertura</span>
+                <span className="font-bold text-secondary-800">
+                  94.5% Pasadas
+                </span>
+              </div>
+              <div className="w-full h-1.5 bg-secondary-100 rounded-full overflow-hidden">
+                <div className="h-full bg-primary-500 rounded-full w-[94.5%]" />
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
     </main>
   );
