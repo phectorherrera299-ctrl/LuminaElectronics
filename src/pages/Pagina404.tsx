@@ -19,7 +19,7 @@ export const Pagina404 = ({ alNavegar }: PropiedadesPagina404) => {
       irA("catalogo");
     }
   };
-  
+
   return (
     <main className="max-w-4xl mx-auto px-4 sm:px-6 py-16 text-center space-y-8 animate-fade-in">
       <div className="space-y-4">
@@ -49,6 +49,21 @@ export const Pagina404 = ({ alNavegar }: PropiedadesPagina404) => {
           última actualización.
         </p>
       </div>
+      <form onSubmit={manejarBusqueda} className="max-w-md mx-auto flex gap-2">
+        <input
+          type="text"
+          value={terminoBusqueda}
+          onChange={(e) => setTerminoBusqueda(e.target.value)}
+          placeholder="Buscar laptops, GPU, periféricos..."
+          className="flex-1 px-4 py-2.5 text-xs sm:text-sm bg-white border border-secondary-200 rounded-xl text-secondary-900 placeholder:text-secondary-400 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all shadow-xs"
+        />
+        <button
+          type="submit"
+          className="px-5 py-2.5 bg-primary-500 hover:bg-primary-600 text-white font-semibold text-xs sm:text-sm rounded-xl transition-colors cursor-pointer shadow-xs"
+        >
+          Buscar
+        </button>
+      </form>
     </main>
   );
 };
