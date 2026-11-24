@@ -107,6 +107,20 @@ export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
           </div>
         </div>
       </section>
+      <section className="space-y-6">
+        <div>
+          <span className="text-[11px] font-bold text-primary-500 uppercase tracking-wider block">
+            Nuestros Fundamentos
+          </span>
+          <h2 className="text-2xl font-heading font-bold text-secondary-900">
+            La ingeniería detrás de cada clic
+          </h2>
+          <p className="text-xs text-secondary-500 mt-1 max-w-xl">
+            Diseñamos Lumina pensando en escalabilidad productiva, no solo en un
+            prototipo estético. Cuatro pilares estructuran nuestro stack.
+          </p>
+        </div>
+      </section>
     </main>
   );
 };
