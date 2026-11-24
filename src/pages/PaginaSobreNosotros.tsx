@@ -18,28 +18,31 @@ const MIEMBROS_EQUIPO: MiembroEquipo[] = [
     rol: "Frontend Architect & UI",
     etiquetaRol: "Lead",
     foto: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80",
-    descripcion: "Especialista en interfaces reactivas con React 18, gestión global del estado y microinteracciones de alto impacto visual.",
+    descripcion:
+      "Especialista en interfaces reactivas con React 18, gestión global del estado y microinteracciones de alto impacto visual.",
     tecnologias: ["React", "Tailwind", "TypeScript", "Zustand"],
-    ubicacion: "Tucumán, AR"
+    ubicacion: "Tucumán, AR",
   },
   {
     nombre: "Guadalupe Andriani",
     rol: "Backend & DB Architect",
     etiquetaRol: "Arch",
     foto: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&auto=format&fit=crop&q=80",
-    descripcion: "Construcción de arquitecturas data-driven en React, persistencia segura en LocalStorage y sincronización de datos de stock.",
+    descripcion:
+      "Construcción de arquitecturas data-driven en React, persistencia segura en LocalStorage y sincronización de datos de stock.",
     tecnologias: ["Node.js", "Express", "PostgreSQL", "JWT"],
-    ubicacion: "Tucumán, AR"
+    ubicacion: "Tucumán, AR",
   },
   {
     nombre: "Daniel Barraza",
     rol: "FullStack & QA Lead",
     etiquetaRol: "QA/Dev",
     foto: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&auto=format&fit=crop&q=80",
-    descripcion: "Implementación de buenas prácticas y tests unitarios con GitHub Actions y gestión del control de versiones del equipo.",
+    descripcion:
+      "Implementación de buenas prácticas y tests unitarios con GitHub Actions y gestión del control de versiones del equipo.",
     tecnologias: ["React", "Jest", "Cypress", "CI/CD"],
-    ubicacion: "Tucumán, AR"
-  }
+    ubicacion: "Tucumán, AR",
+  },
 ];
 
 export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
@@ -56,7 +59,7 @@ export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
         <div className="lg:col-span-7 space-y-6">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-50 border border-primary-200 text-primary-700 text-xs font-semibold">
             <span className="w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse" />
-            PROYECTO FINAL ACADÉMICO • RollingCode School • Cohorte 2025
+            PROYECTO FINAL ACADÉMICO • RollingCode School • Cohorte 2026
           </div>
 
           <h1 className="text-4xl sm:text-5xl font-heading font-extrabold text-secondary-900 tracking-tight leading-[1.15]">
@@ -148,7 +151,6 @@ export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
           </div>
         </div>
       </section>
-
       <section className="space-y-6">
         <div>
           <span className="text-[11px] font-bold text-primary-500 uppercase tracking-wider block">
@@ -212,6 +214,27 @@ export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
             </p>
           </div>
         </div>
+      </section>
+      <section className="space-y-6 pt-4 border-t border-secondary-200/60">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+          <div>
+            <span className="text-[11px] font-bold text-primary-500 uppercase tracking-wider block">
+              Talento &amp; Compromiso
+            </span>
+            <h2 className="text-2xl font-heading font-bold text-secondary-900">
+              Equipo de Desarrollo
+            </h2>
+            <p className="text-xs text-secondary-500 mt-1 max-w-2xl">
+              Estudiantes y desarrolladores formados en el Bootcamp Intensivo de
+              RollingCode School, fusionando precisión visual e ingeniería de
+              software.
+            </p>
+          </div>
+          <span className="text-xs font-semibold text-secondary-500 px-3 py-1 bg-secondary-100 rounded-full self-start sm:self-auto">
+            3 Desarrolladores Principales
+          </span>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
       </section>
     </main>
   );
