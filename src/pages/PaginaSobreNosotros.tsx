@@ -48,35 +48,35 @@ const MIEMBROS_EQUIPO: MiembroEquipo[] = [
 const ETAPAS = [
   {
     numero: "01",
-    semanas: "Semanas 1 - 3",
-    titulo: "Investigación & UX",
+    semanas: "Primera semana",
+    titulo: "Planificación y diseño",
     detalle:
-      "Benchmarking, arquitectura de información, entrevistas a usuarios, definición de buyer personas y creación de wireframes de baja fidelidad.",
+      "Comenzamos organizando las ideas del proyecto, creando el mockup de la página y preparando el repositorio de GitHub para trabajar en equipo.",
     estado: "Completado",
   },
   {
     numero: "02",
-    semanas: "Semanas 4 - 6",
-    titulo: "Design System & Tokens",
+    semanas: "Primera semana",
+    titulo: "Estructura del proyecto",
     detalle:
-      "Construcción de escala de colores semántica, escala tipográfica escalable, kit de iconos y componentes atómicos en Figma y Tailwind.",
+      "Creamos las primeras páginas y componentes, organizamos las carpetas y definimos cómo iba a estar distribuida la información del sitio.",
     estado: "Completado",
   },
   {
     numero: "03",
-    semanas: "Semanas 7 - 10",
-    titulo: "Frontend & API Integration",
+    semanas: "Segunda semana",
+    titulo: "Diseño y funcionalidades",
     detalle:
-      "Desarrollo en React con consumo de inventario asíncrono, panel administrativo con CRUD completo y autenticación por roles.",
+      "Desarrollamos las distintas secciones, incorporamos los productos, los filtros, el carrito de compras y las herramientas para administrar el catálogo.",
     estado: "Completado",
   },
   {
     numero: "04",
-    semanas: "Semanas 11 - 12",
-    titulo: "Testing & Despliegue",
+    semanas: "Segunda semana",
+    titulo: "Detalles finales y presentación",
     detalle:
-      "Auditoría de rendimiento Lighthouse, resolución de edge cases, tests de regresión y despliegue continuo en infraestructura serverless.",
-    estado: "En Producción",
+      "Revisamos el funcionamiento de la página, corregimos errores, ajustamos el diseño y completamos los últimos detalles para presentar nuestro proyecto.",
+    estado: "Completado",
   },
 ];
 
@@ -326,6 +326,51 @@ export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
                 <span className="text-secondary-400 font-bold hover:text-primary-600 cursor-pointer transition-colors">
                   ↗
                 </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="space-y-6 pt-4 border-t border-secondary-200/60">
+        <div>
+          <span className="text-[11px] font-bold text-primary-500 uppercase tracking-wider block">
+            Hoja de Ruta
+          </span>
+          <h2 className="text-2xl font-heading font-bold text-secondary-900">
+            Evolución del Proyecto
+          </h2>
+          <p className="text-xs text-secondary-500 mt-1 max-w-xl">
+            Un proceso iterativo de 2 semanas estructurado bajo metodologías
+            ágiles Scrum en RollingCode School.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {ETAPAS.map((etapa) => (
+            <div
+              key={etapa.numero}
+              className="bg-white p-5 rounded-2xl border border-secondary-200 shadow-xs space-y-3 relative overflow-hidden"
+            >
+              <div className="flex items-center justify-between">
+                <span className="w-8 h-8 rounded-xl bg-primary-50 text-primary-600 font-heading font-bold text-xs flex items-center justify-center">
+                  {etapa.numero}
+                </span>
+                <span className="text-[10px] font-semibold text-secondary-400">
+                  {etapa.semanas}
+                </span>
+              </div>
+              <div>
+                <h3 className="font-heading font-bold text-sm text-secondary-900">
+                  {etapa.titulo}
+                </h3>
+                <p className="text-xs text-secondary-500 leading-relaxed mt-1">
+                  {etapa.detalle}
+                </p>
+              </div>
+              <div className="pt-2 flex items-center gap-1.5 text-[11px] font-bold text-tertiary-600">
+                <span>✓</span>
+                <span>{etapa.estado}</span>
               </div>
             </div>
           ))}
