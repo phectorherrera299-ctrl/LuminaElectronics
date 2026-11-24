@@ -9,6 +9,7 @@ import { ProveedorDeseos, useDeseos } from "./context/ContextoDeseos";
 import { useAutenticacion } from "./context/ContextoAutenticacion";
 import { Footer } from "./components/Footer";
 import { MetricasAdmin } from "./components/MetricasAdmin";
+import { TablaProductosAdmin } from "./components/TablaProductosAdmin";
 
 const PRECIO_LIMITE = 2500;
 function VistaCatalogo() {
@@ -157,6 +158,14 @@ function ContenidoPrincipal() {
         (esAdmin ? (
           <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
             <MetricasAdmin productos={productos} />
+            <TablaProductosAdmin
+              alCrearNuevo={() =>
+                alert("solo para ver si funciona")
+              }
+              alEditarProducto={(prod) =>
+                alert("solo para ver si funciona")
+              }
+            />
           </main>
         ) : (
           <div className="max-w-md mx-auto my-20 p-8 bg-white rounded-2xl border border-secondary-200 text-center space-y-4 shadow-sm">
