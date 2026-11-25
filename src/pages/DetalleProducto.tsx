@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import type { Producto } from "../types/Producto";
 import { useDeseos } from "../context/ContextoDeseos";
@@ -14,6 +13,51 @@ export const DetalleProducto = ({
   alVolver,
   alAgregarAlCarrito,
 }: PropiedadesDetalle) => {
+  const { alternarDeseo, esDeseo } = useDeseos();
+  const favorito = esDeseo(producto.id);
+
+  const [cantidad, setCantidad] = useState(1);
+  const [colorSeleccionado, setColorSeleccionado] = useState("Plata Platino");
+
+  const fotosMiniatura = [
+    producto.imagen,
+    "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=800&auto=format&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=800&auto=format&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=800&auto=format&fit=crop&q=80",
+  ];
+
+  const [fotoActiva, setFotoActiva] = useState(fotosMiniatura[0]);
+
+  const precioFinal = producto.descuento
+    ? (producto.precio * (1 - producto.descuento / 100)).toFixed(2)
+    : producto.precio.toFixed(2);
+
+  const ahorro = producto.descuento
+    ? (producto.precio * (producto.descuento / 100)).toFixed(2)
+    : null;
+
+  const cuota = (parseFloat(precioFinal) / 12).toFixed(2);
+
+  const incrementarCantidad = () => {
+    if (cantidad < producto.stock) {
+      setCantidad(cantidad + 1);
+    }
+  };
+  
+  const decrementarCantidad = () => {
+    if (cantidad > 1) {
+      setCantidad(cantidad - 1);
+    }
+  };
+
+  const manejarCarrito = () => {
+    if (alAgregarAlCarrito) {
+      alAgregarAlCarrito(producto, cantidad);
+    }
+    alert(
+      `¡Agregaste ${cantidad} unidad(es) de ${producto.nombre} al carrito!`,
+    );
+  };
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fade-in">
       <nav className="flex items-center gap-2 text-xs text-secondary-500 overflow-x-auto pb-1">
@@ -31,15 +75,11 @@ export const DetalleProducto = ({
           {producto.nombre}
         </span>
       </nav>
-
       <section className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
         {/* Galería de imágenes */}
-        <div className="lg:col-span-7 flex flex-col-reverse sm:flex-row gap-4">
-        </div>
-
+        <div className="lg:col-span-7 flex flex-col-reverse sm:flex-row gap-4"></div>
         {/* Información y compra */}
-        <div className="lg:col-span-5 space-y-6">
-        </div>
+        <div className="lg:col-span-5 space-y-6"></div>
       </section>
     </main>
   );
