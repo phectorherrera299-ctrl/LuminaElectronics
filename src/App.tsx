@@ -108,7 +108,8 @@ function VistaCatalogo({ alVerDetalle }: PropiedadesVistaCatalogo) {
   return (
     <>
       <HeroBanner />
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <main id= "seccion-catalogo"
+      className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <header className="mb-6">
           <h1 className="text-3xl font-heading font-bold text-secondary-900">
             Catálogo de Productos
