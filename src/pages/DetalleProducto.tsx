@@ -97,6 +97,48 @@ export const DetalleProducto = ({
               </button>
             ))}
           </div>
+          <div className="relative flex-1 aspect-square rounded-3xl bg-white border border-secondary-200 overflow-hidden shadow-xs flex items-center justify-center p-6">
+            <img
+              src={fotoActiva}
+              alt={producto.nombre}
+              className="max-h-full max-w-full object-contain transition-all duration-300"
+            />
+            <div className="absolute top-4 left-4 flex flex-col gap-1.5 items-start">
+              <span className="px-2.5 py-1 text-[11px] font-bold rounded-lg bg-primary-500 text-white shadow-xs">
+                Lumina Flagship
+              </span>
+              {producto.descuento && (
+                <span className="px-2.5 py-1 text-[11px] font-bold rounded-lg bg-error text-white shadow-xs">
+                  -{producto.descuento}% OFF
+                </span>
+              )}
+            </div>
+            <button
+              type="button"
+              onClick={() => alternarDeseo(producto.id)}
+              aria-label="Agregar a lista de deseos"
+              className={`absolute top-4 right-4 w-10 h-10 rounded-full bg-white/90 backdrop-blur-xs border border-secondary-200 flex items-center justify-center shadow-xs transition-all cursor-pointer ${
+                favorito
+                  ? "text-error scale-110"
+                  : "text-secondary-400 hover:text-error"
+              }`}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill={favorito ? "currentColor" : "none"}
+                viewBox="0 0 24 24"
+                strokeWidth={1.8}
+                stroke="currentColor"
+                className="w-5 h-5 transition-colors"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
         <div className="lg:col-span-7 flex flex-col-reverse sm:flex-row gap-4"></div>
         {/* Información y compra */}
