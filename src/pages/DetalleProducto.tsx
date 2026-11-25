@@ -2,6 +2,41 @@ import { useState } from "react";
 import type { Producto } from "../types/Producto";
 import { useDeseos } from "../context/ContextoDeseos";
 
+interface AccesorioRecomendado {
+  id: string;
+  nombre: string;
+  categoria: string;
+  precio: number;
+  imagen: string;
+  etiqueta: string;
+}
+const ACCESORIOS_DEFECTO: AccesorioRecomendado[] = [
+  {
+    id: "ACC-01",
+    nombre: "Estuche Rígido Reforzado ArmorCase",
+    categoria: "Protección & Viajes",
+    precio: 39.0,
+    imagen: "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=600&auto=format&fit=crop&q=80",
+    etiqueta: "Accesorio Oficial",
+  },
+  {
+    id: "ACC-02",
+    nombre: "Cable DAC USB-C a 3.5mm Hi-Res Audio",
+    categoria: "Cables & Conversión",
+    precio: 29.5,
+    imagen: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&auto=format&fit=crop&q=80",
+    etiqueta: "Audífilo",
+  },
+  {
+    id: "ACC-03",
+    nombre: "Soporte de Escritorio en Aluminio CNC",
+    categoria: "Soportes & Estaciones",
+    precio: 49.0,
+    imagen: "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=600&auto=format&fit=crop&q=80",
+    etiqueta: "Diseño Minimalista",
+  },
+];
+
 interface PropiedadesDetalle {
   producto: Producto;
   alVolver: () => void;
@@ -53,14 +88,13 @@ export const DetalleProducto = ({
     }
   };
 
-  const manejarCarrito = () => {
+  const manejarCarrito = (prod: Producto, cant: number = 1) => {
     if (alAgregarAlCarrito) {
-      alAgregarAlCarrito(producto, cantidad);
+      alAgregarAlCarrito(prod, cant);
     }
-    alert(
-      `¡Agregaste ${cantidad} unidad(es) de ${producto.nombre} al carrito!`,
-    );
+    alert(`¡Agregaste ${cant} unidad(es) de ${prod.nombre} al carrito!`);
   };
+  const accesoriosAMostrar = ACCESORIOS_DEFECTO;
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12 animate-fade-in">
       <nav className="flex items-center gap-2 text-xs text-secondary-500 overflow-x-auto pb-1">
@@ -255,7 +289,7 @@ export const DetalleProducto = ({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
               <button
                 type="button"
-                onClick={manejarCarrito}
+                onClick={() => manejarCarrito(producto, cantidad)}
                 className="py-3 px-6 rounded-xl bg-primary-500 hover:bg-primary-600 text-white font-semibold text-xs shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>🛒</span>
@@ -263,7 +297,7 @@ export const DetalleProducto = ({
               </button>
               <button
                 type="button"
-                onClick={manejarCarrito}
+                onClick={() => manejarCarrito(producto, cantidad)}
                 className="py-3 px-6 rounded-xl bg-secondary-900 hover:bg-secondary-800 text-white font-semibold text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>⚡</span>
@@ -348,7 +382,6 @@ export const DetalleProducto = ({
           >
             Descripción &amp; Tecnologías
           </button>
-
           <button
             type="button"
             onClick={() => setPestana("especificaciones")}
@@ -516,6 +549,64 @@ export const DetalleProducto = ({
             </div>
           </div>
         )}
+      </section>
+      <section className="space-y-6 pt-4 border-t border-secondary-200/60">
+        <div>
+          <span className="text-[11px] font-bold text-primary-500 uppercase tracking-wider block">
+            Completa Tu Setup
+          </span>
+          <h2 className="text-2xl font-heading font-bold text-secondary-900">
+            Accesorios recomendados por Lumina
+          </h2>
+          <p className="text-xs text-secondary-500 mt-1">
+            Componentes optimizados para extender la vida útil y el rendimiento de tu equipo.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          {accesoriosAMostrar.map((acc) => (
+            <div
+              key={acc.id}
+              className="bg-white rounded-2xl border border-secondary-200 p-4 space-y-4 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group"
+            >
+              <div className="space-y-3">
+                <div className="relative aspect-4/3 w-full bg-secondary-50 rounded-xl overflow-hidden flex items-center justify-center p-3">
+                  <img
+                    src={acc.imagen}
+                    alt={acc.nombre}
+                    className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <span className="absolute top-2.5 right-2.5 px-2 py-0.5 text-[10px] font-bold rounded-md bg-white/90 backdrop-blur-xs text-secondary-800 border border-secondary-200 shadow-xs">
+                    {acc.etiqueta}
+                  </span>
+                </div>
+                <div className="space-y-1">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-secondary-400 block">
+                    {acc.categoria}
+                  </span>
+                  <h3 className="font-heading font-bold text-xs sm:text-sm text-secondary-900 line-clamp-2 leading-snug">
+                    {acc.nombre}
+                  </h3>
+                </div>
+              </div>
+              <div className="flex items-center justify-between pt-3 border-t border-secondary-100">
+                <span className="text-base font-heading font-extrabold text-secondary-900">
+                  ${acc.precio.toFixed(2)}{" "}
+                  <span className="text-[10px] font-normal text-secondary-400">USD</span>
+                </span>
+                <button
+                  type="button"
+                  onClick={() =>
+                    alert(`¡Agregaste ${acc.nombre} al carrito por $${acc.precio.toFixed(2)}!`)
+                  }
+                  title="Añadir accesorio al carrito"
+                  className="w-8 h-8 rounded-xl bg-primary-50 text-primary-600 hover:bg-primary-500 hover:text-white flex items-center justify-center transition-colors cursor-pointer"
+                >
+                  🛒
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       </section>
     </main>
   );
