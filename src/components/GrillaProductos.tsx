@@ -4,11 +4,12 @@ import { TarjetaProducto } from "./TarjetaProducto";
 
 interface PropiedadesGrilla {
   productos: Producto[];
+   alVerDetalle?: (producto: Producto) => void;
 }
 
 const PRODUCTOS_POR_PAGINA = 8;
 
-export const GrillaProductos = ({ productos }: PropiedadesGrilla) => {
+export const GrillaProductos = ({ productos, alVerDetalle }: PropiedadesGrilla) => {
   const [paginaActual, setPaginaActual] = useState(1);
 
   const totalPaginas = Math.ceil(productos.length / PRODUCTOS_POR_PAGINA);
@@ -48,7 +49,7 @@ export const GrillaProductos = ({ productos }: PropiedadesGrilla) => {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {productosVisibles.map((producto) => (
-          <TarjetaProducto key={producto.id} producto={producto} />
+          <TarjetaProducto key={producto.id} producto={producto} alVerDetalle={alVerDetalle} />
         ))}
       </div>
       {totalPaginas > 1 && (
