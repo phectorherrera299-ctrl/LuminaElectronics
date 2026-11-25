@@ -65,8 +65,48 @@ export function ModalProducto({
       if (e.key === "Escape" && abierto) alCerrar();
     };
     window.addEventListener("keydown", manejarTeclaEscape);
-    return () => window.removeEventListener("keydown", manejarTeclaEscape)
+    return () => window.removeEventListener("keydown", manejarTeclaEscape);
   }, [abierto, alCerrar]);
 
-  if (!abierto) return null
+  if (!abierto) return null;
+
+  const generarIdUnico = (): string => {
+    let nuevoId = "";
+    let existe = true;
+    while (existe) {
+      const random = Math.floor(1000 + Math.random() * 9000);
+      nuevoId = `PRD-${random}`;
+      existe = productos.some((p) => p.id === nuevoId);
+    }
+    return nuevoId;
+  };
+
+  const manejarEnvio = (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorValidacion(null);
+
+    if (!nombre.trim()) {
+      setErrorValidacion("El nombre del producto es obligatorio.");
+      return;
+    }
+    if (precio === "" || Number(precio) <= 0) {
+      setErrorValidacion("El precio debe ser un número mayor a 0.");
+      return;
+    }
+    if (stock === "" || Number(stock) < 0) {
+      setErrorValidacion("El stock no puede ser un número negativo.");
+      return;
+    }
+    if (
+      descuento !== "" &&
+      (Number(descuento) < 0 || Number(descuento) > 100)
+    ) {
+      setErrorValidacion("El descuento debe estar entre 0% y 100%.");
+      return;
+    }
+    if (!descripcion.trim()) {
+      setErrorValidacion("La descripción es obligatoria.");
+      return;
+    }
+  };
 }
