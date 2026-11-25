@@ -168,6 +168,60 @@ export const DetalleProducto = ({
               </span>
             </div>
           </div>
+          <div className="space-y-2">
+            <span className="text-xs font-bold text-secondary-900 uppercase tracking-wider block">
+              Acabado Premium:{" "}
+              <span className="text-secondary-600 font-normal">
+                {colorSeleccionado}
+              </span>
+            </span>
+            <div className="flex gap-2">
+              {["Plata Platino", "Negro Mate", "Azul Medianoche"].map(
+                (color) => (
+                  <button
+                    key={color}
+                    type="button"
+                    onClick={() => setColorSeleccionado(color)}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
+                      colorSeleccionado === color
+                        ? "border-primary-500 bg-primary-50 text-primary-700 shadow-xs"
+                        : "border-secondary-200 bg-white text-secondary-700 hover:bg-secondary-50"
+                    }`}
+                  >
+                    {color}
+                  </button>
+                ),
+              )}
+            </div>
+          </div>
+          <div className="space-y-3 pt-2">
+            <div className="flex items-center gap-3">
+              <div className="flex items-center border border-secondary-200 rounded-xl bg-white shadow-xs p-1">
+                <button
+                  type="button"
+                  onClick={decrementarCantidad}
+                  disabled={cantidad <= 1}
+                  className="w-9 h-9 flex items-center justify-center text-secondary-600 hover:text-secondary-900 disabled:opacity-30 disabled:cursor-not-allowed font-bold text-base cursor-pointer"
+                >
+                  −
+                </button>
+                <span className="w-10 text-center font-heading font-bold text-secondary-900 text-sm">
+                  {cantidad}
+                </span>
+                <button
+                  type="button"
+                  onClick={incrementarCantidad}
+                  disabled={cantidad >= producto.stock}
+                  className="w-9 h-9 flex items-center justify-center text-secondary-600 hover:text-secondary-900 disabled:opacity-30 disabled:cursor-not-allowed font-bold text-base cursor-pointer"
+                >
+                  +
+                </button>
+              </div>
+              <span className="text-xs text-secondary-500">
+                Máximo permitido: <strong>{producto.stock} unids.</strong>
+              </span>
+            </div>
+          </div>
         </div>
       </section>
     </main>
