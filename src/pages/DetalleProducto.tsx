@@ -43,7 +43,7 @@ export const DetalleProducto = ({
       setCantidad(cantidad + 1);
     }
   };
-  
+
   const decrementarCantidad = () => {
     if (cantidad > 1) {
       setCantidad(cantidad - 1);
@@ -76,7 +76,28 @@ export const DetalleProducto = ({
         </span>
       </nav>
       <section className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-        {/* Galería de imágenes */}
+        <div className="lg:col-span-7 flex flex-col-reverse sm:flex-row gap-4">
+          <div className="flex sm:flex-col gap-3 overflow-x-auto sm:overflow-visible shrink-0">
+            {fotosMiniatura.map((foto, index) => (
+              <button
+                key={foto + index}
+                type="button"
+                onClick={() => setFotoActiva(foto)}
+                className={`w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 transition-all cursor-pointer bg-white ${
+                  fotoActiva === foto
+                    ? "border-primary-500 ring-2 ring-primary-100 shadow-sm"
+                    : "border-secondary-200 hover:border-secondary-300 opacity-80 hover:opacity-100"
+                }`}
+              >
+                <img
+                  src={foto}
+                  alt={`Vista ${index + 1}`}
+                  className="w-full h-full object-cover object-center"
+                />
+              </button>
+            ))}
+          </div>
+        </div>
         <div className="lg:col-span-7 flex flex-col-reverse sm:flex-row gap-4"></div>
         {/* Información y compra */}
         <div className="lg:col-span-5 space-y-6"></div>
