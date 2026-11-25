@@ -300,7 +300,8 @@ export const DetalleProducto = ({
             Auto NC Optimizer
           </h3>
           <p className="text-xs text-secondary-500 leading-relaxed">
-            Calibración de presión atmosférica constante y 8 micrófonos que aíslan las frecuencias vocales y agudas.
+            Calibración de presión atmosférica constante y 8 micrófonos que
+            aíslan las frecuencias vocales y agudas.
           </p>
         </div>
         <div className="p-5 rounded-2xl bg-white border border-secondary-200 shadow-xs space-y-2">
@@ -309,7 +310,8 @@ export const DetalleProducto = ({
             Autonomía de 30h
           </h3>
           <p className="text-xs text-secondary-500 leading-relaxed">
-            Batería masiva para viajes largos. Carga ultrarrápida USB-PD: 3 minutos otorgan 3 horas completas de uso.
+            Batería masiva para viajes largos. Carga ultrarrápida USB-PD: 3
+            minutos otorgan 3 horas completas de uso.
           </p>
         </div>
         <div className="p-5 rounded-2xl bg-white border border-secondary-200 shadow-xs space-y-2">
@@ -318,7 +320,8 @@ export const DetalleProducto = ({
             Diafragma 30mm en Carbono
           </h3>
           <p className="text-xs text-secondary-500 leading-relaxed">
-            Cúpula de fibra de carbono ultra-rígida para una claridad acústica superior y graves profundos sin distorsión.
+            Cúpula de fibra de carbono ultra-rígida para una claridad acústica
+            superior y graves profundos sin distorsión.
           </p>
         </div>
         <div className="p-5 rounded-2xl bg-white border border-secondary-200 shadow-xs space-y-2">
@@ -327,7 +330,8 @@ export const DetalleProducto = ({
             Conexión Multipunto
           </h3>
           <p className="text-xs text-secondary-500 leading-relaxed">
-            Emparejamiento simultáneo con dos dispositivos Bluetooth®. Pasa del portátil al smartphone con total fluidez.
+            Emparejamiento simultáneo con dos dispositivos Bluetooth®. Pasa del
+            portátil al smartphone con total fluidez.
           </p>
         </div>
       </section>
@@ -375,26 +379,42 @@ export const DetalleProducto = ({
                 Silencio Redefinido
               </span>
               <h3 className="text-xl sm:text-2xl font-heading font-bold text-secondary-900">
-                Un nuevo estándar de cancelación activa de ruido líder en la industria.
+                Un nuevo estándar de cancelación activa de ruido líder en la
+                industria.
               </h3>
               <p className="text-xs sm:text-sm text-secondary-600 leading-relaxed">
                 {producto.descripcion}
               </p>
               <p className="text-xs text-secondary-500 leading-relaxed">
-                El controlador de 30 mm diseñado con precisión, que cuenta con una cúpula ligera y rígida con material compuesto de fibra de carbono, mejora la sensibilidad en las frecuencias altas para lograr una tonalidad mucho más natural y cristalina.
+                El controlador de 30 mm diseñado con precisión, que cuenta con
+                una cúpula ligera y rígida con material compuesto de fibra de
+                carbono, mejora la sensibilidad en las frecuencias altas para
+                lograr una tonalidad mucho más natural y cristalina.
               </p>
               <div className="grid grid-cols-3 gap-4 pt-4 border-t border-secondary-100 max-w-md">
                 <div>
-                  <span className="font-heading font-bold text-secondary-900 text-sm block">8 Mics</span>
-                  <span className="text-[11px] text-secondary-400 block">Array beamforming</span>
+                  <span className="font-heading font-bold text-secondary-900 text-sm block">
+                    8 Mics
+                  </span>
+                  <span className="text-[11px] text-secondary-400 block">
+                    Array beamforming
+                  </span>
                 </div>
                 <div>
-                  <span className="font-heading font-bold text-secondary-900 text-sm block">LDAC</span>
-                  <span className="text-[11px] text-secondary-400 block">Hi-Res Audio 990kbps</span>
+                  <span className="font-heading font-bold text-secondary-900 text-sm block">
+                    LDAC
+                  </span>
+                  <span className="text-[11px] text-secondary-400 block">
+                    Hi-Res Audio 990kbps
+                  </span>
                 </div>
                 <div>
-                  <span className="font-heading font-bold text-secondary-900 text-sm block">250g</span>
-                  <span className="text-[11px] text-secondary-400 block">Ultralivianos</span>
+                  <span className="font-heading font-bold text-secondary-900 text-sm block">
+                    250g
+                  </span>
+                  <span className="text-[11px] text-secondary-400 block">
+                    Ultralivianos
+                  </span>
                 </div>
               </div>
             </div>
@@ -404,6 +424,51 @@ export const DetalleProducto = ({
                 alt="Tecnología interna"
                 className="max-h-64 object-contain rounded-xl opacity-90"
               />
+            </div>
+          </div>
+        )}
+        {pestana === "especificaciones" && (
+          <div className="pt-2 max-w-2xl space-y-3">
+            <h3 className="font-heading font-bold text-sm text-secondary-900 mb-2">
+              Ficha Técnica Oficial
+            </h3>
+            <div className="divide-y divide-secondary-100 text-xs">
+              <div className="py-2.5 flex justify-between">
+                <span className="text-secondary-500">Identificador SKU:</span>
+                <span className="font-mono font-bold text-secondary-900">
+                  {producto.id}
+                </span>
+              </div>
+              <div className="py-2.5 flex justify-between">
+                <span className="text-secondary-500">Categoría:</span>
+                <span className="font-semibold text-secondary-900">
+                  {producto.categoria}
+                </span>
+              </div>
+              <div className="py-2.5 flex justify-between">
+                <span className="text-secondary-500">Fabricante / Marca:</span>
+                <span className="font-semibold text-secondary-900">
+                  {producto.marca || "Lumina"}
+                </span>
+              </div>
+              <div className="py-2.5 flex justify-between">
+                <span className="text-secondary-500">Peso:</span>
+                <span className="font-semibold text-secondary-900">
+                  250 gramos
+                </span>
+              </div>
+              <div className="py-2.5 flex justify-between">
+                <span className="text-secondary-500">Conectividad:</span>
+                <span className="font-semibold text-secondary-900">
+                  Bluetooth 5.2 / Jack 3.5mm
+                </span>
+              </div>
+              <div className="py-2.5 flex justify-between">
+                <span className="text-secondary-500">Garantía Oficial:</span>
+                <span className="font-semibold text-tertiary-600">
+                  24 meses internacional
+                </span>
+              </div>
             </div>
           </div>
         )}
