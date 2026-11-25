@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { useProductos } from "../context/ProductosContext";
+import { useState, useEffect } from "react";
 import type { Producto } from "../types/Producto";
+import { useProductos } from "../context/ProductosContext";
 
 interface ModalProductoProps {
   abierto: boolean;
   alCerrar: () => void;
-  productosAEditar?: Producto | null;
+  productoAEditar?: Producto | null;
 }
 
 const CATEGORIAS_VALIDAS = [
@@ -97,10 +97,7 @@ export function ModalProducto({
       setErrorValidacion("El stock no puede ser un número negativo.");
       return;
     }
-    if (
-      descuento !== "" &&
-      (Number(descuento) < 0 || Number(descuento) > 100)
-    ) {
+    if (descuento !== "" && (Number(descuento) < 0 || Number(descuento) > 100)) {
       setErrorValidacion("El descuento debe estar entre 0% y 100%.");
       return;
     }
@@ -108,5 +105,41 @@ export function ModalProducto({
       setErrorValidacion("La descripción es obligatoria.");
       return;
     }
+
+    const imagenFinal =
+      imagen.trim() ||
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80";
+
+    if (esModoEdicion && productoAEditar) {
+      const productoActualizado: Producto = {
+        ...productoAEditar,
+        nombre: nombre.trim(),
+        precio: Number(precio),
+        categoria,
+        marca: marca.trim() || "Genérica",
+        stock: Number(stock),
+        descuento: Number(descuento) || 0,
+        imagen: imagenFinal,
+        descripcion: descripcion.trim(),
+      };
+      editarProducto(productoAEditar.id, productoActualizado);
+    } else {
+      const nuevoProducto: Producto = {
+        id: generarIdUnico(),
+        nombre: nombre.trim(),
+        precio: Number(precio),
+        categoria,
+        marca: marca.trim() || "Genérica",
+        stock: Number(stock),
+        descuento: Number(descuento) || 0,
+        imagen: imagenFinal,
+        descripcion: descripcion.trim(),
+        calificacion: 5,
+        destacado: false,
+      };
+      agregarProducto(nuevoProducto);
+    }
+
+    alCerrar();
   };
 }
