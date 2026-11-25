@@ -97,7 +97,10 @@ export function ModalProducto({
       setErrorValidacion("El stock no puede ser un número negativo.");
       return;
     }
-    if (descuento !== "" && (Number(descuento) < 0 || Number(descuento) > 100)) {
+    if (
+      descuento !== "" &&
+      (Number(descuento) < 0 || Number(descuento) > 100)
+    ) {
       setErrorValidacion("El descuento debe estar entre 0% y 100%.");
       return;
     }
@@ -142,4 +145,37 @@ export function ModalProducto({
 
     alCerrar();
   };
+
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-secondary-900/60 backdrop-blur-sm animate-fade-in"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) alCerrar();
+      }}
+    >
+      <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-secondary-200">
+        <div className="flex items-center justify-between p-6 border-b border-secondary-100 sticky top-0 bg-white z-10">
+          <div>
+            <h2 className="text-xl font-heading font-bold text-secondary-900">
+              {esModoEdicion ? "Editar Producto" : "Crear Nuevo Producto"}
+            </h2>
+            <p className="text-xs text-secondary-500 mt-0.5">
+              {esModoEdicion
+                ? `Editando SKU: ${productoAEditar?.id}`
+                : "Completa los campos para publicar un nuevo artículo"}
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={alCerrar}
+            className="w-8 h-8 rounded-full flex items-center justify-center text-secondary-400 hover:text-secondary-600 hover:bg-secondary-100 transition-colors"
+          >
+            ✕
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 }
