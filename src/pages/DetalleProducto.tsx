@@ -2,22 +2,63 @@ import { useState } from "react";
 import type { Producto } from "../types/Producto";
 import { useDeseos } from "../context/ContextoDeseos";
 
+interface AccesorioRecomendado {
+  id: string;
+  nombre: string;
+  categoria: string;
+  precio: number;
+  imagen: string;
+  etiqueta: string;
+}
+
+const ACCESORIOS_DEFECTO: AccesorioRecomendado[] = [
+  {
+    id: "ACC-01",
+    nombre: "Estuche Rígido Reforzado ArmorCase",
+    categoria: "Protección & Viajes",
+    precio: 39.0,
+    imagen: "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=600&auto=format&fit=crop&q=80",
+    etiqueta: "Accesorio Oficial",
+  },
+  {
+    id: "ACC-02",
+    nombre: "Cable DAC USB-C a 3.5mm Hi-Res Audio",
+    categoria: "Cables & Conversión",
+    precio: 29.5,
+    imagen: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&auto=format&fit=crop&q=80",
+    etiqueta: "Audífilo",
+  },
+  {
+    id: "ACC-03",
+    nombre: "Soporte de Escritorio en Aluminio CNC",
+    categoria: "Soportes & Estaciones",
+    precio: 49.0,
+    imagen: "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=600&auto=format&fit=crop&q=80",
+    etiqueta: "Diseño Minimalista",
+  },
+];
+
 interface PropiedadesDetalle {
   producto: Producto;
   alVolver: () => void;
   alAgregarAlCarrito?: (producto: Producto, cantidad: number) => void;
+  productosRecomendados?: Producto[];
 }
+
+type PestanaActiva = "descripcion" | "especificaciones" | "opiniones";
 
 export const DetalleProducto = ({
   producto,
   alVolver,
   alAgregarAlCarrito,
+  productosRecomendados = [],
 }: PropiedadesDetalle) => {
   const { alternarDeseo, esDeseo } = useDeseos();
   const favorito = esDeseo(producto.id);
 
   const [cantidad, setCantidad] = useState(1);
   const [colorSeleccionado, setColorSeleccionado] = useState("Plata Platino");
+  const [pestana, setPestana] = useState<PestanaActiva>("descripcion");
 
   const fotosMiniatura = [
     producto.imagen,
@@ -50,16 +91,27 @@ export const DetalleProducto = ({
     }
   };
 
-  const manejarCarrito = () => {
+  const manejarCarrito = (prod: Producto, cant: number = 1) => {
     if (alAgregarAlCarrito) {
-      alAgregarAlCarrito(producto, cantidad);
+      alAgregarAlCarrito(prod, cant);
     }
-    alert(
-      `¡Agregaste ${cantidad} unidad(es) de ${producto.nombre} al carrito!`,
-    );
+    alert(`¡Agregaste ${cant} unidad(es) de ${prod.nombre} al carrito!`);
   };
+
+  const accesoriosAMostrar =
+    productosRecomendados.length > 0
+      ? productosRecomendados.slice(0, 3).map((p) => ({
+          id: p.id,
+          nombre: p.nombre,
+          categoria: p.categoria,
+          precio: p.precio,
+          imagen: p.imagen,
+          etiqueta: "Recomendado",
+        }))
+      : ACCESORIOS_DEFECTO;
+
   return (
-    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fade-in">
+    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12 animate-fade-in">
       <nav className="flex items-center gap-2 text-xs text-secondary-500 overflow-x-auto pb-1">
         <button
           type="button"
@@ -118,9 +170,7 @@ export const DetalleProducto = ({
               onClick={() => alternarDeseo(producto.id)}
               aria-label="Agregar a lista de deseos"
               className={`absolute top-4 right-4 w-10 h-10 rounded-full bg-white/90 backdrop-blur-xs border border-secondary-200 flex items-center justify-center shadow-xs transition-all cursor-pointer ${
-                favorito
-                  ? "text-error scale-110"
-                  : "text-secondary-400 hover:text-error"
+                favorito ? "text-error scale-110" : "text-secondary-400 hover:text-error"
               }`}
             >
               <svg
@@ -199,27 +249,23 @@ export const DetalleProducto = ({
           <div className="space-y-2">
             <span className="text-xs font-bold text-secondary-900 uppercase tracking-wider block">
               Acabado Premium:{" "}
-              <span className="text-secondary-600 font-normal">
-                {colorSeleccionado}
-              </span>
+              <span className="text-secondary-600 font-normal">{colorSeleccionado}</span>
             </span>
             <div className="flex gap-2">
-              {["Plata Platino", "Negro Mate", "Azul Medianoche"].map(
-                (color) => (
-                  <button
-                    key={color}
-                    type="button"
-                    onClick={() => setColorSeleccionado(color)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
-                      colorSeleccionado === color
-                        ? "border-primary-500 bg-primary-50 text-primary-700 shadow-xs"
-                        : "border-secondary-200 bg-white text-secondary-700 hover:bg-secondary-50"
-                    }`}
-                  >
-                    {color}
-                  </button>
-                ),
-              )}
+              {["Plata Platino", "Negro Mate", "Azul Medianoche"].map((color) => (
+                <button
+                  key={color}
+                  type="button"
+                  onClick={() => setColorSeleccionado(color)}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
+                    colorSeleccionado === color
+                      ? "border-primary-500 bg-primary-50 text-primary-700 shadow-xs"
+                      : "border-secondary-200 bg-white text-secondary-700 hover:bg-secondary-50"
+                  }`}
+                >
+                  {color}
+                </button>
+              ))}
             </div>
           </div>
           <div className="space-y-3 pt-2">
@@ -252,7 +298,7 @@ export const DetalleProducto = ({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
               <button
                 type="button"
-                onClick={manejarCarrito}
+                onClick={() => manejarCarrito(producto, cantidad)}
                 className="py-3 px-6 rounded-xl bg-primary-500 hover:bg-primary-600 text-white font-semibold text-xs shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>🛒</span>
@@ -260,7 +306,7 @@ export const DetalleProducto = ({
               </button>
               <button
                 type="button"
-                onClick={manejarCarrito}
+                onClick={() => manejarCarrito(producto, cantidad)}
                 className="py-3 px-6 rounded-xl bg-secondary-900 hover:bg-secondary-800 text-white font-semibold text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>⚡</span>
@@ -272,22 +318,260 @@ export const DetalleProducto = ({
             <div className="flex items-center gap-2">
               <span className="text-base">🛡️</span>
               <div>
-                <span className="font-bold text-secondary-800 block">
-                  Garantía 2 Años
-                </span>
+                <span className="font-bold text-secondary-800 block">Garantía 2 Años</span>
                 <span className="text-[11px]">Soporte oficial directo</span>
               </div>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-base">🔄</span>
               <div>
-                <span className="font-bold text-secondary-800 block">
-                  Devolución 30 Días
-                </span>
+                <span className="font-bold text-secondary-800 block">Devolución 30 Días</span>
                 <span className="text-[11px]">Reembolso sin preguntas</span>
               </div>
             </div>
           </div>
+        </div>
+      </section>
+      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="p-5 rounded-2xl bg-white border border-secondary-200 shadow-xs space-y-2">
+          <span className="text-2xl block">🎧</span>
+          <h3 className="font-heading font-bold text-sm text-secondary-900">
+            Auto NC Optimizer
+          </h3>
+          <p className="text-xs text-secondary-500 leading-relaxed">
+            Calibración de presión atmosférica constante y 8 micrófonos que aíslan las frecuencias vocales y agudas.
+          </p>
+        </div>
+        <div className="p-5 rounded-2xl bg-white border border-secondary-200 shadow-xs space-y-2">
+          <span className="text-2xl block">🔋</span>
+          <h3 className="font-heading font-bold text-sm text-secondary-900">
+            Autonomía de 30h
+          </h3>
+          <p className="text-xs text-secondary-500 leading-relaxed">
+            Batería masiva para viajes largos. Carga ultrarrápida USB-PD: 3 minutos otorgan 3 horas completas de uso.
+          </p>
+        </div>
+        <div className="p-5 rounded-2xl bg-white border border-secondary-200 shadow-xs space-y-2">
+          <span className="text-2xl block">🔊</span>
+          <h3 className="font-heading font-bold text-sm text-secondary-900">
+            Diafragma 30mm en Carbono
+          </h3>
+          <p className="text-xs text-secondary-500 leading-relaxed">
+            Cúpula de fibra de carbono ultra-rígida para una claridad acústica superior y graves profundos sin distorsión.
+          </p>
+        </div>
+        <div className="p-5 rounded-2xl bg-white border border-secondary-200 shadow-xs space-y-2">
+          <span className="text-2xl block">📱</span>
+          <h3 className="font-heading font-bold text-sm text-secondary-900">
+            Conexión Multipunto
+          </h3>
+          <p className="text-xs text-secondary-500 leading-relaxed">
+            Emparejamiento simultáneo con dos dispositivos Bluetooth®. Pasa del portátil al smartphone con total fluidez.
+          </p>
+        </div>
+      </section>
+      <section className="bg-white rounded-3xl border border-secondary-200 p-6 sm:p-8 shadow-xs space-y-6">
+        <div className="flex border-b border-secondary-200 gap-2 sm:gap-4 overflow-x-auto">
+          <button
+            type="button"
+            onClick={() => setPestana("descripcion")}
+            className={`pb-4 px-2 text-xs sm:text-sm font-heading font-bold border-b-2 transition-all cursor-pointer whitespace-nowrap ${
+              pestana === "descripcion"
+                ? "border-primary-500 text-primary-600"
+                : "border-transparent text-secondary-500 hover:text-secondary-900"
+            }`}
+          >
+            Descripción &amp; Tecnologías
+          </button>
+          <button
+            type="button"
+            onClick={() => setPestana("especificaciones")}
+            className={`pb-4 px-2 text-xs sm:text-sm font-heading font-bold border-b-2 transition-all cursor-pointer whitespace-nowrap ${
+              pestana === "especificaciones"
+                ? "border-primary-500 text-primary-600"
+                : "border-transparent text-secondary-500 hover:text-secondary-900"
+            }`}
+          >
+            Especificaciones Técnicas
+          </button>
+          <button
+            type="button"
+            onClick={() => setPestana("opiniones")}
+            className={`pb-4 px-2 text-xs sm:text-sm font-heading font-bold border-b-2 transition-all cursor-pointer whitespace-nowrap ${
+              pestana === "opiniones"
+                ? "border-primary-500 text-primary-600"
+                : "border-transparent text-secondary-500 hover:text-secondary-900"
+            }`}
+          >
+            Opiniones de Compradores (342)
+          </button>
+        </div>
+        {pestana === "descripcion" && (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-2">
+            <div className="lg:col-span-7 space-y-4">
+              <span className="text-[11px] font-bold text-primary-500 uppercase tracking-wider block">
+                Silencio Redefinido
+              </span>
+              <h3 className="text-xl sm:text-2xl font-heading font-bold text-secondary-900">
+                Un nuevo estándar de cancelación activa de ruido líder en la industria.
+              </h3>
+              <p className="text-xs sm:text-sm text-secondary-600 leading-relaxed">
+                {producto.descripcion}
+              </p>
+              <p className="text-xs text-secondary-500 leading-relaxed">
+                El controlador de 30 mm diseñado con precisión, que cuenta con una cúpula ligera y rígida con material compuesto de fibra de carbono, mejora la sensibilidad en las frecuencias altas para lograr una tonalidad mucho más natural y cristalina.
+              </p>
+              <div className="grid grid-cols-3 gap-4 pt-4 border-t border-secondary-100 max-w-md">
+                <div>
+                  <span className="font-heading font-bold text-secondary-900 text-sm block">8 Mics</span>
+                  <span className="text-[11px] text-secondary-400 block">Array beamforming</span>
+                </div>
+                <div>
+                  <span className="font-heading font-bold text-secondary-900 text-sm block">LDAC</span>
+                  <span className="text-[11px] text-secondary-400 block">Hi-Res Audio 990kbps</span>
+                </div>
+                <div>
+                  <span className="font-heading font-bold text-secondary-900 text-sm block">250g</span>
+                  <span className="text-[11px] text-secondary-400 block">Ultralivianos</span>
+                </div>
+              </div>
+            </div>
+            <div className="lg:col-span-5 bg-secondary-50 rounded-2xl p-4 border border-secondary-100 flex items-center justify-center">
+              <img
+                src={producto.imagen}
+                alt="Tecnología interna"
+                className="max-h-64 object-contain rounded-xl opacity-90"
+              />
+            </div>
+          </div>
+        )}
+        {pestana === "especificaciones" && (
+          <div className="pt-2 max-w-2xl space-y-3">
+            <h3 className="font-heading font-bold text-sm text-secondary-900 mb-2">
+              Ficha Técnica Oficial
+            </h3>
+            <div className="divide-y divide-secondary-100 text-xs">
+              <div className="py-2.5 flex justify-between">
+                <span className="text-secondary-500">Identificador SKU:</span>
+                <span className="font-mono font-bold text-secondary-900">{producto.id}</span>
+              </div>
+              <div className="py-2.5 flex justify-between">
+                <span className="text-secondary-500">Categoría:</span>
+                <span className="font-semibold text-secondary-900">{producto.categoria}</span>
+              </div>
+              <div className="py-2.5 flex justify-between">
+                <span className="text-secondary-500">Fabricante / Marca:</span>
+                <span className="font-semibold text-secondary-900">{producto.marca || "Lumina"}</span>
+              </div>
+              <div className="py-2.5 flex justify-between">
+                <span className="text-secondary-500">Peso:</span>
+                <span className="font-semibold text-secondary-900">250 gramos</span>
+              </div>
+              <div className="py-2.5 flex justify-between">
+                <span className="text-secondary-500">Conectividad:</span>
+                <span className="font-semibold text-secondary-900">Bluetooth 5.2 / Jack 3.5mm</span>
+              </div>
+              <div className="py-2.5 flex justify-between">
+                <span className="text-secondary-500">Garantía Oficial:</span>
+                <span className="font-semibold text-tertiary-600">24 meses internacional</span>
+              </div>
+            </div>
+          </div>
+        )}
+        {pestana === "opiniones" && (
+          <div className="pt-2 space-y-4 max-w-3xl">
+            <div className="flex items-center gap-4 p-4 rounded-2xl bg-secondary-50 border border-secondary-100">
+              <span className="text-4xl font-heading font-extrabold text-secondary-900">
+                {(producto.calificacion || 4.9).toFixed(1)}
+              </span>
+              <div>
+                <div className="text-advertencia text-sm">★★★★★</div>
+                <span className="text-xs text-secondary-500">
+                  Basado en 342 valoraciones certificadas de compradores reales.
+                </span>
+              </div>
+            </div>
+            <div className="space-y-3 pt-2">
+              <div className="p-4 rounded-xl border border-secondary-100 space-y-1">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-bold text-secondary-900">Federico Gómez</span>
+                  <span className="text-secondary-400">Hace 3 días</span>
+                </div>
+                <div className="text-advertencia text-xs">★★★★★</div>
+                <p className="text-xs text-secondary-600">
+                  La calidad acústica es impresionante y la cancelación de ruido en la oficina supera todo lo que probé antes. Vale cada centavo.
+                </p>
+              </div>
+              <div className="p-4 rounded-xl border border-secondary-100 space-y-1">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-bold text-secondary-900">Lucía Fernández</span>
+                  <span className="text-secondary-400">Hace 1 semana</span>
+                </div>
+                <div className="text-advertencia text-xs">★★★★★</div>
+                <p className="text-xs text-secondary-600">
+                  La batería dura semanas con uso moderado y el peso es imperceptible. Compré en cuotas y llegó en menos de 24 horas.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+      </section>
+      <section className="space-y-6 pt-4 border-t border-secondary-200/60">
+        <div>
+          <span className="text-[11px] font-bold text-primary-500 uppercase tracking-wider block">
+            Completa Tu Setup
+          </span>
+          <h2 className="text-2xl font-heading font-bold text-secondary-900">
+            Accesorios recomendados por Lumina
+          </h2>
+          <p className="text-xs text-secondary-500 mt-1">
+            Componentes optimizados para extender la vida útil y el rendimiento de tu equipo.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          {accesoriosAMostrar.map((acc) => (
+            <div
+              key={acc.id}
+              className="bg-white rounded-2xl border border-secondary-200 p-4 space-y-4 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group"
+            >
+              <div className="space-y-3">
+                <div className="relative aspect-4/3 w-full bg-secondary-50 rounded-xl overflow-hidden flex items-center justify-center p-3">
+                  <img
+                    src={acc.imagen}
+                    alt={acc.nombre}
+                    className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <span className="absolute top-2.5 right-2.5 px-2 py-0.5 text-[10px] font-bold rounded-md bg-white/90 backdrop-blur-xs text-secondary-800 border border-secondary-200 shadow-xs">
+                    {acc.etiqueta}
+                  </span>
+                </div>
+                <div className="space-y-1">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-secondary-400 block">
+                    {acc.categoria}
+                  </span>
+                  <h3 className="font-heading font-bold text-xs sm:text-sm text-secondary-900 line-clamp-2 leading-snug">
+                    {acc.nombre}
+                  </h3>
+                </div>
+              </div>
+              <div className="flex items-center justify-between pt-3 border-t border-secondary-100">
+                <span className="text-base font-heading font-extrabold text-secondary-900">
+                  ${acc.precio.toFixed(2)}{" "}
+                  <span className="text-[10px] font-normal text-secondary-400">USD</span>
+                </span>
+                <button
+                  type="button"
+                  onClick={() =>
+                    alert(`¡Agregaste ${acc.nombre} al carrito por $${acc.precio.toFixed(2)}!`)
+                  }
+                  title="Añadir accesorio al carrito"
+                  className="w-8 h-8 rounded-xl bg-primary-50 text-primary-600 hover:bg-primary-500 hover:text-white flex items-center justify-center transition-colors cursor-pointer"
+                >
+                  🛒
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
     </main>
