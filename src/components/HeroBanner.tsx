@@ -88,6 +88,40 @@ export const HeroBanner = ({ alExplorar }: PropiedadesHero) => {
               </div>
             </div>
           </div>
+          <div className="lg:col-span-5 relative">
+            <div className="relative rounded-3xl overflow-hidden bg-gradient-to-tr from-secondary-900 to-secondary-800 p-1 shadow-2xl">
+              <img
+                src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop&q=80"
+                alt="Colección Studio & Acústica"
+                className="w-full aspect-4/3 object-cover rounded-[22px] opacity-90"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-secondary-950/80 via-transparent to-transparent rounded-[22px]" />
+              <div className="absolute bottom-5 left-5 right-5 text-white">
+                <span className="text-[10px] tracking-widest uppercase font-bold text-primary-300 block">
+                  DESTACADO DE LA SEMANA
+                </span>
+                <h3 className="font-heading font-bold text-lg text-white">
+                  Colección Studio &amp; Acústica
+                </h3>
+                <p className="text-xs text-secondary-300 mt-0.5">
+                  Cancelación activa adaptativa y sonido de alta fidelidad.
+                </p>
+              </div>
+            </div>
+            <div className="absolute -bottom-4 -left-4 bg-white rounded-2xl p-3 border border-secondary-200 shadow-lg hidden sm:flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-tertiary-50 text-tertiary-600 flex items-center justify-center font-bold text-sm">
+                ★
+              </div>
+              <div className="text-xs">
+                <span className="font-bold text-secondary-900 block font-heading">
+                  +1,400 Reviews
+                </span>
+                <span className="text-secondary-500 block text-[11px]">
+                  Promedio 4.9/5.0 Estrellas
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
