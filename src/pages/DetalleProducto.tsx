@@ -10,6 +10,7 @@ interface AccesorioRecomendado {
   imagen: string;
   etiqueta: string;
 }
+
 const ACCESORIOS_DEFECTO: AccesorioRecomendado[] = [
   {
     id: "ACC-01",
@@ -41,6 +42,7 @@ interface PropiedadesDetalle {
   producto: Producto;
   alVolver: () => void;
   alAgregarAlCarrito?: (producto: Producto, cantidad: number) => void;
+  productosRecomendados?: Producto[];
 }
 
 type PestanaActiva = "descripcion" | "especificaciones" | "opiniones";
@@ -49,6 +51,7 @@ export const DetalleProducto = ({
   producto,
   alVolver,
   alAgregarAlCarrito,
+  productosRecomendados = [],
 }: PropiedadesDetalle) => {
   const { alternarDeseo, esDeseo } = useDeseos();
   const favorito = esDeseo(producto.id);
@@ -94,7 +97,19 @@ export const DetalleProducto = ({
     }
     alert(`¡Agregaste ${cant} unidad(es) de ${prod.nombre} al carrito!`);
   };
-  const accesoriosAMostrar = ACCESORIOS_DEFECTO;
+
+  const accesoriosAMostrar =
+    productosRecomendados.length > 0
+      ? productosRecomendados.slice(0, 3).map((p) => ({
+          id: p.id,
+          nombre: p.nombre,
+          categoria: p.categoria,
+          precio: p.precio,
+          imagen: p.imagen,
+          etiqueta: "Recomendado",
+        }))
+      : ACCESORIOS_DEFECTO;
+
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12 animate-fade-in">
       <nav className="flex items-center gap-2 text-xs text-secondary-500 overflow-x-auto pb-1">
@@ -155,9 +170,7 @@ export const DetalleProducto = ({
               onClick={() => alternarDeseo(producto.id)}
               aria-label="Agregar a lista de deseos"
               className={`absolute top-4 right-4 w-10 h-10 rounded-full bg-white/90 backdrop-blur-xs border border-secondary-200 flex items-center justify-center shadow-xs transition-all cursor-pointer ${
-                favorito
-                  ? "text-error scale-110"
-                  : "text-secondary-400 hover:text-error"
+                favorito ? "text-error scale-110" : "text-secondary-400 hover:text-error"
               }`}
             >
               <svg
@@ -236,27 +249,23 @@ export const DetalleProducto = ({
           <div className="space-y-2">
             <span className="text-xs font-bold text-secondary-900 uppercase tracking-wider block">
               Acabado Premium:{" "}
-              <span className="text-secondary-600 font-normal">
-                {colorSeleccionado}
-              </span>
+              <span className="text-secondary-600 font-normal">{colorSeleccionado}</span>
             </span>
             <div className="flex gap-2">
-              {["Plata Platino", "Negro Mate", "Azul Medianoche"].map(
-                (color) => (
-                  <button
-                    key={color}
-                    type="button"
-                    onClick={() => setColorSeleccionado(color)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
-                      colorSeleccionado === color
-                        ? "border-primary-500 bg-primary-50 text-primary-700 shadow-xs"
-                        : "border-secondary-200 bg-white text-secondary-700 hover:bg-secondary-50"
-                    }`}
-                  >
-                    {color}
-                  </button>
-                ),
-              )}
+              {["Plata Platino", "Negro Mate", "Azul Medianoche"].map((color) => (
+                <button
+                  key={color}
+                  type="button"
+                  onClick={() => setColorSeleccionado(color)}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
+                    colorSeleccionado === color
+                      ? "border-primary-500 bg-primary-50 text-primary-700 shadow-xs"
+                      : "border-secondary-200 bg-white text-secondary-700 hover:bg-secondary-50"
+                  }`}
+                >
+                  {color}
+                </button>
+              ))}
             </div>
           </div>
           <div className="space-y-3 pt-2">
@@ -309,18 +318,14 @@ export const DetalleProducto = ({
             <div className="flex items-center gap-2">
               <span className="text-base">🛡️</span>
               <div>
-                <span className="font-bold text-secondary-800 block">
-                  Garantía 2 Años
-                </span>
+                <span className="font-bold text-secondary-800 block">Garantía 2 Años</span>
                 <span className="text-[11px]">Soporte oficial directo</span>
               </div>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-base">🔄</span>
               <div>
-                <span className="font-bold text-secondary-800 block">
-                  Devolución 30 Días
-                </span>
+                <span className="font-bold text-secondary-800 block">Devolución 30 Días</span>
                 <span className="text-[11px]">Reembolso sin preguntas</span>
               </div>
             </div>
@@ -334,8 +339,7 @@ export const DetalleProducto = ({
             Auto NC Optimizer
           </h3>
           <p className="text-xs text-secondary-500 leading-relaxed">
-            Calibración de presión atmosférica constante y 8 micrófonos que
-            aíslan las frecuencias vocales y agudas.
+            Calibración de presión atmosférica constante y 8 micrófonos que aíslan las frecuencias vocales y agudas.
           </p>
         </div>
         <div className="p-5 rounded-2xl bg-white border border-secondary-200 shadow-xs space-y-2">
@@ -344,8 +348,7 @@ export const DetalleProducto = ({
             Autonomía de 30h
           </h3>
           <p className="text-xs text-secondary-500 leading-relaxed">
-            Batería masiva para viajes largos. Carga ultrarrápida USB-PD: 3
-            minutos otorgan 3 horas completas de uso.
+            Batería masiva para viajes largos. Carga ultrarrápida USB-PD: 3 minutos otorgan 3 horas completas de uso.
           </p>
         </div>
         <div className="p-5 rounded-2xl bg-white border border-secondary-200 shadow-xs space-y-2">
@@ -354,8 +357,7 @@ export const DetalleProducto = ({
             Diafragma 30mm en Carbono
           </h3>
           <p className="text-xs text-secondary-500 leading-relaxed">
-            Cúpula de fibra de carbono ultra-rígida para una claridad acústica
-            superior y graves profundos sin distorsión.
+            Cúpula de fibra de carbono ultra-rígida para una claridad acústica superior y graves profundos sin distorsión.
           </p>
         </div>
         <div className="p-5 rounded-2xl bg-white border border-secondary-200 shadow-xs space-y-2">
@@ -364,8 +366,7 @@ export const DetalleProducto = ({
             Conexión Multipunto
           </h3>
           <p className="text-xs text-secondary-500 leading-relaxed">
-            Emparejamiento simultáneo con dos dispositivos Bluetooth®. Pasa del
-            portátil al smartphone con total fluidez.
+            Emparejamiento simultáneo con dos dispositivos Bluetooth®. Pasa del portátil al smartphone con total fluidez.
           </p>
         </div>
       </section>
@@ -412,42 +413,26 @@ export const DetalleProducto = ({
                 Silencio Redefinido
               </span>
               <h3 className="text-xl sm:text-2xl font-heading font-bold text-secondary-900">
-                Un nuevo estándar de cancelación activa de ruido líder en la
-                industria.
+                Un nuevo estándar de cancelación activa de ruido líder en la industria.
               </h3>
               <p className="text-xs sm:text-sm text-secondary-600 leading-relaxed">
                 {producto.descripcion}
               </p>
               <p className="text-xs text-secondary-500 leading-relaxed">
-                El controlador de 30 mm diseñado con precisión, que cuenta con
-                una cúpula ligera y rígida con material compuesto de fibra de
-                carbono, mejora la sensibilidad en las frecuencias altas para
-                lograr una tonalidad mucho más natural y cristalina.
+                El controlador de 30 mm diseñado con precisión, que cuenta con una cúpula ligera y rígida con material compuesto de fibra de carbono, mejora la sensibilidad en las frecuencias altas para lograr una tonalidad mucho más natural y cristalina.
               </p>
               <div className="grid grid-cols-3 gap-4 pt-4 border-t border-secondary-100 max-w-md">
                 <div>
-                  <span className="font-heading font-bold text-secondary-900 text-sm block">
-                    8 Mics
-                  </span>
-                  <span className="text-[11px] text-secondary-400 block">
-                    Array beamforming
-                  </span>
+                  <span className="font-heading font-bold text-secondary-900 text-sm block">8 Mics</span>
+                  <span className="text-[11px] text-secondary-400 block">Array beamforming</span>
                 </div>
                 <div>
-                  <span className="font-heading font-bold text-secondary-900 text-sm block">
-                    LDAC
-                  </span>
-                  <span className="text-[11px] text-secondary-400 block">
-                    Hi-Res Audio 990kbps
-                  </span>
+                  <span className="font-heading font-bold text-secondary-900 text-sm block">LDAC</span>
+                  <span className="text-[11px] text-secondary-400 block">Hi-Res Audio 990kbps</span>
                 </div>
                 <div>
-                  <span className="font-heading font-bold text-secondary-900 text-sm block">
-                    250g
-                  </span>
-                  <span className="text-[11px] text-secondary-400 block">
-                    Ultralivianos
-                  </span>
+                  <span className="font-heading font-bold text-secondary-900 text-sm block">250g</span>
+                  <span className="text-[11px] text-secondary-400 block">Ultralivianos</span>
                 </div>
               </div>
             </div>
@@ -468,39 +453,27 @@ export const DetalleProducto = ({
             <div className="divide-y divide-secondary-100 text-xs">
               <div className="py-2.5 flex justify-between">
                 <span className="text-secondary-500">Identificador SKU:</span>
-                <span className="font-mono font-bold text-secondary-900">
-                  {producto.id}
-                </span>
+                <span className="font-mono font-bold text-secondary-900">{producto.id}</span>
               </div>
               <div className="py-2.5 flex justify-between">
                 <span className="text-secondary-500">Categoría:</span>
-                <span className="font-semibold text-secondary-900">
-                  {producto.categoria}
-                </span>
+                <span className="font-semibold text-secondary-900">{producto.categoria}</span>
               </div>
               <div className="py-2.5 flex justify-between">
                 <span className="text-secondary-500">Fabricante / Marca:</span>
-                <span className="font-semibold text-secondary-900">
-                  {producto.marca || "Lumina"}
-                </span>
+                <span className="font-semibold text-secondary-900">{producto.marca || "Lumina"}</span>
               </div>
               <div className="py-2.5 flex justify-between">
                 <span className="text-secondary-500">Peso:</span>
-                <span className="font-semibold text-secondary-900">
-                  250 gramos
-                </span>
+                <span className="font-semibold text-secondary-900">250 gramos</span>
               </div>
               <div className="py-2.5 flex justify-between">
                 <span className="text-secondary-500">Conectividad:</span>
-                <span className="font-semibold text-secondary-900">
-                  Bluetooth 5.2 / Jack 3.5mm
-                </span>
+                <span className="font-semibold text-secondary-900">Bluetooth 5.2 / Jack 3.5mm</span>
               </div>
               <div className="py-2.5 flex justify-between">
                 <span className="text-secondary-500">Garantía Oficial:</span>
-                <span className="font-semibold text-tertiary-600">
-                  24 meses internacional
-                </span>
+                <span className="font-semibold text-tertiary-600">24 meses internacional</span>
               </div>
             </div>
           </div>
@@ -521,29 +494,22 @@ export const DetalleProducto = ({
             <div className="space-y-3 pt-2">
               <div className="p-4 rounded-xl border border-secondary-100 space-y-1">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-secondary-900">
-                    Federico Gómez
-                  </span>
+                  <span className="font-bold text-secondary-900">Federico Gómez</span>
                   <span className="text-secondary-400">Hace 3 días</span>
                 </div>
                 <div className="text-advertencia text-xs">★★★★★</div>
                 <p className="text-xs text-secondary-600">
-                  La calidad acústica es impresionante y la cancelación de ruido
-                  en la oficina supera todo lo que probé antes. Vale cada
-                  centavo.
+                  La calidad acústica es impresionante y la cancelación de ruido en la oficina supera todo lo que probé antes. Vale cada centavo.
                 </p>
               </div>
               <div className="p-4 rounded-xl border border-secondary-100 space-y-1">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-secondary-900">
-                    Lucía Fernández
-                  </span>
+                  <span className="font-bold text-secondary-900">Lucía Fernández</span>
                   <span className="text-secondary-400">Hace 1 semana</span>
                 </div>
                 <div className="text-advertencia text-xs">★★★★★</div>
                 <p className="text-xs text-secondary-600">
-                  La batería dura semanas con uso moderado y el peso es
-                  imperceptible. Compré en cuotas y llegó en menos de 24 horas.
+                  La batería dura semanas con uso moderado y el peso es imperceptible. Compré en cuotas y llegó en menos de 24 horas.
                 </p>
               </div>
             </div>
