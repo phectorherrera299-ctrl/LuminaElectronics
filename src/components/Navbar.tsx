@@ -92,6 +92,13 @@ export const Navbar = ({
           </div>
         </div>
         <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => manejarNavegacion("login")}
+            className="hidden sm:inline-flex rounded-xl bg-primary-50 px-3 py-2 text-xs font-bold text-primary-700 transition hover:bg-primary-100"
+          >
+            Iniciar sesión
+          </button>
           <div className="flex items-center bg-secondary-100 p-0.5 rounded-xl text-xs font-semibold">
             <button
               type="button"
