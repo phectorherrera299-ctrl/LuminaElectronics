@@ -8,6 +8,8 @@ interface PropiedadesDetalle {
   alAgregarAlCarrito?: (producto: Producto, cantidad: number) => void;
 }
 
+type PestanaActiva = "descripcion" | "especificaciones" | "opiniones";
+
 export const DetalleProducto = ({
   producto,
   alVolver,
@@ -18,6 +20,7 @@ export const DetalleProducto = ({
 
   const [cantidad, setCantidad] = useState(1);
   const [colorSeleccionado, setColorSeleccionado] = useState("Plata Platino");
+  const [pestana, setPestana] = useState<PestanaActiva>("descripcion");
 
   const fotosMiniatura = [
     producto.imagen,
@@ -327,6 +330,83 @@ export const DetalleProducto = ({
             Emparejamiento simultáneo con dos dispositivos Bluetooth®. Pasa del portátil al smartphone con total fluidez.
           </p>
         </div>
+      </section>
+      <section className="bg-white rounded-3xl border border-secondary-200 p-6 sm:p-8 shadow-xs space-y-6">
+        <div className="flex border-b border-secondary-200 gap-2 sm:gap-4 overflow-x-auto">
+          <button
+            type="button"
+            onClick={() => setPestana("descripcion")}
+            className={`pb-4 px-2 text-xs sm:text-sm font-heading font-bold border-b-2 transition-all cursor-pointer whitespace-nowrap ${
+              pestana === "descripcion"
+                ? "border-primary-500 text-primary-600"
+                : "border-transparent text-secondary-500 hover:text-secondary-900"
+            }`}
+          >
+            Descripción &amp; Tecnologías
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setPestana("especificaciones")}
+            className={`pb-4 px-2 text-xs sm:text-sm font-heading font-bold border-b-2 transition-all cursor-pointer whitespace-nowrap ${
+              pestana === "especificaciones"
+                ? "border-primary-500 text-primary-600"
+                : "border-transparent text-secondary-500 hover:text-secondary-900"
+            }`}
+          >
+            Especificaciones Técnicas
+          </button>
+          <button
+            type="button"
+            onClick={() => setPestana("opiniones")}
+            className={`pb-4 px-2 text-xs sm:text-sm font-heading font-bold border-b-2 transition-all cursor-pointer whitespace-nowrap ${
+              pestana === "opiniones"
+                ? "border-primary-500 text-primary-600"
+                : "border-transparent text-secondary-500 hover:text-secondary-900"
+            }`}
+          >
+            Opiniones de Compradores (342)
+          </button>
+        </div>
+        {pestana === "descripcion" && (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-2">
+            <div className="lg:col-span-7 space-y-4">
+              <span className="text-[11px] font-bold text-primary-500 uppercase tracking-wider block">
+                Silencio Redefinido
+              </span>
+              <h3 className="text-xl sm:text-2xl font-heading font-bold text-secondary-900">
+                Un nuevo estándar de cancelación activa de ruido líder en la industria.
+              </h3>
+              <p className="text-xs sm:text-sm text-secondary-600 leading-relaxed">
+                {producto.descripcion}
+              </p>
+              <p className="text-xs text-secondary-500 leading-relaxed">
+                El controlador de 30 mm diseñado con precisión, que cuenta con una cúpula ligera y rígida con material compuesto de fibra de carbono, mejora la sensibilidad en las frecuencias altas para lograr una tonalidad mucho más natural y cristalina.
+              </p>
+              <div className="grid grid-cols-3 gap-4 pt-4 border-t border-secondary-100 max-w-md">
+                <div>
+                  <span className="font-heading font-bold text-secondary-900 text-sm block">8 Mics</span>
+                  <span className="text-[11px] text-secondary-400 block">Array beamforming</span>
+                </div>
+                <div>
+                  <span className="font-heading font-bold text-secondary-900 text-sm block">LDAC</span>
+                  <span className="text-[11px] text-secondary-400 block">Hi-Res Audio 990kbps</span>
+                </div>
+                <div>
+                  <span className="font-heading font-bold text-secondary-900 text-sm block">250g</span>
+                  <span className="text-[11px] text-secondary-400 block">Ultralivianos</span>
+                </div>
+              </div>
+            </div>
+            <div className="lg:col-span-5 bg-secondary-50 rounded-2xl p-4 border border-secondary-100 flex items-center justify-center">
+              <img
+                src={producto.imagen}
+                alt="Tecnología interna"
+                className="max-h-64 object-contain rounded-xl opacity-90"
+              />
+            </div>
+          </div>
+        )}
       </section>
     </main>
   );
