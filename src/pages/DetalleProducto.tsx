@@ -97,14 +97,12 @@ export const DetalleProducto = ({
               </button>
             ))}
           </div>
-
           <div className="relative flex-1 aspect-square rounded-3xl bg-white border border-secondary-200 overflow-hidden shadow-xs flex items-center justify-center p-6">
             <img
               src={fotoActiva}
               alt={producto.nombre}
               className="max-h-full max-w-full object-contain transition-all duration-300"
             />
-
             <div className="absolute top-4 left-4 flex flex-col gap-1.5 items-start">
               <span className="px-2.5 py-1 text-[11px] font-bold rounded-lg bg-primary-500 text-white shadow-xs">
                 Lumina Flagship
@@ -115,7 +113,6 @@ export const DetalleProducto = ({
                 </span>
               )}
             </div>
-
             <button
               type="button"
               onClick={() => alternarDeseo(producto.id)}
@@ -145,26 +142,57 @@ export const DetalleProducto = ({
         </div>
         <div className="lg:col-span-5 space-y-6">
           <div className="space-y-2">
-            <div className="flex items-center gap-3">
-              <span className="text-xs font-bold text-primary-600 uppercase tracking-widest">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold uppercase tracking-wider text-primary-600 font-heading">
                 {producto.marca || "Lumina Hardware"}
               </span>
-              <span className="text-[10px] font-bold text-success bg-success/10 px-2 py-1 rounded-md">
-                ⚡ Envío Prioritario 24h
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-tertiary-50 text-tertiary-700 text-[11px] font-semibold border border-tertiary-200">
+                <span>⚡</span> Envío Prioritario 24h
               </span>
             </div>
-            <h1 className="text-3xl font-heading font-bold text-secondary-900 leading-tight">
+            <h1 className="text-2xl sm:text-3xl font-heading font-extrabold text-secondary-900 leading-tight">
               {producto.nombre}
             </h1>
-            <div className="flex items-center gap-2 text-sm">
-              <div className="flex text-warning">
+            <div className="flex items-center gap-3 pt-1">
+              <div className="flex items-center text-advertencia text-sm">
                 {"★★★★★".slice(0, Math.round(producto.calificacion || 5))}
               </div>
-              <span className="font-bold text-secondary-900">
+              <span className="text-xs font-bold text-secondary-900">
                 {(producto.calificacion || 4.9).toFixed(1)}
               </span>
-              <span className="text-secondary-400">
-                (342 valoraciones verificadas)
+              <span className="text-xs text-secondary-400">•</span>
+              <span className="text-xs text-secondary-500 underline cursor-pointer">
+                342 valoraciones verificadas
+              </span>
+            </div>
+          </div>
+          <div className="p-5 rounded-2xl bg-white border border-secondary-200 shadow-xs space-y-2">
+            <div className="flex items-baseline gap-3">
+              <span className="text-3xl sm:text-4xl font-heading font-extrabold text-secondary-900">
+                ${precioFinal}
+              </span>
+              {producto.descuento && (
+                <>
+                  <span className="text-base text-secondary-400 line-through">
+                    ${producto.precio.toFixed(2)}
+                  </span>
+                  <span className="px-2 py-0.5 rounded-md bg-error/10 text-error text-xs font-bold">
+                    Ahorras ${ahorro} ({producto.descuento}%)
+                  </span>
+                </>
+              )}
+            </div>
+            <p className="text-xs text-secondary-500">
+              💳 O hasta 12 cuotas fijas sin interés de{" "}
+              <strong className="text-secondary-800">${cuota} USD</strong>
+            </p>
+            <div className="pt-3 border-t border-secondary-100 flex items-center justify-between text-xs">
+              <span className="flex items-center gap-1.5 font-semibold text-tertiary-700">
+                <span className="w-2 h-2 rounded-full bg-tertiary-500 animate-pulse" />
+                Stock Inmediato
+              </span>
+              <span className="text-secondary-500 font-medium">
+                {producto.stock} unidades en bodega
               </span>
             </div>
           </div>
@@ -220,6 +248,44 @@ export const DetalleProducto = ({
               <span className="text-xs text-secondary-500">
                 Máximo permitido: <strong>{producto.stock} unids.</strong>
               </span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+              <button
+                type="button"
+                onClick={manejarCarrito}
+                className="py-3 px-6 rounded-xl bg-primary-500 hover:bg-primary-600 text-white font-semibold text-xs shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <span>🛒</span>
+                <span>Añadir al Carrito</span>
+              </button>
+              <button
+                type="button"
+                onClick={manejarCarrito}
+                className="py-3 px-6 rounded-xl bg-secondary-900 hover:bg-secondary-800 text-white font-semibold text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <span>⚡</span>
+                <span>Comprar Ahora</span>
+              </button>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-3 pt-4 border-t border-secondary-200 text-xs text-secondary-500">
+            <div className="flex items-center gap-2">
+              <span className="text-base">🛡️</span>
+              <div>
+                <span className="font-bold text-secondary-800 block">
+                  Garantía 2 Años
+                </span>
+                <span className="text-[11px]">Soporte oficial directo</span>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-base">🔄</span>
+              <div>
+                <span className="font-bold text-secondary-800 block">
+                  Devolución 30 Días
+                </span>
+                <span className="text-[11px]">Reembolso sin preguntas</span>
+              </div>
             </div>
           </div>
         </div>
