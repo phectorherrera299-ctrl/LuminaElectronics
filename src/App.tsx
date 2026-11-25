@@ -15,6 +15,7 @@ import { PaginaNosotros } from "./pages/PaginaSobreNosotros";
 import { DetalleProducto } from "./pages/DetalleProducto";
 import type { Producto } from "./types/Producto";
 import { HeroBanner } from "./components/HeroBanner";
+import { TablaGestionUsuarios } from "./components/TablaGestionUsuarios";
 
 const PRECIO_LIMITE = 2500;
 
@@ -196,6 +197,7 @@ function ContenidoPrincipal() {
                   alert(`solo para ver si funciona: ${prod.nombre}`)
                 }
               />
+              <TablaGestionUsuarios/>
             </main>
           ) : (
             <div className="max-w-md mx-auto my-20 p-8 bg-white rounded-2xl border border-secondary-200 text-center space-y-4 shadow-sm">
