@@ -108,7 +108,7 @@ export const HeroBanner = ({ alExplorar }: PropiedadesHero) => {
                 </p>
               </div>
             </div>
-            <div className="absolute -bottom-4 -left-4 bg-white rounded-2xl p-3 border border-secondary-200 shadow-lg hidden sm:flex items-center gap-3">
+            <div className="bottom-4 -left-4 bg-white rounded-2xl p-3 border border-secondary-200 shadow-lg hidden sm:flex items-center gap-3 w-70">
               <div className="w-10 h-10 rounded-xl bg-tertiary-50 text-tertiary-600 flex items-center justify-center font-bold text-sm">
                 ★
               </div>

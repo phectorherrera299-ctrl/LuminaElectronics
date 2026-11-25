@@ -14,6 +14,7 @@ import { Pagina404 } from "./pages/Pagina404";
 import { PaginaNosotros } from "./pages/PaginaSobreNosotros";
 import { DetalleProducto } from "./pages/DetalleProducto";
 import type { Producto } from "./types/Producto";
+import { HeroBanner } from "./components/HeroBanner";
 
 const PRECIO_LIMITE = 2500;
 
@@ -105,48 +106,51 @@ function VistaCatalogo({ alVerDetalle }: PropiedadesVistaCatalogo) {
     calificacionMinima,
   ]);
   return (
-    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <header className="mb-6">
-        <h1 className="text-3xl font-heading font-bold text-secondary-900">
-          Catálogo de Productos
-        </h1>
-        <p className="text-secondary-500 text-sm mt-1">
-          Explora nuestra selección de dispositivos y accesorios de última
-          generación.
-        </p>
-      </header>
-      <BuscadorCategorias
-        busqueda={busqueda}
-        alCambiarBusqueda={setBusqueda}
-        categoriaSeleccionada={categoriaSeleccionada}
-        alSeleccionarCategoria={setCategoriaSeleccionada}
-        criterioOrden={criterioOrden}
-        alCambiarOrden={setCriterioOrden}
-      />
-      <div className="flex flex-col lg:flex-row gap-8 items-start">
-        <FiltrosLaterales
-          marcasDisponibles={marcasDisponibles}
-          marcasSeleccionadas={marcasSeleccionadas}
-          alCambiarMarca={alternarMarca}
-          precioMaximo={precioMaximo}
-          precioLimite={PRECIO_LIMITE}
-          alCambiarPrecioMaximo={setPrecioMaximo}
-          soloEnStock={soloEnStock}
-          alCambiarSoloEnStock={setSoloEnStock}
-          soloConDescuento={soloConDescuento}
-          alCambiarSoloConDescuento={setSoloConDescuento}
-          calificacionMinima={calificacionMinima}
-          alCambiarCalificacionMinima={setCalificacionMinima}
-          alReiniciarFiltros={reiniciarFiltros}
+    <>
+      <HeroBanner />
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <header className="mb-6">
+          <h1 className="text-3xl font-heading font-bold text-secondary-900">
+            Catálogo de Productos
+          </h1>
+          <p className="text-secondary-500 text-sm mt-1">
+            Explora nuestra selección de dispositivos y accesorios de última
+            generación.
+          </p>
+        </header>
+        <BuscadorCategorias
+          busqueda={busqueda}
+          alCambiarBusqueda={setBusqueda}
+          categoriaSeleccionada={categoriaSeleccionada}
+          alSeleccionarCategoria={setCategoriaSeleccionada}
+          criterioOrden={criterioOrden}
+          alCambiarOrden={setCriterioOrden}
         />
-        <div className="flex-1 w-full">
-          <GrillaProductos
-            productos={productosFiltrados}
-            alVerDetalle={alVerDetalle}
+        <div className="flex flex-col lg:flex-row gap-8 items-start">
+          <FiltrosLaterales
+            marcasDisponibles={marcasDisponibles}
+            marcasSeleccionadas={marcasSeleccionadas}
+            alCambiarMarca={alternarMarca}
+            precioMaximo={precioMaximo}
+            precioLimite={PRECIO_LIMITE}
+            alCambiarPrecioMaximo={setPrecioMaximo}
+            soloEnStock={soloEnStock}
+            alCambiarSoloEnStock={setSoloEnStock}
+            soloConDescuento={soloConDescuento}
+            alCambiarSoloConDescuento={setSoloConDescuento}
+            calificacionMinima={calificacionMinima}
+            alCambiarCalificacionMinima={setCalificacionMinima}
+            alReiniciarFiltros={reiniciarFiltros}
           />
+          <div className="flex-1 w-full">
+            <GrillaProductos
+              productos={productosFiltrados}
+              alVerDetalle={alVerDetalle}
+            />
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </>
   );
 }
 
