@@ -3,9 +3,10 @@ import { useDeseos } from "../context/ContextoDeseos";
 
 interface PropiedadesTarjeta {
   producto: Producto;
+  alVerDetalle?: (producto: Producto) => void;
 }
 
-export const TarjetaProducto = ({ producto }: PropiedadesTarjeta) => {
+export const TarjetaProducto = ({ producto, alVerDetalle }: PropiedadesTarjeta) => {
   const precioFinal = producto.descuento
     ? (producto.precio * (1 - producto.descuento / 100)).toFixed(2)
     : producto.precio.toFixed(2);
@@ -123,6 +124,7 @@ export const TarjetaProducto = ({ producto }: PropiedadesTarjeta) => {
         </div>
         <button
           type="button"
+          onClick={() => alVerDetalle && alVerDetalle(producto)}
           className="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-primary-50 text-primary-600 hover:bg-primary-500 hover:text-white transition-colors cursor-pointer"
         >
           Ver Detalle

@@ -80,7 +80,7 @@ const ETAPAS = [
   },
 ];
 
-const TECCNOLOGIAS = [
+const TECNOLOGIAS = [
   { nombre: "React 19", detalle: "Core UI", icono: "⚛️" },
   { nombre: "Tailwind CSS", detalle: "Design Tokens", icono: "🎨" },
   { nombre: "TypeScript", detalle: "Type Safety", icono: "🛡️" },
@@ -385,7 +385,7 @@ export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
           </p>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-          {TECCNOLOGIAS.map((tech) => (
+          {TECNOLOGIAS.map((tech) => (
             <div
               key={tech.nombre}
               className="bg-white p-4 rounded-2xl border border-secondary-200 shadow-xs text-center space-y-1 hover:border-primary-300 transition-colors"

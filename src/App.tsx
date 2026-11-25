@@ -12,9 +12,16 @@ import { MetricasAdmin } from "./components/MetricasAdmin";
 import { TablaProductosAdmin } from "./components/TablaProductosAdmin";
 import { Pagina404 } from "./pages/Pagina404";
 import { PaginaNosotros } from "./pages/PaginaSobreNosotros";
+import { DetalleProducto } from "./pages/DetalleProducto";
+import type { Producto } from "./types/Producto";
 
 const PRECIO_LIMITE = 2500;
-function VistaCatalogo() {
+
+interface PropiedadesVistaCatalogo {
+  alVerDetalle: (producto: Producto) => void;
+}
+
+function VistaCatalogo({ alVerDetalle }: PropiedadesVistaCatalogo) {
   const { productos } = useProductos();
   const [busqueda, setBusqueda] = useState("");
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("Todos");
@@ -41,6 +48,7 @@ function VistaCatalogo() {
         : [...previas, marca],
     );
   };
+
   const reiniciarFiltros = () => {
     setMarcasSeleccionadas([]);
     setPrecioMaximo(PRECIO_LIMITE);
@@ -48,6 +56,7 @@ function VistaCatalogo() {
     setSoloConDescuento(false);
     setCalificacionMinima(0);
   };
+
   const productosFiltrados = useMemo(() => {
     return productos
       .filter((producto) => {
@@ -131,7 +140,10 @@ function VistaCatalogo() {
           alReiniciarFiltros={reiniciarFiltros}
         />
         <div className="flex-1 w-full">
-          <GrillaProductos productos={productosFiltrados} />
+          <GrillaProductos
+            productos={productosFiltrados}
+            alVerDetalle={alVerDetalle}
+          />
         </div>
       </div>
     </main>
@@ -143,54 +155,73 @@ function ContenidoPrincipal() {
   const { cantidadDeseos } = useDeseos();
   const { esAdmin } = useAutenticacion();
   const { productos } = useProductos();
+  const [productoSeleccionado, setProductoSeleccionado] =
+    useState<Producto | null>(null);
+
+  const verDetalleDeProducto = (prod: Producto) => {
+    setProductoSeleccionado(prod);
+    setSeccion("detalle");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
   return (
-    <div className="min-h-screen bg-neutral-50">
-      <Navbar
-        seccionActiva={seccion}
-        alNavegar={setSeccion}
-        cantidadDeseos={cantidadDeseos}
-      />
-      {seccion === "catalogo" && <VistaCatalogo />}
-      {seccion === "nosotros" && <PaginaNosotros alNavegar={setSeccion} />}
-      {seccion === "admin" &&
-        (esAdmin ? (
-          <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-            <MetricasAdmin productos={productos} />
-            <TablaProductosAdmin
-              alCrearNuevo={() => alert("solo para ver si funciona")}
-              alEditarProducto={(prod) => alert("solo para ver si funciona")}
-            />
-          </main>
-        ) : (
-          <div className="max-w-md mx-auto my-20 p-8 bg-white rounded-2xl border border-secondary-200 text-center space-y-4 shadow-sm">
-            <div className="w-12 h-12 mx-auto rounded-full bg-error/10 text-error flex items-center justify-center font-bold text-xl">
-              ✕
+    <div className="min-h-screen bg-neutral-50 flex flex-col justify-between">
+      <div>
+        <Navbar
+          seccionActiva={seccion}
+          alNavegar={setSeccion}
+          cantidadDeseos={cantidadDeseos}
+        />
+        {seccion === "catalogo" && (
+          <VistaCatalogo alVerDetalle={verDetalleDeProducto} />
+        )}
+        {seccion === "detalle" && productoSeleccionado && (
+          <DetalleProducto
+            producto={productoSeleccionado}
+            alVolver={() => setSeccion("catalogo")}
+          />
+        )}
+        {seccion === "nosotros" && <PaginaNosotros alNavegar={setSeccion} />}
+        {seccion === "admin" &&
+          (esAdmin ? (
+            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+              <MetricasAdmin productos={productos} />
+              <TablaProductosAdmin
+                alCrearNuevo={() => alert("solo para ver si funciona")}
+                alEditarProducto={(prod) =>
+                  alert(`solo para ver si funciona: ${prod.nombre}`)
+                }
+              />
+            </main>
+          ) : (
+            <div className="max-w-md mx-auto my-20 p-8 bg-white rounded-2xl border border-secondary-200 text-center space-y-4 shadow-sm">
+              <div className="w-12 h-12 mx-auto rounded-full bg-error/10 text-error flex items-center justify-center font-bold text-xl">
+                ✕
+              </div>
+              <h2 className="text-xl font-heading font-bold text-secondary-900">
+                Acceso Restringido
+              </h2>
+              <p className="text-xs text-secondary-500">
+                Esta sección está reservada exclusivamente para administradores.
+                Por favor, cambia tu rol a <strong>Admin</strong> desde la barra
+                superior para continuar.
+              </p>
+              <button
+                type="button"
+                onClick={() => setSeccion("catalogo")}
+                className="px-4 py-2 bg-primary-500 text-white text-xs font-semibold rounded-xl hover:bg-primary-600 cursor-pointer"
+              >
+                Volver al Catálogo
+              </button>
             </div>
-            <h2 className="text-xl font-heading font-bold text-secondary-900">
-              Acceso Restringido
-            </h2>
-            <p className="text-xs text-secondary-500">
-              Esta sección está reservada exclusivamente para administradores.
-              Por favor, cambia tu rol a <strong>Admin</strong> desde la barra
-              superior para continuar.
-            </p>
-            <button
-              type="button"
-              onClick={() => setSeccion("catalogo")}
-              className="px-4 py-2 bg-primary-500 text-white text-xs font-semibold rounded-xl hover:bg-primary-600 cursor-pointer"
-            >
-              Volver al Catálogo
-            </button>
-          </div>
-        ))}
-      {seccion === "404" && (
-        <Pagina404 alNavegar={setSeccion} productos={productos} />
-      )}
+          ))}
+        {seccion === "404" && (
+          <Pagina404 alNavegar={setSeccion} productos={productos} />
+        )}
+      </div>
       <Footer alNavegar={setSeccion} />
     </div>
   );
 }
-
 function App() {
   return (
     <ProveedorAutenticacion>
@@ -202,4 +233,5 @@ function App() {
     </ProveedorAutenticacion>
   );
 }
+
 export default App;
