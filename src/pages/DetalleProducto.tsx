@@ -97,12 +97,14 @@ export const DetalleProducto = ({
               </button>
             ))}
           </div>
+
           <div className="relative flex-1 aspect-square rounded-3xl bg-white border border-secondary-200 overflow-hidden shadow-xs flex items-center justify-center p-6">
             <img
               src={fotoActiva}
               alt={producto.nombre}
               className="max-h-full max-w-full object-contain transition-all duration-300"
             />
+
             <div className="absolute top-4 left-4 flex flex-col gap-1.5 items-start">
               <span className="px-2.5 py-1 text-[11px] font-bold rounded-lg bg-primary-500 text-white shadow-xs">
                 Lumina Flagship
@@ -113,6 +115,7 @@ export const DetalleProducto = ({
                 </span>
               )}
             </div>
+
             <button
               type="button"
               onClick={() => alternarDeseo(producto.id)}
@@ -140,9 +143,32 @@ export const DetalleProducto = ({
             </button>
           </div>
         </div>
-        <div className="lg:col-span-7 flex flex-col-reverse sm:flex-row gap-4"></div>
-        {/* Información y compra */}
-        <div className="lg:col-span-5 space-y-6"></div>
+        <div className="lg:col-span-5 space-y-6">
+          <div className="space-y-2">
+            <div className="flex items-center gap-3">
+              <span className="text-xs font-bold text-primary-600 uppercase tracking-widest">
+                {producto.marca || "Lumina Hardware"}
+              </span>
+              <span className="text-[10px] font-bold text-success bg-success/10 px-2 py-1 rounded-md">
+                ⚡ Envío Prioritario 24h
+              </span>
+            </div>
+            <h1 className="text-3xl font-heading font-bold text-secondary-900 leading-tight">
+              {producto.nombre}
+            </h1>
+            <div className="flex items-center gap-2 text-sm">
+              <div className="flex text-warning">
+                {"★★★★★".slice(0, Math.round(producto.calificacion || 5))}
+              </div>
+              <span className="font-bold text-secondary-900">
+                {(producto.calificacion || 4.9).toFixed(1)}
+              </span>
+              <span className="text-secondary-400">
+                (342 valoraciones verificadas)
+              </span>
+            </div>
+          </div>
+        </div>
       </section>
     </main>
   );
