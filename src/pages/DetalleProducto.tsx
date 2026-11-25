@@ -59,7 +59,7 @@ export const DetalleProducto = ({
     );
   };
   return (
-    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fade-in">
+    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12 animate-fade-in">
       <nav className="flex items-center gap-2 text-xs text-secondary-500 overflow-x-auto pb-1">
         <button
           type="button"
@@ -288,6 +288,44 @@ export const DetalleProducto = ({
               </div>
             </div>
           </div>
+        </div>
+      </section>
+      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="p-5 rounded-2xl bg-white border border-secondary-200 shadow-xs space-y-2">
+          <span className="text-2xl block">🎧</span>
+          <h3 className="font-heading font-bold text-sm text-secondary-900">
+            Auto NC Optimizer
+          </h3>
+          <p className="text-xs text-secondary-500 leading-relaxed">
+            Calibración de presión atmosférica constante y 8 micrófonos que aíslan las frecuencias vocales y agudas.
+          </p>
+        </div>
+        <div className="p-5 rounded-2xl bg-white border border-secondary-200 shadow-xs space-y-2">
+          <span className="text-2xl block">🔋</span>
+          <h3 className="font-heading font-bold text-sm text-secondary-900">
+            Autonomía de 30h
+          </h3>
+          <p className="text-xs text-secondary-500 leading-relaxed">
+            Batería masiva para viajes largos. Carga ultrarrápida USB-PD: 3 minutos otorgan 3 horas completas de uso.
+          </p>
+        </div>
+        <div className="p-5 rounded-2xl bg-white border border-secondary-200 shadow-xs space-y-2">
+          <span className="text-2xl block">🔊</span>
+          <h3 className="font-heading font-bold text-sm text-secondary-900">
+            Diafragma 30mm en Carbono
+          </h3>
+          <p className="text-xs text-secondary-500 leading-relaxed">
+            Cúpula de fibra de carbono ultra-rígida para una claridad acústica superior y graves profundos sin distorsión.
+          </p>
+        </div>
+        <div className="p-5 rounded-2xl bg-white border border-secondary-200 shadow-xs space-y-2">
+          <span className="text-2xl block">📱</span>
+          <h3 className="font-heading font-bold text-sm text-secondary-900">
+            Conexión Multipunto
+          </h3>
+          <p className="text-xs text-secondary-500 leading-relaxed">
+            Emparejamiento simultáneo con dos dispositivos Bluetooth®. Pasa del portátil al smartphone con total fluidez.
+          </p>
         </div>
       </section>
     </main>
