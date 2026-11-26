@@ -17,6 +17,7 @@ import { LoginPage } from "./pages/LoginPage";
 import { TablaGestionUsuarios } from "./components/TablaGestionUsuarios";
 import type { Producto } from "./types/Producto";
 import { HeroBanner } from "./components/HeroBanner";
+import { TablaGestionUsuarios } from "./components/TablaGestionUsuarios";
 import { ModalProducto } from "./components/ModalProducto";
 
 const PRECIO_LIMITE = 2500;
@@ -200,7 +201,7 @@ function ContenidoPrincipal() {
                 alCerrar={() => setModalAbierto(false)}
                 productoAEditar={productoAEditar}
               />
-              <TablaGestionUsuarios />
+              <TablaGestionUsuarios/>
             </main>
           ) : (
             <div className="max-w-md mx-auto my-20 p-8 bg-white rounded-2xl border border-secondary-200 text-center space-y-4 shadow-sm">
