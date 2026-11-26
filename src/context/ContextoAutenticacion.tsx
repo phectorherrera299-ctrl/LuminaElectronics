@@ -28,9 +28,9 @@ interface TipoContextoAutenticacion {
   cambiarRol: (nuevoRol: RolUsuario) => void;
   iniciarSesion: (
     email: string,
-    rol: Exclude<RolUsuario, "Invitado"> | "Cliente",
+    password: string,
     recordar: boolean,
-  ) => void;
+  ) => { exito: boolean; mensaje: string };
   cerrarSesion: () => void;
   esAdmin: boolean;
   registrarUsuario: (
@@ -39,6 +39,8 @@ interface TipoContextoAutenticacion {
     password: string,
     tipoCuenta: TipoCuenta,
   ) => { exito: boolean; mensaje: string };
+  usuariosRegistrados: UsuarioRegistrado[];
+  eliminarUsuario: (id: string) => void;
 }
 
 const ContextoAutenticacion = createContext<
@@ -68,6 +70,12 @@ export const ProveedorAutenticacion = ({
     }
     return USUARIO_DEFECTO;
   });
+
+  const eliminarUsuario = (id: string) => {
+    setUsuariosRegistrados((actuales) =>
+      actuales.filter((usuario) => usuario.id !== id),
+    );
+  };
 
   const [usuariosRegistrados, setUsuariosRegistrados] = useState<
     UsuarioRegistrado[]
@@ -167,18 +175,50 @@ export const ProveedorAutenticacion = ({
 
   const iniciarSesion = (
     email: string,
-    rol: "Admin" | "Cliente",
+    password: string,
     recordar: boolean,
   ) => {
-    const nombre =
-      rol === "Admin"
-        ? "Sofía Valenzuela"
-        : (email.split("@")[0] || "Cliente")
-            .replace(/[._-]/g, " ")
-            .replace(/\b\w/g, (letra) => letra.toUpperCase());
-    if (recordar) localStorage.setItem("lumina_recordar_sesion", "true");
-    else localStorage.removeItem("lumina_recordar_sesion");
-    setUsuario({ nombre, email, rol });
+    const emailNormalizado = email.trim().toLowerCase();
+    if (emailNormalizado === "admin@lumina.dev" && password === "Admin2026!") {
+      setUsuario({
+        nombre: "Administrador",
+        email: emailNormalizado,
+        rol: "Admin",
+      });
+    } else {
+      const usuarioEncontrado = usuariosRegistrados.find(
+        (usuario) =>
+          usuario.email.toLowerCase() === emailNormalizado &&
+          usuario.password === password,
+      );
+      if (!usuarioEncontrado) {
+        return {
+          exito: false,
+          mensaje: "El correo electrónico o la contraseña son incorrectos.",
+        };
+      }
+      if (usuarioEncontrado.estado !== "Activo") {
+        return {
+          exito: false,
+          mensaje:
+            "Tu cuenta se encuentra inactiva. Contactá con administración.",
+        };
+      }
+      setUsuario({
+        nombre: usuarioEncontrado.nombre,
+        email: usuarioEncontrado.email,
+        rol: "Cliente",
+      });
+    }
+    if (recordar) {
+      localStorage.setItem("lumina_recordar_sesion", "true");
+    } else {
+      localStorage.removeItem("lumina_recordar_sesion");
+    }
+    return {
+      exito: true,
+      mensaje: "¡Bienvenido! Iniciaste sesión correctamente.",
+    };
   };
 
   const cerrarSesion = () => setUsuario(USUARIO_DEFECTO);
@@ -190,7 +230,9 @@ export const ProveedorAutenticacion = ({
         cambiarRol,
         iniciarSesion,
         cerrarSesion,
-         registrarUsuario,
+        registrarUsuario,
+        usuariosRegistrados,
+        eliminarUsuario,
         esAdmin: usuario.rol === "Admin",
       }}
     >

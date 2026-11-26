@@ -1,86 +1,30 @@
 import { useMemo, useState } from "react";
 import "./TablaGestioUsuario.css";
-
-type RolCuenta = "Administrador" | "Cliente";
-interface UsuarioRegistrado {
-  id: string;
-  nombre: string;
-  email: string;
-  rol: RolCuenta;
-  fechaRegistro: string;
-  estado: "Activo" | "Inactivo";
-  avatar: string;
-}
-
-const USUARIOS_INICIALES: UsuarioRegistrado[] = [
-  {
-    id: "USR-0012",
-    nombre: "Sofía Valenzuela",
-    email: "sofia.admin@lumina.dev",
-    rol: "Administrador",
-    fechaRegistro: "12 Ene 2024",
-    estado: "Activo",
-    avatar: "SV",
-  },
-  {
-    id: "USR-B489",
-    nombre: "Mateo Rivas",
-    email: "m.rivas@designcraft.co",
-    rol: "Cliente",
-    fechaRegistro: "28 Feb 2024",
-    estado: "Activo",
-    avatar: "MR",
-  },
-  {
-    id: "USR-0512",
-    nombre: "Camila Torres",
-    email: "camila@techflows.io",
-    rol: "Cliente",
-    fechaRegistro: "04 Mar 2024",
-    estado: "Activo",
-    avatar: "CT",
-  },
-  {
-    id: "USR-0201",
-    nombre: "Julián Morales",
-    email: "jmorales@inbox.me",
-    rol: "Cliente",
-    fechaRegistro: "18 Nov 2023",
-    estado: "Inactivo",
-    avatar: "JM",
-  },
-  {
-    id: "USR-0715",
-    nombre: "Lucía Fernández",
-    email: "lucia.fernandez@mail.com",
-    rol: "Cliente",
-    fechaRegistro: "09 Abr 2024",
-    estado: "Activo",
-    avatar: "LF",
-  },
-];
+import { useAutenticacion } from "../context/ContextoAutenticacion";
+import type { UsuarioRegistrado } from "../context/ContextoAutenticacion";
 
 export const TablaGestionUsuarios = () => {
-  const [usuarios, setUsuarios] = useState(USUARIOS_INICIALES);
+  const { usuariosRegistrados, eliminarUsuario: eliminarUsuarioDelContexto } =
+    useAutenticacion();
   const [busqueda, setBusqueda] = useState("");
   const usuariosFiltrados = useMemo(
     () =>
-      usuarios.filter((usuario) =>
+      usuariosRegistrados.filter((usuario) =>
         `${usuario.nombre} ${usuario.email}`
           .toLowerCase()
           .includes(busqueda.toLowerCase().trim()),
       ),
-    [usuarios, busqueda],
+    [usuariosRegistrados, busqueda],
   );
 
   const eliminarUsuario = (usuario: UsuarioRegistrado) => {
     const confirmar = window.confirm(
       `¿Seguro que querés eliminar a ${usuario.nombre}? Esta acción no se puede deshacer.`,
     );
-    if (confirmar)
-      setUsuarios((actuales) =>
-        actuales.filter((item) => item.id !== usuario.id),
-      );
+
+    if (confirmar) {
+      eliminarUsuarioDelContexto(usuario.id);
+    }
   };
 
   return (
@@ -92,7 +36,7 @@ export const TablaGestionUsuarios = () => {
               Gestión de Clientes &amp; Usuario
             </h2>
             <span className="rounded-full bg-primary-50 px-2.5 py-1 text-[10px] font-bold text-primary-700">
-              {usuarios.length.toLocaleString("es-AR")} registrados
+              {usuariosRegistrados.length.toLocaleString("es-AR")} registrados
             </span>
           </div>
           <p className="mt-1 text-xs text-secondary-500">
@@ -197,7 +141,7 @@ export const TablaGestionUsuarios = () => {
       </div>
       <div className="flex flex-col gap-1 border-t border-secondary-100 px-5 py-3 text-[10px] text-secondary-400 sm:flex-row sm:items-center sm:justify-between">
         <span>
-          Mostrando {usuariosFiltrados.length} de {usuarios.length} usuarios
+          Mostrando {usuariosFiltrados.length} de {usuariosRegistrados.length} usuarios
         </span>
         <span>Los datos de esta versión son de demostración local.</span>
       </div>
@@ -205,46 +149,3 @@ export const TablaGestionUsuarios = () => {
   );
 };
 
-type Usuario = {
-  id: number;
-  nombre: string;
-  email: string;
-  rol: "Administrador" | "Cliente";
-  fecha: string;
-  activo: boolean;
-};
-
-const usuariosIniciales: Usuario[] = [
-  {
-    id: 8012,
-    nombre: "Sofía Valenzuela",
-    email: "sofia.admin@lumina.dev",
-    rol: "Administrador",
-    fecha: "12 Ene 2024",
-    activo: true,
-  },
-  {
-    id: 8489,
-    nombre: "Mateo Rivas",
-    email: "m.rivas@designcraft.co",
-    rol: "Cliente",
-    fecha: "28 Feb 2024",
-    activo: true,
-  },
-  {
-    id: 8512,
-    nombre: "Camila Torres",
-    email: "camila@techflows.io",
-    rol: "Cliente",
-    fecha: "04 Mar 2024",
-    activo: true,
-  },
-  {
-    id: 8201,
-    nombre: "Julián Morales",
-    email: "jmorales@inbox.me",
-    rol: "Cliente",
-    fecha: "18 Nov 2023",
-    activo: false,
-  },
-];
