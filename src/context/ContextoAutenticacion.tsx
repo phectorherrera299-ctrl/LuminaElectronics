@@ -33,6 +33,12 @@ interface TipoContextoAutenticacion {
   ) => void;
   cerrarSesion: () => void;
   esAdmin: boolean;
+  registrarUsuario: (
+    nombre: string,
+    email: string,
+    password: string,
+    tipoCuenta: TipoCuenta,
+  ) => { exito: boolean; mensaje: string };
 }
 
 const ContextoAutenticacion = createContext<
@@ -113,6 +119,52 @@ export const ProveedorAutenticacion = ({
     );
   };
 
+  const registrarUsuario = (
+    nombre: string,
+    email: string,
+    password: string,
+    tipoCuenta: TipoCuenta,
+  ) => {
+    const emailNormalizado = email.trim().toLowerCase();
+
+    const existe = usuariosRegistrados.some(
+      (usuario) => usuario.email.toLowerCase() === emailNormalizado,
+    );
+    if (existe) {
+      return {
+        exito: false,
+        mensaje: "Ya existe una cuenta registrada con ese correo electrónico.",
+      };
+    }
+
+    const nuevoUsuario: UsuarioRegistrado = {
+      id: `USR-${Date.now()}`,
+      nombre: nombre.trim(),
+      email: emailNormalizado,
+      password,
+      tipoCuenta,
+      rol: "Cliente",
+      fechaRegistro: new Date().toLocaleDateString("es-AR", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      }),
+      estado: "Activo",
+      avatar: nombre
+        .trim()
+        .split(/\s+/)
+        .map((parte) => parte[0])
+        .join("")
+        .slice(0, 2)
+        .toUpperCase(),
+    };
+    setUsuariosRegistrados((actuales) => [...actuales, nuevoUsuario]);
+    return {
+      exito: true,
+      mensaje: "¡Tu cuenta fue creada correctamente!",
+    };
+  };
+
   const iniciarSesion = (
     email: string,
     rol: "Admin" | "Cliente",
@@ -138,6 +190,7 @@ export const ProveedorAutenticacion = ({
         cambiarRol,
         iniciarSesion,
         cerrarSesion,
+         registrarUsuario,
         esAdmin: usuario.rol === "Admin",
       }}
     >
