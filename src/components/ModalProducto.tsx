@@ -300,6 +300,21 @@ export function ModalProducto({
               />
             </div>
           </div>
+          <div className="flex justify-end gap-3 pt-4 border-t border-secondary-100">
+            <button
+              type="button"
+              onClick={alCerrar}
+              className="px-4 py-2 border border-secondary-300 text-secondary-700 text-xs font-semibold rounded-xl hover:bg-secondary-50 transition-colors"
+            >
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              className="px-5 py-2 bg-primary-500 hover:bg-primary-600 text-white text-xs font-semibold rounded-xl shadow-sm transition-colors cursor-pointer"
+            >
+              {esModoEdicion ? "Guardar Cambios" : "Crear Producto"}
+            </button>
+          </div>
         </form>
       </div>
     </div>
