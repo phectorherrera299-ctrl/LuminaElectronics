@@ -1,15 +1,14 @@
-
 import { useState } from "react";
+import { useAutenticacion } from "../context/ContextoAutenticacion";
 
 interface RegistroCuentaProps {
   onIrLogin?: () => void;
 }
 
-export default function RegistroCuenta({
-  onIrLogin,
-}: RegistroCuentaProps) {
+export default function RegistroCuenta({ onIrLogin }: RegistroCuentaProps) {
+  const { registrarUsuario } = useAutenticacion();
   const [tipoCuenta, setTipoCuenta] = useState<"Personal" | "Corporativa">(
-    "Personal"
+    "Personal",
   );
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
@@ -56,9 +55,17 @@ export default function RegistroCuenta({
       return;
     }
 
-    setMensaje(
-      "¡Formulario validado correctamente! La conexión con el servicio de registro debe integrarse para crear la cuenta."
-    );
+    const resultado = registrarUsuario(nombre, email, password, tipoCuenta);
+
+    setMensaje(resultado.mensaje);
+
+    if (resultado.exito) {
+      setNombre("");
+      setEmail("");
+      setPassword("");
+      setConfirmarPassword("");
+      setAceptaTerminos(false);
+    }
   };
 
   return (
@@ -86,8 +93,8 @@ export default function RegistroCuenta({
             <div className="mb-2 text-2xl">✦</div>
             <h3 className="mb-2 font-bold">Tu experiencia Lumina</h3>
             <p className="text-sm leading-relaxed text-slate-300">
-              Descubrí productos, promociones y soluciones tecnológicas
-              pensadas para vos.
+              Descubrí productos, promociones y soluciones tecnológicas pensadas
+              para vos.
             </p>
           </div>
         </section>
