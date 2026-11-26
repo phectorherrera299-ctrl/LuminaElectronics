@@ -107,17 +107,41 @@ export const Footer = ({ alNavegar }: PropiedadesFooter) => {
               Soporte &amp; Legal
             </h3>
             <ul className="space-y-2 text-xs text-secondary-500">
-              <li className="hover:text-secondary-900 cursor-pointer transition-colors">
-                Centro de Ayuda
+              <li>
+                <button
+                  type="button"
+                  onClick={() => irA("ayuda")}
+                  className="hover:text-primary-600 cursor-pointer transition-colors text-left"
+                >
+                  Centro de Ayuda
+                </button>
               </li>
-              <li className="hover:text-secondary-900 cursor-pointer transition-colors">
-                Garantías &amp; Devoluciones
+              <li>
+                <button
+                  type="button"
+                  onClick={() => irA("garantias")}
+                  className="hover:text-primary-600 cursor-pointer transition-colors text-left"
+                >
+                  Garantías &amp; Devoluciones
+                </button>
               </li>
-              <li className="hover:text-secondary-900 cursor-pointer transition-colors">
-                Términos y Condiciones
+              <li>
+                <button
+                  type="button"
+                  onClick={() => irA("terminos")}
+                  className="hover:text-primary-600 cursor-pointer transition-colors text-left"
+                >
+                  Términos y Condiciones
+                </button>
               </li>
-              <li className="hover:text-secondary-900 cursor-pointer transition-colors">
-                Política de Privacidad
+              <li>
+                <button
+                  type="button"
+                  onClick={() => irA("privacidad")}
+                  className="hover:text-primary-600 cursor-pointer transition-colors text-left"
+                >
+                  Política de Privacidad
+                </button>
               </li>
             </ul>
           </div>
