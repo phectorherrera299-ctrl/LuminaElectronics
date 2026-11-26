@@ -264,8 +264,114 @@ export const Navbar = ({
                 </span>
               </div>
             </button>
+            <button
+              type="button"
+              onClick={() => setMenuAbierto(!menuAbierto)}
+              aria-label={menuAbierto ? "Cerrar menú" : "Abrir menú"}
+              aria-expanded={menuAbierto}
+              className="md:hidden w-9 h-9 rounded-xl border border-white/20 bg-white/5 text-indigo-200 hover:text-white hover:bg-white/10 flex items-center justify-center transition-colors cursor-pointer"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.8}
+                stroke="currentColor"
+                className="w-5 h-5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d={
+                    menuAbierto
+                      ? "M6 18 18 6M6 6l12 12"
+                      : "M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                  }
+                />
+              </svg>
+            </button>
           </div>
         </nav>
+        {menuAbierto && (
+          <div className="md:hidden border-t border-white/10 bg-indigo-950/95 backdrop-blur-md px-5 py-4 space-y-3 animate-fade-in shadow-xl">
+            <button
+              type="button"
+              onClick={() => {
+                manejarNavegacion("catalogo");
+                setMenuAbierto(false);
+              }}
+              className="block w-full text-left py-2 text-sm font-bold text-indigo-100 hover:text-white transition cursor-pointer"
+            >
+              Catálogo
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                manejarNavegacion("nosotros");
+                setMenuAbierto(false);
+              }}
+              className="block w-full text-left py-2 text-sm font-bold text-indigo-100 hover:text-white transition cursor-pointer"
+            >
+              Sobre Nosotros
+            </button>
+            {esAdmin && (
+              <button
+                type="button"
+                onClick={() => {
+                  manejarNavegacion("admin");
+                  setMenuAbierto(false);
+                }}
+                className="block w-full text-left py-2 text-sm font-bold text-primary-300 hover:text-white transition cursor-pointer"
+              >
+                Admin Panel (PRO)
+              </button>
+            )}
+            <div className="pt-3 border-t border-white/10 space-y-2">
+              <div className="flex items-center justify-between text-xs text-indigo-300 pb-1">
+                <span>Cuenta actual:</span>
+                <span className="font-bold text-white">
+                  {usuario.nombre} ({usuario.rol})
+                </span>
+              </div>
+              {usuario.rol === "Invitado" ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    manejarNavegacion("login");
+                    setMenuAbierto(false);
+                  }}
+                  className="w-full py-2.5 px-4 bg-gradient-to-r from-primary-500 to-indigo-600 hover:from-primary-600 hover:to-indigo-700 text-white font-bold text-xs rounded-xl shadow-md transition text-center cursor-pointer flex items-center justify-center gap-2"
+                >
+                  <span>🔐</span>
+                  <span>Iniciar sesión en mi cuenta</span>
+                </button>
+              ) : (
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMenuAbierto(false);
+                      setModalUsuarioAbierto(true);
+                    }}
+                    className="flex-1 py-2 text-xs font-bold text-indigo-200 bg-white/10 hover:bg-white/20 rounded-xl transition"
+                  >
+                    Mi Perfil ✎
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      cerrarSesion();
+                      setMenuAbierto(false);
+                    }}
+                    className="py-2 px-3 text-xs font-bold text-error bg-error/10 hover:bg-error/20 rounded-xl transition"
+                  >
+                    Cerrar sesión
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </header>
       {modalUsuarioAbierto && (
         <div
