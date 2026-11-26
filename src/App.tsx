@@ -23,7 +23,11 @@ import type { Producto } from "./types/Producto";
 
 const PRECIO_LIMITE = 2500;
 
-function VistaCatalogo({ alVerDetalle }: { alVerDetalle: (prod: Producto) => void }) {
+function VistaCatalogo({
+  alVerDetalle,
+}: {
+  alVerDetalle: (prod: Producto) => void;
+}) {
   const { productos } = useProductos();
   const [busqueda, setBusqueda] = useState("");
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("Todos");
@@ -93,6 +97,28 @@ function VistaCatalogo({ alVerDetalle }: { alVerDetalle: (prod: Producto) => voi
       .sort((a, b) => {
         if (criterioOrden === "menor-precio") return a.precio - b.precio;
         if (criterioOrden === "mayor-precio") return b.precio - a.precio;
+        const destacadosTop = [
+          "macbook pro",
+          "keychron q1",
+          "ipad air",
+          "iphone 13 pro",
+          "apple watch",
+          "sony wh-1000xm5",
+          "samsung ultrawide",
+          "logitech mx master",
+        ];
+        const indexA = destacadosTop.findIndex((p) =>
+          a.nombre.toLowerCase().includes(p),
+        );
+        const indexB = destacadosTop.findIndex((p) =>
+          b.nombre.toLowerCase().includes(p),
+        );
+        if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+        // Si solo 'a' es favorito, va primero
+        if (indexA !== -1) return -1;
+        // Si solo 'b' es favorito, va primero
+        if (indexB !== -1) return 1;
+        // Si ninguno está en la lista top, desempatar por calificación
         return (b.calificacion || 0) - (a.calificacion || 0);
       });
   }, [
@@ -118,7 +144,8 @@ function VistaCatalogo({ alVerDetalle }: { alVerDetalle: (prod: Producto) => voi
             Catálogo de Productos
           </h1>
           <p className="text-secondary-500 text-sm mt-1">
-            Explora nuestra selección de dispositivos y accesorios de última generación.
+            Explora nuestra selección de dispositivos y accesorios de última
+            generación.
           </p>
         </header>
         <BuscadorCategorias
@@ -164,15 +191,15 @@ function VistaDetalleWrapper() {
   const producto = productos.find((p) => String(p.id) === String(id));
 
   if (!producto) {
-    return <Pagina404 alNavegar={(ruta) => navigate(`/${ruta}`)} productos={productos} />;
+    return (
+      <Pagina404
+        alNavegar={(ruta) => navigate(`/${ruta}`)}
+        productos={productos}
+      />
+    );
   }
 
-  return (
-    <DetalleProducto
-      producto={producto}
-      alVolver={() => navigate("/")}
-    />
-  );
+  return <DetalleProducto producto={producto} alVolver={() => navigate("/")} />;
 }
 function VistaAdmin() {
   const { productos } = useProductos();
@@ -225,11 +252,31 @@ function ContenidoPrincipal() {
           }}
         />
         <Routes>
-          <Route path="/" element={<VistaCatalogo alVerDetalle={irADetalle} />} />
+          <Route
+            path="/"
+            element={<VistaCatalogo alVerDetalle={irADetalle} />}
+          />
           <Route path="/producto/:id" element={<VistaDetalleWrapper />} />
-          <Route path="/nosotros" element={<PaginaNosotros alNavegar={(s) => navigate(s === "catalogo" ? "/" : `/${s}`)} />} />
-          <Route path="/login" element={<LoginPage alNavegar={(s) => navigate(s === "catalogo" ? "/" : `/${s}`)} />} />
-          <Route path="/registro" element={<RegistroCuenta onIrLogin={() => navigate("/login")} />} />
+          <Route
+            path="/nosotros"
+            element={
+              <PaginaNosotros
+                alNavegar={(s) => navigate(s === "catalogo" ? "/" : `/${s}`)}
+              />
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <LoginPage
+                alNavegar={(s) => navigate(s === "catalogo" ? "/" : `/${s}`)}
+              />
+            }
+          />
+          <Route
+            path="/registro"
+            element={<RegistroCuenta onIrLogin={() => navigate("/login")} />}
+          />
           <Route
             path="/admin"
             element={
@@ -238,7 +285,15 @@ function ContenidoPrincipal() {
               </RutaProtegida>
             }
           />
-          <Route path="*" element={<Pagina404 alNavegar={(s) => navigate(s === "catalogo" ? "/" : `/${s}`)} productos={productos} />} />
+          <Route
+            path="*"
+            element={
+              <Pagina404
+                alNavegar={(s) => navigate(s === "catalogo" ? "/" : `/${s}`)}
+                productos={productos}
+              />
+            }
+          />
         </Routes>
       </div>
       <Footer alNavegar={(s) => navigate(s === "catalogo" ? "/" : `/${s}`)} />
