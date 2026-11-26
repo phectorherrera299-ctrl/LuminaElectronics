@@ -13,6 +13,8 @@ import { TablaProductosAdmin } from "./components/TablaProductosAdmin";
 import { Pagina404 } from "./pages/Pagina404";
 import { PaginaNosotros } from "./pages/PaginaSobreNosotros";
 import { DetalleProducto } from "./pages/DetalleProducto";
+import { LoginPage } from "./pages/LoginPage";
+import { TablaGestionUsuarios } from "./components/TablaGestionUsuarios";
 import type { Producto } from "./types/Producto";
 import { HeroBanner } from "./components/HeroBanner";
 import { ModalProducto } from "./components/ModalProducto";
@@ -130,31 +132,14 @@ function VistaCatalogo({ alVerDetalle }: PropiedadesVistaCatalogo) {
           criterioOrden={criterioOrden}
           alCambiarOrden={setCriterioOrden}
         />
-        <div className="flex flex-col lg:flex-row gap-8 items-start">
-          <FiltrosLaterales
-            marcasDisponibles={marcasDisponibles}
-            marcasSeleccionadas={marcasSeleccionadas}
-            alCambiarMarca={alternarMarca}
-            precioMaximo={precioMaximo}
-            precioLimite={PRECIO_LIMITE}
-            alCambiarPrecioMaximo={setPrecioMaximo}
-            soloEnStock={soloEnStock}
-            alCambiarSoloEnStock={setSoloEnStock}
-            soloConDescuento={soloConDescuento}
-            alCambiarSoloConDescuento={setSoloConDescuento}
-            calificacionMinima={calificacionMinima}
-            alCambiarCalificacionMinima={setCalificacionMinima}
-            alReiniciarFiltros={reiniciarFiltros}
+        <div className="flex-1 w-full">
+          <GrillaProductos
+            productos={productosFiltrados}
+            alVerDetalle={alVerDetalle}
           />
-          <div className="flex-1 w-full">
-            <GrillaProductos
-              productos={productosFiltrados}
-              alVerDetalle={alVerDetalle}
-            />
-          </div>
         </div>
-      </main>
-    </>
+      </div>
+    </main>
   );
 }
 
@@ -201,6 +186,7 @@ function ContenidoPrincipal() {
           />
         )}
         {seccion === "nosotros" && <PaginaNosotros alNavegar={setSeccion} />}
+        {seccion === "login" && <LoginPage alNavegar={setSeccion} />}
         {seccion === "admin" &&
           (esAdmin ? (
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
@@ -209,12 +195,12 @@ function ContenidoPrincipal() {
                 alCrearNuevo={abrirCrear}
                 alEditarProducto={abrirEditar}
               />
-              {/* 👇 AQUÍ RENDERIZAS EL MODAL 👇 */}
               <ModalProducto
                 abierto={modalAbierto}
                 alCerrar={() => setModalAbierto(false)}
                 productoAEditar={productoAEditar}
               />
+              <TablaGestionUsuarios />
             </main>
           ) : (
             <div className="max-w-md mx-auto my-20 p-8 bg-white rounded-2xl border border-secondary-200 text-center space-y-4 shadow-sm">
