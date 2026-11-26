@@ -16,6 +16,8 @@ import { DetalleProducto } from "./pages/DetalleProducto";
 import { LoginPage } from "./pages/LoginPage";
 import { TablaGestionUsuarios } from "./components/TablaGestionUsuarios";
 import type { Producto } from "./types/Producto";
+import { HeroBanner } from "./components/HeroBanner";
+import { ModalProducto } from "./components/ModalProducto";
 
 const PRECIO_LIMITE = 2500;
 
@@ -107,39 +109,28 @@ function VistaCatalogo({ alVerDetalle }: PropiedadesVistaCatalogo) {
     calificacionMinima,
   ]);
   return (
-    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <header className="mb-6">
-        <h1 className="text-3xl font-heading font-bold text-secondary-900">
-          Catálogo de Productos
-        </h1>
-        <p className="text-secondary-500 text-sm mt-1">
-          Explora nuestra selección de dispositivos y accesorios de última
-          generación.
-        </p>
-      </header>
-      <BuscadorCategorias
-        busqueda={busqueda}
-        alCambiarBusqueda={setBusqueda}
-        categoriaSeleccionada={categoriaSeleccionada}
-        alSeleccionarCategoria={setCategoriaSeleccionada}
-        criterioOrden={criterioOrden}
-        alCambiarOrden={setCriterioOrden}
-      />
-      <div className="flex flex-col lg:flex-row gap-8 items-start">
-        <FiltrosLaterales
-          marcasDisponibles={marcasDisponibles}
-          marcasSeleccionadas={marcasSeleccionadas}
-          alCambiarMarca={alternarMarca}
-          precioMaximo={precioMaximo}
-          precioLimite={PRECIO_LIMITE}
-          alCambiarPrecioMaximo={setPrecioMaximo}
-          soloEnStock={soloEnStock}
-          alCambiarSoloEnStock={setSoloEnStock}
-          soloConDescuento={soloConDescuento}
-          alCambiarSoloConDescuento={setSoloConDescuento}
-          calificacionMinima={calificacionMinima}
-          alCambiarCalificacionMinima={setCalificacionMinima}
-          alReiniciarFiltros={reiniciarFiltros}
+    <>
+      <HeroBanner />
+      <main
+        id="seccion-catalogo"
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10"
+      >
+        <header className="mb-6">
+          <h1 className="text-3xl font-heading font-bold text-secondary-900">
+            Catálogo de Productos
+          </h1>
+          <p className="text-secondary-500 text-sm mt-1">
+            Explora nuestra selección de dispositivos y accesorios de última
+            generación.
+          </p>
+        </header>
+        <BuscadorCategorias
+          busqueda={busqueda}
+          alCambiarBusqueda={setBusqueda}
+          categoriaSeleccionada={categoriaSeleccionada}
+          alSeleccionarCategoria={setCategoriaSeleccionada}
+          criterioOrden={criterioOrden}
+          alCambiarOrden={setCriterioOrden}
         />
         <div className="flex-1 w-full">
           <GrillaProductos
@@ -159,6 +150,18 @@ function ContenidoPrincipal() {
   const { productos } = useProductos();
   const [productoSeleccionado, setProductoSeleccionado] =
     useState<Producto | null>(null);
+
+  const [modalAbierto, setModalAbierto] = useState(false);
+  const [productoAEditar, setProductoAEditar] = useState<Producto | null>(null);
+
+  const abrirCrear = () => {
+    setProductoAEditar(null);
+    setModalAbierto(true);
+  };
+  const abrirEditar = (prod: Producto) => {
+    setProductoAEditar(prod);
+    setModalAbierto(true);
+  };
 
   const verDetalleDeProducto = (prod: Producto) => {
     setProductoSeleccionado(prod);
@@ -189,10 +192,13 @@ function ContenidoPrincipal() {
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
               <MetricasAdmin productos={productos} />
               <TablaProductosAdmin
-                alCrearNuevo={() => alert("solo para ver si funciona")}
-                alEditarProducto={(prod) =>
-                  alert(`solo para ver si funciona: ${prod.nombre}`)
-                }
+                alCrearNuevo={abrirCrear}
+                alEditarProducto={abrirEditar}
+              />
+              <ModalProducto
+                abierto={modalAbierto}
+                alCerrar={() => setModalAbierto(false)}
+                productoAEditar={productoAEditar}
               />
               <TablaGestionUsuarios />
             </main>
