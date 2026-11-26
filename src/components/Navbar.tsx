@@ -264,6 +264,32 @@ export const Navbar = ({
                 </span>
               </div>
             </button>
+            <button
+              type="button"
+              onClick={() => setMenuAbierto(!menuAbierto)}
+              aria-label={menuAbierto ? "Cerrar menú" : "Abrir menú"}
+              aria-expanded={menuAbierto}
+              className="md:hidden w-9 h-9 rounded-xl border border-white/20 bg-white/5 text-indigo-200 hover:text-white hover:bg-white/10 flex items-center justify-center transition-colors cursor-pointer"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.8}
+                stroke="currentColor"
+                className="w-5 h-5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d={
+                    menuAbierto
+                      ? "M6 18 18 6M6 6l12 12"
+                      : "M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                  }
+                />
+              </svg>
+            </button>
           </div>
         </nav>
         {menuAbierto && (
