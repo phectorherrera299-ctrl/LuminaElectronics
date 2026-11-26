@@ -175,6 +175,73 @@ export function ModalProducto({
             ✕
           </button>
         </div>
+        <form onSubmit={manejarEnvio} className="p-6 space-y-4">
+          {errorValidacion && (
+            <div className="p-3 bg-error/10 border border-error/20 text-error text-xs rounded-xl font-medium">
+              ⚠️ {errorValidacion}
+            </div>
+          )}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="sm:col-span-2 space-y-1">
+              <label className="text-xs font-semibold text-secondary-700">
+                Nombre del Producto *
+              </label>
+              <input
+                type="text"
+                required
+                value={nombre}
+                onChange={(e) => setNombre(e.target.value)}
+                placeholder="Ej. Auriculares Noise Cancelling Pro"
+                className="w-full px-3 py-2 text-sm border border-secondary-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500"
+              />
+            </div>
+            <div className="space-y-1">
+              <label className="text-xs font-semibold text-secondary-700">
+                Categoría *
+              </label>
+              <select
+                value={categoria}
+                onChange={(e) => setCategoria(e.target.value)}
+                className="w-full px-3 py-2 text-sm border border-secondary-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 bg-white"
+              >
+                {CATEGORIAS_VALIDAS.map((cat) => (
+                  <option key={cat} value={cat}>
+                    {cat}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="space-y-1">
+              <label className="text-xs font-semibold text-secondary-700">
+                Marca
+              </label>
+              <input
+                type="text"
+                value={marca}
+                onChange={(e) => setMarca(e.target.value)}
+                placeholder="Ej. Sony, Apple, Samsung..."
+                className="w-full px-3 py-2 text-sm border border-secondary-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500"
+              />
+            </div>
+            <div className="space-y-1">
+              <label className="text-xs font-semibold text-secondary-700">
+                Precio (USD) *
+              </label>
+              <input
+                type="number"
+                step="0.01"
+                min="0.01"
+                required
+                value={precio}
+                onChange={(e) =>
+                  setPrecio(e.target.value === "" ? "" : Number(e.target.value))
+                }
+                placeholder="299.99"
+                className="w-full px-3 py-2 text-sm border border-secondary-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500"
+              />
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   );
