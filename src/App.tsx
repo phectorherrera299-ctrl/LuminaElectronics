@@ -1,122 +1,320 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { useState, useMemo } from "react";
+import { Routes, Route, useNavigate, useParams } from "react-router-dom";
+import { ProveedorProductos, useProductos } from "./context/ProductosContext";
+import { GrillaProductos } from "./components/GrillaProductos";
+import { BuscadorCategorias } from "./components/BuscadorCategorias";
+import { FiltrosLaterales } from "./components/FiltrosLaterales";
+import { ProveedorAutenticacion } from "./context/ContextoAutenticacion";
+import { Navbar } from "./components/Navbar";
+import { ProveedorDeseos, useDeseos } from "./context/ContextoDeseos";
+import { Footer } from "./components/Footer";
+import { MetricasAdmin } from "./components/MetricasAdmin";
+import { TablaProductosAdmin } from "./components/TablaProductosAdmin";
+import { TablaGestionUsuarios } from "./components/TablaGestionUsuarios";
+import { ModalProducto } from "./components/ModalProducto";
+import { RutaProtegida } from "./components/RutaProtegida";
+import { Pagina404 } from "./pages/Pagina404";
+import { PaginaNosotros } from "./pages/PaginaSobreNosotros";
+import { DetalleProducto } from "./pages/DetalleProducto";
+import { LoginPage } from "./pages/LoginPage";
+import RegistroCuenta from "./pages/RegistroCuenta";
+import { HeroBanner } from "./components/HeroBanner";
+import type { Producto } from "./types/Producto";
+import { ProveedorCarrito, useCarrito } from "./context/ContextoCarrito";
 
-function App() {
-  const [count, setCount] = useState(0)
+const PRECIO_LIMITE = 2500;
 
+function VistaCatalogo({
+  alVerDetalle,
+}: {
+  alVerDetalle: (prod: Producto) => void;
+}) {
+  const { productos } = useProductos();
+  const [busqueda, setBusqueda] = useState("");
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("Todos");
+  const [criterioOrden, setCriterioOrden] = useState("populares");
+
+  const [marcasSeleccionadas, setMarcasSeleccionadas] = useState<string[]>([]);
+  const [precioMaximo, setPrecioMaximo] = useState(PRECIO_LIMITE);
+  const [soloEnStock, setSoloEnStock] = useState(false);
+  const [soloConDescuento, setSoloConDescuento] = useState(false);
+  const [calificacionMinima, setCalificacionMinima] = useState(0);
+
+  const marcasDisponibles = useMemo(() => {
+    const conjunto = new Set<string>();
+    productos.forEach((p) => {
+      if (p.marca) conjunto.add(p.marca);
+    });
+    return Array.from(conjunto);
+  }, [productos]);
+
+  const alternarMarca = (marca: string) => {
+    setMarcasSeleccionadas((previas) =>
+      previas.includes(marca)
+        ? previas.filter((m) => m !== marca)
+        : [...previas, marca],
+    );
+  };
+
+  const reiniciarFiltros = () => {
+    setMarcasSeleccionadas([]);
+    setPrecioMaximo(PRECIO_LIMITE);
+    setSoloEnStock(false);
+    setSoloConDescuento(false);
+    setCalificacionMinima(0);
+  };
+
+  const productosFiltrados = useMemo(() => {
+    return productos
+      .filter((producto) => {
+        const coincideBusqueda =
+          producto.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
+          producto.descripcion.toLowerCase().includes(busqueda.toLowerCase());
+        const coincideCategoria =
+          categoriaSeleccionada === "Todos" ||
+          producto.categoria === categoriaSeleccionada;
+        const coincideMarca =
+          marcasSeleccionadas.length === 0 ||
+          (producto.marca && marcasSeleccionadas.includes(producto.marca));
+        const coincidePrecio = producto.precio <= precioMaximo;
+        const coincideStock = !soloEnStock || producto.stock > 0;
+        const coincideDescuento =
+          !soloConDescuento ||
+          (producto.descuento !== undefined && producto.descuento > 0);
+        const coincideCalificacion =
+          calificacionMinima === 0 ||
+          (producto.calificacion !== undefined &&
+            producto.calificacion >= calificacionMinima);
+        return (
+          coincideBusqueda &&
+          coincideCategoria &&
+          coincideMarca &&
+          coincidePrecio &&
+          coincideStock &&
+          coincideDescuento &&
+          coincideCalificacion
+        );
+      })
+      .sort((a, b) => {
+        if (criterioOrden === "menor-precio") return a.precio - b.precio;
+        if (criterioOrden === "mayor-precio") return b.precio - a.precio;
+        const destacadosTop = [
+          "macbook pro",
+          "keychron q1",
+          "ipad air",
+          "iphone 13 pro",
+          "apple watch",
+          "sony wh-1000xm5",
+          "samsung ultrawide",
+          "logitech mx master",
+        ];
+        const indexA = destacadosTop.findIndex((p) =>
+          a.nombre.toLowerCase().includes(p),
+        );
+        const indexB = destacadosTop.findIndex((p) =>
+          b.nombre.toLowerCase().includes(p),
+        );
+        if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+        // Si solo 'a' es favorito, va primero
+        if (indexA !== -1) return -1;
+        // Si solo 'b' es favorito, va primero
+        if (indexB !== -1) return 1;
+        // Si ninguno está en la lista top, desempatar por calificación
+        return (b.calificacion || 0) - (a.calificacion || 0);
+      });
+  }, [
+    productos,
+    busqueda,
+    categoriaSeleccionada,
+    criterioOrden,
+    marcasSeleccionadas,
+    precioMaximo,
+    soloEnStock,
+    soloConDescuento,
+    calificacionMinima,
+  ]);
   return (
     <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
+      <HeroBanner />
+      <main
+        id="seccion-catalogo"
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10"
+      >
+        <header className="mb-6">
+          <h1 className="text-3xl font-heading font-bold text-secondary-900">
+            Catálogo de Productos
+          </h1>
+          <p className="text-secondary-500 text-sm mt-1">
+            Explora nuestra selección de dispositivos y accesorios de última
+            generación.
           </p>
+        </header>
+        <BuscadorCategorias
+          busqueda={busqueda}
+          alCambiarBusqueda={setBusqueda}
+          categoriaSeleccionada={categoriaSeleccionada}
+          alSeleccionarCategoria={setCategoriaSeleccionada}
+          criterioOrden={criterioOrden}
+          alCambiarOrden={setCriterioOrden}
+        />
+        <div className="flex flex-col lg:flex-row gap-8 items-start">
+          <FiltrosLaterales
+            marcasDisponibles={marcasDisponibles}
+            marcasSeleccionadas={marcasSeleccionadas}
+            alCambiarMarca={alternarMarca}
+            precioMaximo={precioMaximo}
+            precioLimite={PRECIO_LIMITE}
+            alCambiarPrecioMaximo={setPrecioMaximo}
+            soloEnStock={soloEnStock}
+            alCambiarSoloEnStock={setSoloEnStock}
+            soloConDescuento={soloConDescuento}
+            alCambiarSoloConDescuento={setSoloConDescuento}
+            calificacionMinima={calificacionMinima}
+            alCambiarCalificacionMinima={setCalificacionMinima}
+            alReiniciarFiltros={reiniciarFiltros}
+          />
+          <div className="flex-1 w-full">
+            <GrillaProductos
+              productos={productosFiltrados}
+              alVerDetalle={alVerDetalle}
+            />
+          </div>
         </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
+      </main>
     </>
-  )
+  );
+}
+function VistaDetalleWrapper() {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const { productos } = useProductos();
+
+  const producto = productos.find((p) => String(p.id) === String(id));
+
+  if (!producto) {
+    return (
+      <Pagina404
+        alNavegar={(ruta) => navigate(`/${ruta}`)}
+        productos={productos}
+      />
+    );
+  }
+
+  return <DetalleProducto producto={producto} alVolver={() => navigate("/")} />;
+}
+function VistaAdmin() {
+  const { productos } = useProductos();
+  const [modalAbierto, setModalAbierto] = useState(false);
+  const [productoAEditar, setProductoAEditar] = useState<Producto | null>(null);
+
+  const abrirCrear = () => {
+    setProductoAEditar(null);
+    setModalAbierto(true);
+  };
+  const abrirEditar = (prod: Producto) => {
+    setProductoAEditar(prod);
+    setModalAbierto(true);
+  };
+
+  return (
+    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+      <MetricasAdmin productos={productos} />
+      <TablaProductosAdmin
+        alCrearNuevo={abrirCrear}
+        alEditarProducto={abrirEditar}
+      />
+      <TablaGestionUsuarios />
+      <ModalProducto
+        abierto={modalAbierto}
+        alCerrar={() => setModalAbierto(false)}
+        productoAEditar={productoAEditar}
+      />
+    </main>
+  );
+}
+function ContenidoPrincipal() {
+  const navigate = useNavigate();
+  const { cantidadDeseos } = useDeseos();
+  const { cantidadTotal } = useCarrito();
+  const { productos } = useProductos();
+
+  const irADetalle = (prod: Producto) => {
+    navigate(`/producto/${prod.id}`);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50/60 via-purple-50/30 to-slate-100 flex flex-col justify-between selection:bg-primary-500 selection:text-white">
+      <div className="w-full">
+        <Navbar
+          cantidadDeseos={cantidadDeseos}
+          cantidadCarrito={cantidadTotal}
+          alNavegar={(seccion) => {
+            if (seccion === "catalogo") navigate("/");
+            else navigate(`/${seccion}`);
+          }}
+        />
+        <Routes>
+          <Route
+            path="/"
+            element={<VistaCatalogo alVerDetalle={irADetalle} />}
+          />
+          <Route path="/producto/:id" element={<VistaDetalleWrapper />} />
+          <Route
+            path="/nosotros"
+            element={
+              <PaginaNosotros
+                alNavegar={(s) => navigate(s === "catalogo" ? "/" : `/${s}`)}
+              />
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <LoginPage
+                alNavegar={(s) => navigate(s === "catalogo" ? "/" : `/${s}`)}
+              />
+            }
+          />
+          <Route
+            path="/registro"
+            element={<RegistroCuenta onIrLogin={() => navigate("/login")} />}
+          />
+          <Route
+            path="/admin"
+            element={
+              <RutaProtegida>
+                <VistaAdmin />
+              </RutaProtegida>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <Pagina404
+                alNavegar={(s) => navigate(s === "catalogo" ? "/" : `/${s}`)}
+                productos={productos}
+              />
+            }
+          />
+        </Routes>
+      </div>
+      <Footer alNavegar={(s) => navigate(s === "catalogo" ? "/" : `/${s}`)} />
+    </div>
+  );
+}
+function App() {
+  return (
+    <ProveedorAutenticacion>
+      <ProveedorProductos>
+        <ProveedorDeseos>
+          <ProveedorCarrito>
+            <ContenidoPrincipal />
+          </ProveedorCarrito>
+        </ProveedorDeseos>
+      </ProveedorProductos>
+    </ProveedorAutenticacion>
+  );
 }
 
-export default App
+export default App;
