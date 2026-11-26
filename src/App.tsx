@@ -15,6 +15,7 @@ import { PaginaNosotros } from "./pages/PaginaSobreNosotros";
 import { DetalleProducto } from "./pages/DetalleProducto";
 import type { Producto } from "./types/Producto";
 import { HeroBanner } from "./components/HeroBanner";
+import { ModalProducto } from "./components/ModalProducto";
 
 const PRECIO_LIMITE = 2500;
 
@@ -108,8 +109,10 @@ function VistaCatalogo({ alVerDetalle }: PropiedadesVistaCatalogo) {
   return (
     <>
       <HeroBanner />
-      <main id= "seccion-catalogo"
-      className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <main
+        id="seccion-catalogo"
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10"
+      >
         <header className="mb-6">
           <h1 className="text-3xl font-heading font-bold text-secondary-900">
             Catálogo de Productos
@@ -163,6 +166,18 @@ function ContenidoPrincipal() {
   const [productoSeleccionado, setProductoSeleccionado] =
     useState<Producto | null>(null);
 
+  const [modalAbierto, setModalAbierto] = useState(false);
+  const [productoAEditar, setProductoAEditar] = useState<Producto | null>(null);
+
+  const abrirCrear = () => {
+    setProductoAEditar(null);
+    setModalAbierto(true);
+  };
+  const abrirEditar = (prod: Producto) => {
+    setProductoAEditar(prod);
+    setModalAbierto(true);
+  };
+
   const verDetalleDeProducto = (prod: Producto) => {
     setProductoSeleccionado(prod);
     setSeccion("detalle");
@@ -191,10 +206,14 @@ function ContenidoPrincipal() {
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
               <MetricasAdmin productos={productos} />
               <TablaProductosAdmin
-                alCrearNuevo={() => alert("solo para ver si funciona")}
-                alEditarProducto={(prod) =>
-                  alert(`solo para ver si funciona: ${prod.nombre}`)
-                }
+                alCrearNuevo={abrirCrear}
+                alEditarProducto={abrirEditar}
+              />
+              {/* 👇 AQUÍ RENDERIZAS EL MODAL 👇 */}
+              <ModalProducto
+                abierto={modalAbierto}
+                alCerrar={() => setModalAbierto(false)}
+                productoAEditar={productoAEditar}
               />
             </main>
           ) : (

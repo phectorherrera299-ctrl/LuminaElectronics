@@ -189,6 +189,12 @@ export function ModalProducto({
               <input
                 type="text"
                 required
+                onInvalid={(e) =>
+                  e.currentTarget.setCustomValidity(
+                    "Por favor, ingresá el nombre del producto.",
+                  )
+                }
+                onInput={(e) => e.currentTarget.setCustomValidity("")}
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
                 placeholder="Ej. Auriculares Noise Cancelling Pro"
@@ -232,6 +238,12 @@ export function ModalProducto({
                 step="0.01"
                 min="0.01"
                 required
+                onInvalid={(e) =>
+                  e.currentTarget.setCustomValidity(
+                    "Por favor, ingresá un precio válido mayor a 0.",
+                  )
+                }
+                onInput={(e) => e.currentTarget.setCustomValidity("")}
                 value={precio}
                 onChange={(e) =>
                   setPrecio(e.target.value === "" ? "" : Number(e.target.value))
@@ -293,6 +305,12 @@ export function ModalProducto({
               <textarea
                 rows={3}
                 required
+                onInvalid={(e) =>
+                  e.currentTarget.setCustomValidity(
+                    "Por favor, ingresá una descripción del producto.",
+                  )
+                }
+                onInput={(e) => e.currentTarget.setCustomValidity("")}
                 value={descripcion}
                 onChange={(e) => setDescripcion(e.target.value)}
                 placeholder="Características principales del producto..."
