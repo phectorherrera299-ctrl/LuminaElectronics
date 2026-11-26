@@ -51,4 +51,25 @@ export const ProveedorCarrito = ({ children }: { children: ReactNode }) => {
     setCarrito([]);
   };
   const cantidadTotal = carrito.reduce((acc, item) => acc + item.cantidad, 0);
+
+  return (
+    <ContextoCarrito.Provider
+      value={{
+        carrito,
+        agregarAlCarrito,
+        eliminarDelCarrito,
+        vaciarCarrito,
+        cantidadTotal,
+      }}
+    >
+      {children}
+    </ContextoCarrito.Provider>
+  );
+};
+export const useCarrito = () => {
+  const contexto = useContext(ContextoCarrito);
+  if (!contexto) {
+    throw new Error("useCarrito debe usarse dentro de un ProveedorCarrito");
+  }
+  return contexto;
 };
