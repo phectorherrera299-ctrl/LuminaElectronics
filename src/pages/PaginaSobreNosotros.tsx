@@ -19,7 +19,7 @@ const MIEMBROS_EQUIPO: MiembroEquipo[] = [
     etiquetaRol: "Lead",
     foto: "/avatar/avatar_ejecutivo_1.png",
     descripcion:
-      "Especialista en interfaces reactivas con React 18, gestión global del estado y microinteracciones de alto impacto visual.",
+      "Especialista en interfaces reactivas con React 18/19, gestión global del estado y microinteracciones de alto impacto visual.",
     tecnologias: ["React", "Tailwind", "TypeScript", "Zustand"],
     ubicacion: "Tucumán, AR",
   },
@@ -98,95 +98,100 @@ export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
   };
 
   return (
-    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16 animate-fade-in">
-      <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-        <div className="lg:col-span-7 space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-50 border border-primary-200 text-primary-700 text-xs font-semibold">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse" />
-            PROYECTO FINAL ACADÉMICO • RollingCode School • Cohorte 2026
-          </div>
-          <h1 className="text-4xl sm:text-5xl font-heading font-extrabold text-secondary-900 tracking-tight leading-[1.15]">
-            Construyendo la nueva experiencia del{" "}
-            <span className="text-primary-500">comercio digital</span>.
-          </h1>
-          <p className="text-secondary-600 text-sm sm:text-base leading-relaxed max-w-xl">
-            Lumina Commerce nace de la visión de repensar el retail de
-            tecnología de alto desempeño. Una síntesis de arquitectura frontend
-            modular, diseño de sistemas riguroso y telemetría de inventario en
-            tiempo real concebida con los estándares más exigentes de la
-            industria.
-          </p>
-          <div className="flex flex-wrap items-center gap-3 pt-2">
-            <button
-              type="button"
-              onClick={() => irA("catalogo")}
-              className="px-5 py-2.5 rounded-xl bg-primary-500 hover:bg-primary-600 text-white font-semibold text-xs shadow-xs transition-colors cursor-pointer"
-            >
-              Explorar Catálogo →
-            </button>
-            <a
-              href="https://github.com"
-              target="_blank"
-              rel="noreferrer"
-              className="px-5 py-2.5 rounded-xl bg-white border border-secondary-200 hover:bg-secondary-50 text-secondary-700 font-semibold text-xs transition-colors cursor-pointer"
-            >
-              Repositorio GitHub ↗
-            </a>
-          </div>
-        </div>
-        <div className="lg:col-span-5">
-          <div className="bg-white rounded-3xl border border-secondary-200 p-6 shadow-sm space-y-6">
-            <div className="flex items-center justify-between pb-3 border-b border-secondary-100">
-              <span className="text-xs font-bold text-secondary-900 font-heading">
-                Ficha Técnica del Proyecto
-              </span>
-              <span className="px-2 py-0.5 rounded-md bg-tertiary-50 text-tertiary-700 text-[10px] font-bold">
-                AUDITORÍA V2.4
-              </span>
+    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16 animate-fade-in">
+      <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-950 via-purple-900 to-slate-950 text-white p-8 sm:p-12 lg:p-16 shadow-2xl border border-primary-500/20">
+        <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary-500/25 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div className="lg:col-span-7 space-y-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-primary-200 text-xs font-semibold">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary-400 animate-pulse" />
+              PROYECTO FINAL ACADÉMICO • RollingCode School 2026
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="p-4 rounded-2xl bg-secondary-50 border border-secondary-100 space-y-1">
-                <span className="text-2xl sm:text-3xl font-heading font-extrabold text-primary-600 block">
-                  99.8%
-                </span>
-                <span className="text-[11px] font-semibold text-secondary-500 uppercase tracking-wider block">
-                  Rendimiento del faro.
-                </span>
-              </div>
-              <div className="p-4 rounded-2xl bg-secondary-50 border border-secondary-100 space-y-1">
-                <span className="text-2xl sm:text-3xl font-heading font-extrabold text-secondary-900 block">
-                  &lt; 180ms
-                </span>
-                <span className="text-[11px] font-semibold text-secondary-500 uppercase tracking-wider block">
-                  Tiempo de Carga
-                </span>
-              </div>
-              <div className="p-4 rounded-2xl bg-secondary-50 border border-secondary-100 space-y-1">
-                <span className="text-2xl sm:text-3xl font-heading font-extrabold text-secondary-900 block">
-                  32+
-                </span>
-                <span className="text-[11px] font-semibold text-secondary-500 uppercase tracking-wider block">
-                  Componentes UI
-                </span>
-              </div>
-              <div className="p-4 rounded-2xl bg-secondary-50 border border-secondary-100 space-y-1">
-                <span className="text-2xl sm:text-3xl font-heading font-extrabold text-tertiary-600 block">
-                  100%
-                </span>
-                <span className="text-[11px] font-semibold text-secondary-500 uppercase tracking-wider block">
-                  Responsive Web
-                </span>
-              </div>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-white tracking-tight leading-[1.1]">
+              Construyendo la nueva experiencia del{" "}
+              <span className="bg-gradient-to-r from-primary-300 via-indigo-200 to-purple-300 bg-clip-text text-transparent">
+                comercio digital
+              </span>
+              .
+            </h1>
+            <p className="text-indigo-100 text-sm sm:text-base leading-relaxed max-w-xl">
+              Lumina Electronics nace de la visión de repensar el retail de
+              tecnología de alto desempeño. Una síntesis de arquitectura
+              frontend modular, diseño de sistemas riguroso y telemetría de
+              inventario en tiempo real concebida con los estándares más
+              exigentes de la industria.
+            </p>
+            <div className="flex flex-wrap items-center gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => irA("catalogo")}
+                className="px-6 py-3 rounded-xl bg-gradient-to-r from-primary-500 to-indigo-600 hover:from-primary-600 hover:to-indigo-700 text-white font-bold text-xs sm:text-sm shadow-lg shadow-primary-500/30 transition-all cursor-pointer hover:scale-105"
+              >
+                Explorar Catálogo →
+              </button>
+              <a
+                href="https://github.com/phectorherrera299-ctrl/LuminaElectronics.git"
+                target="_blank"
+                rel="noreferrer"
+                className="px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-xs sm:text-sm transition-all cursor-pointer backdrop-blur-sm"
+              >
+                Repositorio GitHub ↗
+              </a>
             </div>
-            <div className="pt-2">
-              <div className="flex justify-between text-[11px] text-secondary-500 mb-1">
-                <span>Pruebas Unitarias &amp; Cobertura</span>
-                <span className="font-bold text-secondary-800">
-                  94.5% Pasadas
+          </div>
+          <div className="lg:col-span-5">
+            <div className="bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 p-6 sm:p-8 shadow-2xl space-y-6">
+              <div className="flex items-center justify-between pb-3 border-b border-white/10">
+                <span className="text-xs font-bold text-white font-heading tracking-wide">
+                  Ficha Técnica del Proyecto
+                </span>
+                <span className="px-2.5 py-0.5 rounded-md bg-primary-400/20 text-primary-200 border border-primary-300/30 text-[10px] font-bold">
+                  AUDITORÍA V2.4
                 </span>
               </div>
-              <div className="w-full h-1.5 bg-secondary-100 rounded-full overflow-hidden">
-                <div className="h-full bg-primary-500 rounded-full w-[94.5%]" />
+              <div className="grid grid-cols-2 gap-4">
+                <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-1">
+                  <span className="text-2xl sm:text-3xl font-heading font-extrabold text-primary-300 block">
+                    99.8%
+                  </span>
+                  <span className="text-[11px] font-semibold text-indigo-200 uppercase tracking-wider block">
+                    Lighthouse Score
+                  </span>
+                </div>
+                <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-1">
+                  <span className="text-2xl sm:text-3xl font-heading font-extrabold text-white block">
+                    &lt; 180ms
+                  </span>
+                  <span className="text-[11px] font-semibold text-indigo-200 uppercase tracking-wider block">
+                    Tiempo de Carga
+                  </span>
+                </div>
+                <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-1">
+                  <span className="text-2xl sm:text-3xl font-heading font-extrabold text-white block">
+                    32+
+                  </span>
+                  <span className="text-[11px] font-semibold text-indigo-200 uppercase tracking-wider block">
+                    Componentes UI
+                  </span>
+                </div>
+                <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-1">
+                  <span className="text-2xl sm:text-3xl font-heading font-extrabold text-tertiary-400 block">
+                    100%
+                  </span>
+                  <span className="text-[11px] font-semibold text-indigo-200 uppercase tracking-wider block">
+                    Responsive Web
+                  </span>
+                </div>
+              </div>
+              <div className="pt-2">
+                <div className="flex justify-between text-[11px] text-indigo-200 mb-1.5">
+                  <span>Pruebas Unitarias &amp; Cobertura</span>
+                  <span className="font-bold text-white">94.5% Pasadas</span>
+                </div>
+                <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden p-0.5">
+                  <div className="h-full bg-gradient-to-r from-primary-400 to-indigo-400 rounded-full w-[94.5%]" />
+                </div>
               </div>
             </div>
           </div>
@@ -194,23 +199,23 @@ export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
       </section>
       <section className="space-y-6">
         <div>
-          <span className="text-[11px] font-bold text-primary-500 uppercase tracking-wider block">
+          <span className="text-[11px] font-bold text-primary-600 uppercase tracking-wider block">
             Nuestros Fundamentos
           </span>
-          <h2 className="text-2xl font-heading font-bold text-secondary-900">
+          <h2 className="text-2xl sm:text-3xl font-heading font-bold text-secondary-900">
             La ingeniería detrás de cada clic
           </h2>
-          <p className="text-xs text-secondary-500 mt-1 max-w-xl">
+          <p className="text-xs sm:text-sm text-secondary-500 mt-1 max-w-xl leading-relaxed">
             Diseñamos Lumina pensando en escalabilidad productiva, no solo en un
             prototipo estético. Cuatro pilares estructuran nuestro stack.
           </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div className="bg-white p-6 rounded-2xl border border-secondary-200 shadow-xs space-y-2">
-            <div className="w-9 h-9 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center font-bold text-sm">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="bg-white p-6 rounded-3xl border-2 border-indigo-100/70 hover:border-primary-500 shadow-xs hover:shadow-xl hover:shadow-primary-500/10 transition-all duration-300 space-y-3 hover:-translate-y-1">
+            <div className="w-10 h-10 rounded-2xl bg-primary-100 text-primary-700 flex items-center justify-center font-bold text-lg">
               ⚡
             </div>
-            <h3 className="font-heading font-bold text-sm text-secondary-900">
+            <h3 className="font-heading font-bold text-base text-secondary-900">
               Rendimiento React
             </h3>
             <p className="text-xs text-secondary-500 leading-relaxed">
@@ -218,11 +223,11 @@ export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
               hooks de estado y memoización para garantizar 60 FPS estables.
             </p>
           </div>
-          <div className="bg-white p-6 rounded-2xl border border-secondary-200 shadow-xs space-y-2">
-            <div className="w-9 h-9 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center font-bold text-sm">
+          <div className="bg-white p-6 rounded-3xl border-2 border-indigo-100/70 hover:border-primary-500 shadow-xs hover:shadow-xl hover:shadow-primary-500/10 transition-all duration-300 space-y-3 hover:-translate-y-1">
+            <div className="w-10 h-10 rounded-2xl bg-primary-100 text-primary-700 flex items-center justify-center font-bold text-lg">
               🏗️
             </div>
-            <h3 className="font-heading font-bold text-sm text-secondary-900">
+            <h3 className="font-heading font-bold text-base text-secondary-900">
               Arquitectura Limpia
             </h3>
             <p className="text-xs text-secondary-500 leading-relaxed">
@@ -230,11 +235,11 @@ export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
               TypeScript y componentes atómicos reutilizables.
             </p>
           </div>
-          <div className="bg-white p-6 rounded-2xl border border-secondary-200 shadow-xs space-y-2">
-            <div className="w-9 h-9 rounded-xl bg-tertiary-50 text-tertiary-600 flex items-center justify-center font-bold text-sm">
+          <div className="bg-white p-6 rounded-3xl border-2 border-indigo-100/70 hover:border-primary-500 shadow-xs hover:shadow-xl hover:shadow-primary-500/10 transition-all duration-300 space-y-3 hover:-translate-y-1">
+            <div className="w-10 h-10 rounded-2xl bg-tertiary-100 text-tertiary-700 flex items-center justify-center font-bold text-lg">
               ♿
             </div>
-            <h3 className="font-heading font-bold text-sm text-secondary-900">
+            <h3 className="font-heading font-bold text-base text-secondary-900">
               Accesibilidad Total
             </h3>
             <p className="text-xs text-secondary-500 leading-relaxed">
@@ -242,73 +247,73 @@ export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
               teclado y contraste cromático conforme a normas WCAG 2.1 AA.
             </p>
           </div>
-          <div className="bg-white p-6 rounded-2xl border border-secondary-200 shadow-xs space-y-2">
-            <div className="w-9 h-9 rounded-xl bg-secondary-100 text-secondary-700 flex items-center justify-center font-bold text-sm">
+          <div className="bg-white p-6 rounded-3xl border-2 border-indigo-100/70 hover:border-primary-500 shadow-xs hover:shadow-xl hover:shadow-primary-500/10 transition-all duration-300 space-y-3 hover:-translate-y-1">
+            <div className="w-10 h-10 rounded-2xl bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-lg">
               🎯
             </div>
-            <h3 className="font-heading font-bold text-sm text-secondary-900">
+            <h3 className="font-heading font-bold text-base text-secondary-900">
               UX Sin Fricción
             </h3>
             <p className="text-xs text-secondary-500 leading-relaxed">
               Respuestas instantáneas al vuelo, filtros combinados sin recargas
-              y un checkout con validación interactiva paso a paso.
+              y persistencia de datos sincronizada en tiempo real.
             </p>
           </div>
         </div>
       </section>
-      <section className="space-y-6 pt-4 border-t border-secondary-200/60">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+      <section className="space-y-6 pt-4 border-t border-indigo-100">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
           <div>
-            <span className="text-[11px] font-bold text-primary-500 uppercase tracking-wider block">
+            <span className="text-[11px] font-bold text-primary-600 uppercase tracking-wider block">
               Talento &amp; Compromiso
             </span>
-            <h2 className="text-2xl font-heading font-bold text-secondary-900">
+            <h2 className="text-2xl sm:text-3xl font-heading font-bold text-secondary-900">
               Equipo de Desarrollo
             </h2>
-            <p className="text-xs text-secondary-500 mt-1 max-w-2xl">
-              Estudiantes y desarrolladores formados en el Bootcamp Intensivo de
-              RollingCode School, fusionando precisión visual e ingeniería de
-              software.
+            <p className="text-xs sm:text-sm text-secondary-500 mt-1 max-w-2xl leading-relaxed">
+              Desarrolladores formados en el Bootcamp Intensivo de RollingCode
+              School, fusionando precisión visual, arquitectura sólida e
+              ingeniería de software.
             </p>
           </div>
-          <span className="text-xs font-semibold text-secondary-500 px-3 py-1 bg-secondary-100 rounded-full self-start sm:self-auto">
+          <span className="text-xs font-bold text-primary-700 px-4 py-1.5 bg-primary-50 border border-primary-200 rounded-full self-start sm:self-auto">
             3 Desarrolladores Principales
           </span>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {MIEMBROS_EQUIPO.map((miembro) => (
             <div
               key={miembro.nombre}
-              className="bg-white rounded-2xl border border-secondary-200 overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col justify-between group"
+              className="bg-white rounded-3xl border-2 border-indigo-100/80 hover:border-primary-500 overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-primary-500/20 transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1.5"
             >
               <div>
-                <div className="relative aspect-4/3 w-full bg-secondary-100 overflow-hidden">
+                <div className="relative aspect-4/3 w-full bg-gradient-to-b from-indigo-100 via-purple-50 to-white overflow-hidden p-3 flex items-center justify-center">
                   <img
                     src={miembro.foto}
                     alt={miembro.nombre}
-                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover object-top rounded-2xl group-hover:scale-105 transition-transform duration-500 shadow-inner"
                   />
-                  <span className="absolute top-3 right-3 px-2 py-0.5 text-[10px] font-bold rounded-md bg-secondary-900/80 backdrop-blur-xs text-white">
+                  <span className="absolute top-5 right-5 px-3 py-1 text-[10px] font-bold rounded-lg bg-indigo-900/90 text-white shadow-md backdrop-blur-md">
                     {miembro.etiquetaRol}
                   </span>
                 </div>
-                <div className="p-5 space-y-3">
+                <div className="p-6 space-y-3.5">
                   <div>
-                    <h3 className="font-heading font-bold text-base text-secondary-900 leading-tight">
+                    <h3 className="font-heading font-bold text-lg text-secondary-900 leading-tight group-hover:text-primary-600 transition-colors">
                       {miembro.nombre}
                     </h3>
-                    <span className="text-xs font-semibold text-primary-600 block mt-0.5">
+                    <span className="text-xs font-bold text-primary-600 block mt-0.5">
                       {miembro.rol}
                     </span>
                   </div>
-                  <p className="text-xs text-secondary-500 leading-relaxed line-clamp-3">
+                  <p className="text-xs text-secondary-600 leading-relaxed line-clamp-3">
                     {miembro.descripcion}
                   </p>
                   <div className="flex flex-wrap gap-1.5 pt-1">
                     {miembro.tecnologias.map((tech) => (
                       <span
                         key={tech}
-                        className="px-2 py-0.5 text-[10px] font-medium bg-secondary-50 text-secondary-600 rounded-md border border-secondary-200"
+                        className="px-2.5 py-1 text-[10px] font-bold bg-primary-50 text-primary-700 rounded-lg border border-primary-200/60"
                       >
                         {tech}
                       </span>
@@ -316,27 +321,27 @@ export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
                   </div>
                 </div>
               </div>
-              <div className="p-5 pt-3 border-t border-secondary-100 flex items-center justify-between text-xs text-secondary-400">
-                <span className="flex items-center gap-1 text-[11px]">
+              <div className="p-6 pt-3 border-t border-indigo-50 flex items-center justify-between text-xs text-secondary-500 bg-gradient-to-b from-transparent to-indigo-50/30">
+                <span className="flex items-center gap-1.5 font-medium text-[11px] text-secondary-600">
                   📍 {miembro.ubicacion}
                 </span>
-                <span className="text-secondary-400 font-bold hover:text-primary-600 cursor-pointer transition-colors">
-                  ↗
+                <span className="text-primary-600 font-extrabold group-hover:translate-x-1 transition-transform">
+                  Ver Perfil ↗
                 </span>
               </div>
             </div>
           ))}
         </div>
       </section>
-      <section className="space-y-6 pt-4 border-t border-secondary-200/60">
+      <section className="space-y-6 pt-4 border-t border-indigo-100">
         <div>
-          <span className="text-[11px] font-bold text-primary-500 uppercase tracking-wider block">
+          <span className="text-[11px] font-bold text-primary-600 uppercase tracking-wider block">
             Hoja de Ruta
           </span>
-          <h2 className="text-2xl font-heading font-bold text-secondary-900">
+          <h2 className="text-2xl sm:text-3xl font-heading font-bold text-secondary-900">
             Evolución del Proyecto
           </h2>
-          <p className="text-xs text-secondary-500 mt-1 max-w-xl">
+          <p className="text-xs sm:text-sm text-secondary-500 mt-1 max-w-xl leading-relaxed">
             Un proceso iterativo de 2 semanas estructurado bajo metodologías
             ágiles Scrum en RollingCode School.
           </p>
@@ -345,13 +350,13 @@ export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
           {ETAPAS.map((etapa) => (
             <div
               key={etapa.numero}
-              className="bg-white p-5 rounded-2xl border border-secondary-200 shadow-xs space-y-3 relative overflow-hidden"
+              className="bg-white p-6 rounded-3xl border-2 border-indigo-100/70 hover:border-primary-500 shadow-xs hover:shadow-xl hover:shadow-primary-500/10 transition-all duration-300 space-y-3 relative overflow-hidden"
             >
               <div className="flex items-center justify-between">
-                <span className="w-8 h-8 rounded-xl bg-primary-50 text-primary-600 font-heading font-bold text-xs flex items-center justify-center">
+                <span className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-600 to-indigo-600 text-white font-heading font-extrabold text-xs flex items-center justify-center shadow-xs">
                   {etapa.numero}
                 </span>
-                <span className="text-[10px] font-semibold text-secondary-400">
+                <span className="text-[10px] font-bold text-secondary-400">
                   {etapa.semanas}
                 </span>
               </div>
@@ -359,11 +364,11 @@ export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
                 <h3 className="font-heading font-bold text-sm text-secondary-900">
                   {etapa.titulo}
                 </h3>
-                <p className="text-xs text-secondary-500 leading-relaxed mt-1">
+                <p className="text-xs text-secondary-500 leading-relaxed mt-1.5">
                   {etapa.detalle}
                 </p>
               </div>
-              <div className="pt-2 flex items-center gap-1.5 text-[11px] font-bold text-tertiary-600">
+              <div className="pt-2 flex items-center gap-1.5 text-[11px] font-bold text-tertiary-700">
                 <span>✓</span>
                 <span>{etapa.estado}</span>
               </div>
@@ -371,12 +376,12 @@ export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
           ))}
         </div>
       </section>
-      <section className="space-y-6 pt-4 border-t border-secondary-200/60">
+      <section className="space-y-6 pt-4 border-t border-indigo-100">
         <div className="text-center max-w-xl mx-auto space-y-1">
-          <span className="text-[11px] font-bold text-primary-500 uppercase tracking-wider block">
+          <span className="text-[11px] font-bold text-primary-600 uppercase tracking-wider block">
             Arquitectura de Software
           </span>
-          <h2 className="text-2xl font-heading font-bold text-secondary-900">
+          <h2 className="text-2xl sm:text-3xl font-heading font-bold text-secondary-900">
             Tech Stack de Lumina
           </h2>
           <p className="text-xs text-secondary-500">
@@ -388,20 +393,20 @@ export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
           {TECNOLOGIAS.map((tech) => (
             <div
               key={tech.nombre}
-              className="bg-white p-4 rounded-2xl border border-secondary-200 shadow-xs text-center space-y-1 hover:border-primary-300 transition-colors"
+              className="bg-white p-4 rounded-2xl border-2 border-indigo-100/70 hover:border-primary-500 shadow-xs text-center space-y-1 hover:shadow-lg hover:shadow-primary-500/15 hover:-translate-y-1 transition-all"
             >
               <span className="text-2xl block mb-1">{tech.icono}</span>
               <span className="font-heading font-bold text-xs text-secondary-900 block truncate">
                 {tech.nombre}
               </span>
-              <span className="text-[10px] text-secondary-400 block truncate">
+              <span className="text-[10px] text-primary-600 font-semibold block truncate">
                 {tech.detalle}
               </span>
             </div>
           ))}
         </div>
       </section>
-      <section className="bg-gradient-to-r from-primary-900 to-secondary-900 rounded-3xl p-8 sm:p-12 text-white shadow-xl relative overflow-hidden">
+      <section className="bg-gradient-to-r from-indigo-950 via-purple-900 to-indigo-900 rounded-3xl p-8 sm:p-12 text-white shadow-2xl relative overflow-hidden border border-primary-500/25">
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-8 space-y-4">
             <span className="text-[10px] font-bold tracking-widest uppercase text-primary-300 block">
@@ -410,14 +415,14 @@ export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
             <h2 className="text-2xl sm:text-3xl font-heading font-extrabold text-white">
               Gracias al equipo docente de RollingCode School
             </h2>
-            <p className="text-xs sm:text-sm text-secondary-300 leading-relaxed max-w-2xl">
+            <p className="text-xs sm:text-sm text-indigo-100 leading-relaxed max-w-2xl">
               Este proyecto representa la culminación de meses de mentoría
               constante, código colaborativo y ejecución de desafíos reales. Un
               agradecimiento especial a los profesores y tutores que guiaron la
               arquitectura, nos desafiaron a seguir las mejores prácticas de la
               industria y fomentaron el trabajo en equipo con rigor profesional.
             </p>
-            <div className="flex flex-wrap items-center gap-4 pt-2 text-xs text-secondary-300">
+            <div className="flex flex-wrap items-center gap-4 pt-2 text-xs text-indigo-200">
               <span className="flex items-center gap-1.5 font-semibold">
                 <span className="text-tertiary-400">✓</span> Bootcamp FullStack
               </span>
@@ -428,25 +433,24 @@ export const PaginaNosotros = ({ alNavegar }: PropiedadesPaginaNosotros) => {
               </span>
               <span>•</span>
               <span className="flex items-center gap-1.5 font-semibold">
-                <span className="text-tertiary-400">✓</span> Mentores Demo
-                Senior
+                <span className="text-tertiary-400">✓</span> Metodología Ágil
               </span>
             </div>
           </div>
-          <div className="lg:col-span-4 bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/15 text-center space-y-3">
-            <span className="text-2xl block">📦</span>
+          <div className="lg:col-span-4 bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 text-center space-y-3">
+            <span className="text-3xl block">📦</span>
             <h3 className="font-heading font-bold text-sm text-white">
               ¿Te interesa el código?
             </h3>
-            <p className="text-[11px] text-secondary-300 leading-relaxed">
-              El repositorio cuenta con documentación, esquemas de base de datos
-              y guía de instalación con TypeScript y Vite.
+            <p className="text-[11px] text-indigo-200 leading-relaxed">
+              El repositorio cuenta con documentación, esquemas y componentes
+              modulares creados con TypeScript y Vite.
             </p>
             <a
-              href="https://github.com"
+              href="https://github.com/phectorherrera299-ctrl/LuminaElectronics.git"
               target="_blank"
               rel="noreferrer"
-              className="inline-block w-full py-2.5 px-4 rounded-xl bg-white text-secondary-900 font-semibold text-xs hover:bg-secondary-100 transition-colors shadow-sm"
+              className="inline-block w-full py-2.5 px-4 rounded-xl bg-white text-secondary-900 font-bold text-xs hover:bg-primary-50 hover:text-primary-700 transition-colors shadow-sm"
             >
               Ver Repositorio en GitHub ↗
             </a>
