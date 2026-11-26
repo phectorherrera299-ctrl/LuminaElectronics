@@ -50,7 +50,7 @@ export const BuscadorCategorias = ({
             value={busqueda}
             onChange={(e) => alCambiarBusqueda(e.target.value)}
             placeholder="Buscar por nombre, modelo (ej. 'Sony XM5', 'MacBook', 'Keychron')..."
-            className="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm bg-white border border-secondary-200 rounded-xl text-secondary-900 placeholder:text-secondary-400 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all"
+            className="w-full pl-10 pr-4 py-3 text-xs sm:text-sm bg-white border border-secondary-200 rounded-xl text-secondary-900 placeholder:text-secondary-400 focus:outline-none focus:border-primary-500 focus:ring-4 focus:ring-primary-500/15 shadow-xs transition-all"
           />
           {busqueda && (
             <button
@@ -89,10 +89,10 @@ export const BuscadorCategorias = ({
               key={cat}
               type="button"
               onClick={() => alSeleccionarCategoria(cat)}
-              className={`px-4 py-2 text-xs font-semibold rounded-xl whitespace-nowrap transition-all cursor-pointer ${
+              className={`px-4 py-2.5 text-xs font-bold rounded-xl whitespace-nowrap transition-all cursor-pointer ${
                 estaActivo
-                  ? "bg-primary-500 text-white shadow-xs"
-                  : "bg-white border border-secondary-200 text-secondary-600 hover:bg-secondary-50 hover:text-secondary-900"
+                  ? "bg-gradient-to-r from-primary-600 to-indigo-600 text-white shadow-md shadow-primary-500/25 scale-105"
+                  : "bg-white/80 backdrop-blur-sm border border-secondary-200 text-secondary-600 hover:border-primary-300 hover:text-primary-600 hover:bg-primary-50/50"
               }`}
             >
               {cat === "Todos" ? "Todos los Equipos" : cat}

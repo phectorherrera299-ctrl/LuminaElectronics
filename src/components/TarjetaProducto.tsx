@@ -6,7 +6,10 @@ interface PropiedadesTarjeta {
   alVerDetalle?: (producto: Producto) => void;
 }
 
-export const TarjetaProducto = ({ producto, alVerDetalle }: PropiedadesTarjeta) => {
+export const TarjetaProducto = ({
+  producto,
+  alVerDetalle,
+}: PropiedadesTarjeta) => {
   const precioFinal = producto.descuento
     ? (producto.precio * (1 - producto.descuento / 100)).toFixed(2)
     : producto.precio.toFixed(2);
@@ -35,7 +38,7 @@ export const TarjetaProducto = ({ producto, alVerDetalle }: PropiedadesTarjeta) 
   const stockInfo = estadoStock();
 
   return (
-    <article className="group bg-white rounded-2xl border border-secondary-200 overflow-hidden shadow-xs hover:shadow-md transition-all duration-300 flex flex-col justify-between">
+    <article className="group bg-white rounded-2xl border border-secondary-200 hover:border-primary-400/60 overflow-hidden shadow-sm hover:shadow-xl hover:shadow-primary-500/10 transition-all duration-300 flex flex-col justify-between hover:-translate-y-1">
       <div>
         <div className="relative aspect-square w-full bg-secondary-50 overflow-hidden">
           <img
@@ -125,7 +128,7 @@ export const TarjetaProducto = ({ producto, alVerDetalle }: PropiedadesTarjeta) 
         <button
           type="button"
           onClick={() => alVerDetalle && alVerDetalle(producto)}
-          className="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-primary-50 text-primary-600 hover:bg-primary-500 hover:text-white transition-colors cursor-pointer"
+          className="px-3.5 py-1.5 text-xs font-bold rounded-xl bg-gradient-to-r from-primary-500 to-indigo-600 text-white shadow-xs hover:shadow-md hover:from-primary-600 hover:to-indigo-700 transition-all cursor-pointer"
         >
           Ver Detalle
         </button>

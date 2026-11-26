@@ -242,8 +242,8 @@ function ContenidoPrincipal() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-50 flex flex-col justify-between">
-      <div>
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50/60 via-purple-50/30 to-slate-100 flex flex-col justify-between selection:bg-primary-500 selection:text-white">
+      <div className="w-full">
         <Navbar
           cantidadDeseos={cantidadDeseos}
           alNavegar={(seccion) => {
