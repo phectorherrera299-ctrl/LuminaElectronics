@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import type { Producto } from "../types/Producto";
 import { useDeseos } from "../context/ContextoDeseos";
+import { useCarrito } from "../context/ContextoCarrito";
 
 interface AccesorioRecomendado {
   id: string;
@@ -57,6 +58,7 @@ export const DetalleProducto = ({
   productosRecomendados = [],
 }: PropiedadesDetalle) => {
   const { alternarDeseo, esDeseo } = useDeseos();
+  const { agregarAlCarrito } = useCarrito();
   const favorito = esDeseo(producto.id);
 
   const [cantidad, setCantidad] = useState(1);
@@ -249,10 +251,10 @@ export const DetalleProducto = ({
   };
 
   const manejarCarrito = (prod: Producto, cant: number = 1) => {
+    agregarAlCarrito(prod.id, cant);
     if (alAgregarAlCarrito) {
       alAgregarAlCarrito(prod, cant);
     }
-    alert(`¡Agregaste ${cant} unidad(es) de ${prod.nombre} al carrito!`);
   };
 
   const accesoriosAMostrar =
@@ -770,11 +772,9 @@ export const DetalleProducto = ({
                 </span>
                 <button
                   type="button"
-                  onClick={() =>
-                    alert(
-                      `¡Agregaste ${acc.nombre} al carrito por $${acc.precio.toFixed(2)}!`,
-                    )
-                  }
+                  onClick={() => {
+                    agregarAlCarrito(acc.id, 1);
+                  }}
                   title="Añadir accesorio al carrito"
                   className="w-8 h-8 rounded-xl bg-primary-50 text-primary-600 hover:bg-primary-500 hover:text-white flex items-center justify-center transition-colors cursor-pointer"
                 >

@@ -20,6 +20,7 @@ import { LoginPage } from "./pages/LoginPage";
 import RegistroCuenta from "./pages/RegistroCuenta";
 import { HeroBanner } from "./components/HeroBanner";
 import type { Producto } from "./types/Producto";
+import { ProveedorCarrito, useCarrito } from "./context/ContextoCarrito";
 
 const PRECIO_LIMITE = 2500;
 
@@ -234,6 +235,7 @@ function VistaAdmin() {
 function ContenidoPrincipal() {
   const navigate = useNavigate();
   const { cantidadDeseos } = useDeseos();
+  const { cantidadTotal } = useCarrito();
   const { productos } = useProductos();
 
   const irADetalle = (prod: Producto) => {
@@ -246,6 +248,7 @@ function ContenidoPrincipal() {
       <div className="w-full">
         <Navbar
           cantidadDeseos={cantidadDeseos}
+          cantidadCarrito={cantidadTotal}
           alNavegar={(seccion) => {
             if (seccion === "catalogo") navigate("/");
             else navigate(`/${seccion}`);
@@ -305,7 +308,9 @@ function App() {
     <ProveedorAutenticacion>
       <ProveedorProductos>
         <ProveedorDeseos>
-          <ContenidoPrincipal />
+          <ProveedorCarrito>
+            <ContenidoPrincipal />
+          </ProveedorCarrito>
         </ProveedorDeseos>
       </ProveedorProductos>
     </ProveedorAutenticacion>

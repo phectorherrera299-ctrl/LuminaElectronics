@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAutenticacion } from "../context/ContextoAutenticacion";
+import { useCarrito } from "../context/ContextoCarrito";
 
 interface PropiedadesNavbar {
   cantidadDeseos?: number;
@@ -20,6 +21,20 @@ export const Navbar = ({
   const manejarNavegacion = (seccion: string) => {
     if (alNavegar) alNavegar(seccion);
     setMenuAbierto(false);
+  };
+
+  const { vaciarCarrito } = useCarrito();
+  const manejarClicCarrito = () => {
+    if (cantidadCarrito === 0) {
+      alert("Tu carrito de compras está vacío.");
+      return;
+    }
+    const confirmar = window.confirm(
+      `Tienes ${cantidadCarrito} producto(s) en tu carrito. ¿Deseas vaciar el carrito?`,
+    );
+    if (confirmar) {
+      vaciarCarrito();
+    }
   };
 
   return (
@@ -154,8 +169,9 @@ export const Navbar = ({
           </button>
           <button
             type="button"
+            onClick={manejarClicCarrito}
             aria-label="Carrito de compras"
-            className="relative w-9 h-9 rounded-xl border border-secondary-200 text-secondary-600 hover:text-secondary-900 hover:bg-secondary-50 flex items-center justify-center transition-colors cursor-pointer"
+            className="relative w-9 h-9 rounded-xl border border-secondary-200 text-secondary-600 hover:text-primary-600 hover:border-primary-300 hover:bg-primary-50/50 flex items-center justify-center transition-all cursor-pointer"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -168,11 +184,11 @@ export const Navbar = ({
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
+                d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
               />
             </svg>
             {cantidadCarrito > 0 && (
-              <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary-500 text-white text-[10px] font-bold flex items-center justify-center">
+              <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary-500 text-white text-[10px] font-bold flex items-center justify-center shadow-xs">
                 {cantidadCarrito}
               </span>
             )}
