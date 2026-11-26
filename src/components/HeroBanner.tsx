@@ -21,7 +21,8 @@ export const HeroBanner = ({ alExplorar }: PropiedadesHero) => {
   };
 
   return (
-    <section className="bg-gradient-to-b from-white to-secondary-50/60 border-b border-secondary-200/70 pt-8 pb-12">
+    <section className="bg-gradient-to-br from-indigo-900 via-primary-800 to-purple-950 text-white py-14 shadow-inner relative overflow-hidden border-b border-primary-700/50">
+      <div className="absolute -top-20 -right-20 w-96 h-96 bg-primary-500/20 rounded-full blur-3xl pointer-events-none" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-7 space-y-6">
@@ -29,12 +30,12 @@ export const HeroBanner = ({ alExplorar }: PropiedadesHero) => {
               <span className="w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse" />
               Innovación &amp; Precisión Minimalista
             </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-secondary-900 tracking-tight leading-[1.1]">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-white tracking-tight leading-[1.1]">
               Tecnología de{" "}
-              <span className="text-primary-500">Próxima Generación</span> en
+              <span className="text-primary-300">Próxima Generación</span> en
               tus Manos.
             </h1>
-            <p className="text-secondary-600 text-sm sm:text-base max-w-xl leading-relaxed">
+            <p className="text-indigo-100 text-sm sm:text-base max-w-xl leading-relaxed">
               Descubre nuestra selección exclusiva de estaciones de trabajo,
               audio inmersivo y periféricos inteligentes concebidos para
               entusiastas y creadores de alto impacto.
@@ -51,7 +52,7 @@ export const HeroBanner = ({ alExplorar }: PropiedadesHero) => {
               <button
                 type="button"
                 onClick={copiarCupon}
-                className="px-4 py-3 rounded-xl bg-white border border-secondary-200 hover:bg-secondary-50 text-secondary-800 text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 cursor-pointer shadow-xs"
+                className="px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 cursor-pointer backdrop-blur-sm"
               >
                 <span>🏷️</span>
                 <span>
@@ -63,26 +64,26 @@ export const HeroBanner = ({ alExplorar }: PropiedadesHero) => {
             </div>
             <div className="grid grid-cols-3 gap-3 pt-4 border-t border-secondary-200/60 max-w-lg">
               <div className="space-y-0.5">
-                <span className="font-heading font-bold text-secondary-900 text-sm block">
+                <span className="font-heading font-bold text-indigo-200 text-sm block">
                   Envío Gratis
                 </span>
-                <span className="text-[11px] text-secondary-500 block">
+                <span className="text-[11px] text-white block">
                   En órdenes &gt; $50
                 </span>
               </div>
               <div className="space-y-0.5">
-                <span className="font-heading font-bold text-secondary-900 text-sm block">
+                <span className="font-heading font-bold text-indigo-200 text-sm block">
                   30 Días
                 </span>
-                <span className="text-[11px] text-secondary-500 block">
+                <span className="text-[11px] text-white block">
                   Garantía sin costo
                 </span>
               </div>
               <div className="space-y-0.5">
-                <span className="font-heading font-bold text-secondary-900 text-sm block">
+                <span className="font-heading font-bold text-indigo-200 text-sm block">
                   Soporte 24/7
                 </span>
-                <span className="text-[11px] text-secondary-500 block">
+                <span className="text-[11px] text-white block">
                   Especialistas Lumina
                 </span>
               </div>
@@ -91,7 +92,7 @@ export const HeroBanner = ({ alExplorar }: PropiedadesHero) => {
           <div className="lg:col-span-5 relative">
             <div className="relative rounded-3xl overflow-hidden bg-gradient-to-tr from-secondary-900 to-secondary-800 p-1 shadow-2xl">
               <img
-                src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop&q=80"
+                src="https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=1000&auto=format&fit=crop&q=80"
                 alt="Colección Studio & Acústica"
                 className="w-full aspect-4/3 object-cover rounded-[22px] opacity-90"
               />
@@ -108,7 +109,7 @@ export const HeroBanner = ({ alExplorar }: PropiedadesHero) => {
                 </p>
               </div>
             </div>
-            <div className="bottom-4 -left-4 bg-white rounded-2xl p-3 border border-secondary-200 shadow-lg hidden sm:flex items-center gap-3 w-70">
+            <div className="bottom-4 -left-4 bg-gradient-to-br from-indigo-300 rounded-2xl p-3 border border-secondary-200 shadow-lg hidden sm:flex items-center gap-3 w-70">
               <div className="w-10 h-10 rounded-xl bg-tertiary-50 text-tertiary-600 flex items-center justify-center font-bold text-sm">
                 ★
               </div>
@@ -116,7 +117,7 @@ export const HeroBanner = ({ alExplorar }: PropiedadesHero) => {
                 <span className="font-bold text-secondary-900 block font-heading">
                   +1,400 Reviews
                 </span>
-                <span className="text-secondary-500 block text-[11px]">
+                <span className="text-white block text-[11px]">
                   Promedio 4.9/5.0 Estrellas
                 </span>
               </div>

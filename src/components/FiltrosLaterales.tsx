@@ -30,21 +30,21 @@ export const FiltrosLaterales = ({
   alReiniciarFiltros,
 }: PropiedadesFiltrosLaterales) => {
   return (
-    <aside className="w-full lg:w-64 bg-white rounded-2xl border border-secondary-200 p-5 space-y-6 h-fit">
+    <aside className="w-full lg:w-64 bg-indigo-900 rounded-2xl border border-secondary-200 p-5 space-y-6 h-fit">
       <div className="flex items-center justify-between pb-3 border-b border-secondary-300">
-        <h2 className="font-heading font-bold text-secondary-900 text-base">
+        <h2 className="font-heading font-bold text-white text-base">
           Filtros
         </h2>
         <button
           type="button"
           onClick={alReiniciarFiltros}
-          className="text-xs font-semibold text-primary-500 hover:text-primary-700 transition-colors cursor-pointer"
+          className="text-xs font-semibold text-primary-200 hover:text-primary-300 transition-colors cursor-pointer"
         >
           Reiniciar
         </button>
       </div>
       <div>
-        <h3 className="text-xs font-bold text-secondary-900 uppercase tracking-wider mb-3">
+        <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-3">
           Marcas Disponibles
         </h3>
         <div className="space-y-2">
@@ -53,7 +53,7 @@ export const FiltrosLaterales = ({
             return (
               <label
                 key={marca}
-                className="flex items-center gap-2.5 text-xs text-secondary-700 hover:text-secondary-900 cursor-pointer select-none"
+                className="flex items-center gap-2.5 text-xs text-white hover:text-secondary-300 cursor-pointer select-none"
               >
                 <input
                   type="checkbox"
@@ -69,10 +69,10 @@ export const FiltrosLaterales = ({
       </div>
       <div>
         <div className="flex items-center justify-between mb-2">
-          <h3 className="text-xs font-bold text-secondary-900 uppercase tracking-wider">
+          <h3 className="text-xs font-bold text-white uppercase tracking-wider">
             Precio Máximo
           </h3>
-          <span className="text-xs font-bold text-primary-600 font-heading">
+          <span className="text-xs font-bold text-primary-200 font-heading">
             ${precioMaximo.toLocaleString()} USD
           </span>
         </div>
@@ -85,17 +85,17 @@ export const FiltrosLaterales = ({
           onChange={(e) => alCambiarPrecioMaximo(Number(e.target.value))}
           className="w-full accent-primary-500 cursor-pointer"
         />
-        <div className="flex justify-between text-[10px] text-secondary-400 mt-1">
+        <div className="flex justify-between text-[10px] text-secondary-300 mt-1">
           <span>$50</span>
           <span>${precioLimite.toLocaleString()}</span>
         </div>
       </div>
       <div>
-        <h3 className="text-xs font-bold text-secondary-900 uppercase tracking-wider mb-3">
+        <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-3">
           Disponibilidad
         </h3>
         <div className="space-y-2">
-          <label className="flex items-center gap-2.5 text-xs text-secondary-700 hover:text-secondary-900 cursor-pointer select-none">
+          <label className="flex items-center gap-2.5 text-xs text-white hover:text-secondary-300 cursor-pointer select-none">
             <input
               type="checkbox"
               checked={soloEnStock}
@@ -104,7 +104,7 @@ export const FiltrosLaterales = ({
             />
             <span>Solo productos en stock</span>
           </label>
-          <label className="flex items-center gap-2.5 text-xs text-secondary-700 hover:text-secondary-900 cursor-pointer select-none">
+          <label className="flex items-center gap-2.5 text-xs text-white hover:text-secondary-300 cursor-pointer select-none">
             <input
               type="checkbox"
               checked={soloConDescuento}
@@ -116,7 +116,7 @@ export const FiltrosLaterales = ({
         </div>
       </div>
       <div>
-        <h3 className="text-xs font-bold text-secondary-900 uppercase tracking-wider mb-3">
+        <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-3">
           Calificación Mínima
         </h3>
         <div className="flex gap-2">
@@ -130,7 +130,7 @@ export const FiltrosLaterales = ({
                 className={`px-3 py-1.5 text-xs font-semibold rounded-lg border transition-all cursor-pointer ${
                   activo
                     ? "bg-primary-50 border-primary-500 text-primary-600"
-                    : "border-secondary-200 text-secondary-600 hover:bg-secondary-50"
+                    : "border-secondary-200 text-white hover:bg-secondary-50"
                 }`}
               >
                 ★ {calif}+

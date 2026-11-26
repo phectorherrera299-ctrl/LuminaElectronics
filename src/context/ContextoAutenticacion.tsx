@@ -134,6 +134,16 @@ export const ProveedorAutenticacion = ({
     tipoCuenta: TipoCuenta,
   ) => {
     const emailNormalizado = email.trim().toLowerCase();
+    if (
+      emailNormalizado.endsWith("@lumina.dev") ||
+      emailNormalizado === "admin@lumina.dev"
+    ) {
+      return {
+        exito: false,
+        mensaje:
+          "No está permitido registrar cuentas con dominio administrativo (@lumina.dev).",
+      };
+    }
 
     const existe = usuariosRegistrados.some(
       (usuario) => usuario.email.toLowerCase() === emailNormalizado,
@@ -185,40 +195,44 @@ export const ProveedorAutenticacion = ({
         email: emailNormalizado,
         rol: "Admin",
       });
-    } else {
-      const usuarioEncontrado = usuariosRegistrados.find(
-        (usuario) =>
-          usuario.email.toLowerCase() === emailNormalizado &&
-          usuario.password === password,
-      );
-      if (!usuarioEncontrado) {
-        return {
-          exito: false,
-          mensaje: "El correo electrónico o la contraseña son incorrectos.",
-        };
+      if (recordar) {
+        localStorage.setItem("lumina_recordar_sesion", "true");
       }
-      if (usuarioEncontrado.estado !== "Activo") {
-        return {
-          exito: false,
-          mensaje:
-            "Tu cuenta se encuentra inactiva. Contactá con administración.",
-        };
-      }
-      setUsuario({
-        nombre: usuarioEncontrado.nombre,
-        email: usuarioEncontrado.email,
-        rol: "Cliente",
-      });
+      return { exito: true, mensaje: "Sesión iniciada como Administrador." };
     }
+
+    const usuarioEncontrado = usuariosRegistrados.find(
+      (usuario) =>
+        usuario.email.toLowerCase() === emailNormalizado &&
+        usuario.password === password,
+    );
+
+    if (!usuarioEncontrado) {
+      return {
+        exito: false,
+        mensaje: "El correo electrónico o la contraseña son incorrectos.",
+      };
+    }
+
+    if (usuarioEncontrado.estado !== "Activo") {
+      return {
+        exito: false,
+        mensaje:
+          "Tu cuenta se encuentra inactiva. Contactá con administración.",
+      };
+    }
+
+    const esRolAdmin = usuarioEncontrado.rol === "Administrador";
+
+    setUsuario({
+      nombre: usuarioEncontrado.nombre,
+      email: usuarioEncontrado.email,
+      rol: esRolAdmin ? "Admin" : "Cliente",
+    });
     if (recordar) {
       localStorage.setItem("lumina_recordar_sesion", "true");
-    } else {
-      localStorage.removeItem("lumina_recordar_sesion");
     }
-    return {
-      exito: true,
-      mensaje: "¡Bienvenido! Iniciaste sesión correctamente.",
-    };
+    return { exito: true, mensaje: "Sesión iniciada con éxito." };
   };
 
   const cerrarSesion = () => setUsuario(USUARIO_DEFECTO);

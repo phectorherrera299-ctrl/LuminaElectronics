@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { Routes, Route, useNavigate, useParams } from "react-router-dom";
 import { ProveedorProductos, useProductos } from "./context/ProductosContext";
 import { GrillaProductos } from "./components/GrillaProductos";
 import { BuscadorCategorias } from "./components/BuscadorCategorias";
@@ -6,27 +7,28 @@ import { FiltrosLaterales } from "./components/FiltrosLaterales";
 import { ProveedorAutenticacion } from "./context/ContextoAutenticacion";
 import { Navbar } from "./components/Navbar";
 import { ProveedorDeseos, useDeseos } from "./context/ContextoDeseos";
-import { useAutenticacion } from "./context/ContextoAutenticacion";
 import { Footer } from "./components/Footer";
 import { MetricasAdmin } from "./components/MetricasAdmin";
 import { TablaProductosAdmin } from "./components/TablaProductosAdmin";
+import { TablaGestionUsuarios } from "./components/TablaGestionUsuarios";
+import { ModalProducto } from "./components/ModalProducto";
+import { RutaProtegida } from "./components/RutaProtegida";
 import { Pagina404 } from "./pages/Pagina404";
 import { PaginaNosotros } from "./pages/PaginaSobreNosotros";
 import { DetalleProducto } from "./pages/DetalleProducto";
 import { LoginPage } from "./pages/LoginPage";
-import type { Producto } from "./types/Producto";
-import { HeroBanner } from "./components/HeroBanner";
-import { TablaGestionUsuarios } from "./components/TablaGestionUsuarios";
 import RegistroCuenta from "./pages/RegistroCuenta";
-import { ModalProducto } from "./components/ModalProducto";
+import { HeroBanner } from "./components/HeroBanner";
+import type { Producto } from "./types/Producto";
+import { ProveedorCarrito, useCarrito } from "./context/ContextoCarrito";
 
 const PRECIO_LIMITE = 2500;
 
-interface PropiedadesVistaCatalogo {
-  alVerDetalle: (producto: Producto) => void;
-}
-
-function VistaCatalogo({ alVerDetalle }: PropiedadesVistaCatalogo) {
+function VistaCatalogo({
+  alVerDetalle,
+}: {
+  alVerDetalle: (prod: Producto) => void;
+}) {
   const { productos } = useProductos();
   const [busqueda, setBusqueda] = useState("");
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("Todos");
@@ -96,6 +98,28 @@ function VistaCatalogo({ alVerDetalle }: PropiedadesVistaCatalogo) {
       .sort((a, b) => {
         if (criterioOrden === "menor-precio") return a.precio - b.precio;
         if (criterioOrden === "mayor-precio") return b.precio - a.precio;
+        const destacadosTop = [
+          "macbook pro",
+          "keychron q1",
+          "ipad air",
+          "iphone 13 pro",
+          "apple watch",
+          "sony wh-1000xm5",
+          "samsung ultrawide",
+          "logitech mx master",
+        ];
+        const indexA = destacadosTop.findIndex((p) =>
+          a.nombre.toLowerCase().includes(p),
+        );
+        const indexB = destacadosTop.findIndex((p) =>
+          b.nombre.toLowerCase().includes(p),
+        );
+        if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+        // Si solo 'a' es favorito, va primero
+        if (indexA !== -1) return -1;
+        // Si solo 'b' es favorito, va primero
+        if (indexB !== -1) return 1;
+        // Si ninguno está en la lista top, desempatar por calificación
         return (b.calificacion || 0) - (a.calificacion || 0);
       });
   }, [
@@ -160,16 +184,26 @@ function VistaCatalogo({ alVerDetalle }: PropiedadesVistaCatalogo) {
     </>
   );
 }
-
-function ContenidoPrincipal() {
-  const [seccion, setSeccion] = useState("catalogo");
-
-  const { cantidadDeseos } = useDeseos();
-  const { esAdmin } = useAutenticacion();
+function VistaDetalleWrapper() {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const { productos } = useProductos();
-  const [productoSeleccionado, setProductoSeleccionado] =
-    useState<Producto | null>(null);
 
+  const producto = productos.find((p) => String(p.id) === String(id));
+
+  if (!producto) {
+    return (
+      <Pagina404
+        alNavegar={(ruta) => navigate(`/${ruta}`)}
+        productos={productos}
+      />
+    );
+  }
+
+  return <DetalleProducto producto={producto} alVolver={() => navigate("/")} />;
+}
+function VistaAdmin() {
+  const { productos } = useProductos();
   const [modalAbierto, setModalAbierto] = useState(false);
   const [productoAEditar, setProductoAEditar] = useState<Producto | null>(null);
 
@@ -182,90 +216,90 @@ function ContenidoPrincipal() {
     setModalAbierto(true);
   };
 
-  const verDetalleDeProducto = (prod: Producto) => {
-    setProductoSeleccionado(prod);
-    setSeccion("detalle");
+  return (
+    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+      <MetricasAdmin productos={productos} />
+      <TablaProductosAdmin
+        alCrearNuevo={abrirCrear}
+        alEditarProducto={abrirEditar}
+      />
+      <TablaGestionUsuarios />
+      <ModalProducto
+        abierto={modalAbierto}
+        alCerrar={() => setModalAbierto(false)}
+        productoAEditar={productoAEditar}
+      />
+    </main>
+  );
+}
+function ContenidoPrincipal() {
+  const navigate = useNavigate();
+  const { cantidadDeseos } = useDeseos();
+  const { cantidadTotal } = useCarrito();
+  const { productos } = useProductos();
+
+  const irADetalle = (prod: Producto) => {
+    navigate(`/producto/${prod.id}`);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
   return (
-    <div className="min-h-screen bg-neutral-50 flex flex-col justify-between">
-      <div>
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50/60 via-purple-50/30 to-slate-100 flex flex-col justify-between selection:bg-primary-500 selection:text-white">
+      <div className="w-full">
         <Navbar
-          seccionActiva={seccion}
-          alNavegar={setSeccion}
           cantidadDeseos={cantidadDeseos}
+          cantidadCarrito={cantidadTotal}
+          alNavegar={(seccion) => {
+            if (seccion === "catalogo") navigate("/");
+            else navigate(`/${seccion}`);
+          }}
         />
-        {seccion === "catalogo" && (
-          <div className="flex justify-end px-6 py-3">
-            <button
-              onClick={() => setSeccion("registro")}
-              className="rounded-xl bg-indigo-600 px-5 py-3 font-semibold text-white hover:bg-indigo-700"
-            >
-              Crear cuenta
-            </button>
-          </div>
-        )}
-        {seccion === "catalogo" && (
-          <VistaCatalogo alVerDetalle={verDetalleDeProducto} />
-        )}
-        {seccion === "registro" && (
-          <RegistroCuenta
-            onIrLogin={() => {
-              setSeccion("catalogo");
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }}
+        <Routes>
+          <Route
+            path="/"
+            element={<VistaCatalogo alVerDetalle={irADetalle} />}
           />
-        )}
-        {seccion === "detalle" && productoSeleccionado && (
-          <DetalleProducto
-            producto={productoSeleccionado}
-            alVolver={() => setSeccion("catalogo")}
+          <Route path="/producto/:id" element={<VistaDetalleWrapper />} />
+          <Route
+            path="/nosotros"
+            element={
+              <PaginaNosotros
+                alNavegar={(s) => navigate(s === "catalogo" ? "/" : `/${s}`)}
+              />
+            }
           />
-        )}
-        {seccion === "nosotros" && <PaginaNosotros alNavegar={setSeccion} />}
-        {seccion === "login" && <LoginPage alNavegar={setSeccion} />}
-        {seccion === "admin" &&
-          (esAdmin ? (
-            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-              <MetricasAdmin productos={productos} />
-              <TablaProductosAdmin
-                alCrearNuevo={abrirCrear}
-                alEditarProducto={abrirEditar}
+          <Route
+            path="/login"
+            element={
+              <LoginPage
+                alNavegar={(s) => navigate(s === "catalogo" ? "/" : `/${s}`)}
               />
-              <TablaGestionUsuarios />
-              <ModalProducto
-                abierto={modalAbierto}
-                alCerrar={() => setModalAbierto(false)}
-                productoAEditar={productoAEditar}
+            }
+          />
+          <Route
+            path="/registro"
+            element={<RegistroCuenta onIrLogin={() => navigate("/login")} />}
+          />
+          <Route
+            path="/admin"
+            element={
+              <RutaProtegida>
+                <VistaAdmin />
+              </RutaProtegida>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <Pagina404
+                alNavegar={(s) => navigate(s === "catalogo" ? "/" : `/${s}`)}
+                productos={productos}
               />
-            </main>
-          ) : (
-            <div className="max-w-md mx-auto my-20 p-8 bg-white rounded-2xl border border-secondary-200 text-center space-y-4 shadow-sm">
-              <div className="w-12 h-12 mx-auto rounded-full bg-error/10 text-error flex items-center justify-center font-bold text-xl">
-                ✕
-              </div>
-              <h2 className="text-xl font-heading font-bold text-secondary-900">
-                Acceso Restringido
-              </h2>
-              <p className="text-xs text-secondary-500">
-                Esta sección está reservada exclusivamente para administradores.
-                Por favor, cambia tu rol a <strong>Admin</strong> desde la barra
-                superior para continuar.
-              </p>
-              <button
-                type="button"
-                onClick={() => setSeccion("catalogo")}
-                className="px-4 py-2 bg-primary-500 text-white text-xs font-semibold rounded-xl hover:bg-primary-600 cursor-pointer"
-              >
-                Volver al Catálogo
-              </button>
-            </div>
-          ))}
-        {seccion === "404" && (
-          <Pagina404 alNavegar={setSeccion} productos={productos} />
-        )}
+            }
+          />
+        </Routes>
       </div>
-      <Footer alNavegar={setSeccion} />
+      <Footer alNavegar={(s) => navigate(s === "catalogo" ? "/" : `/${s}`)} />
     </div>
   );
 }
@@ -274,7 +308,9 @@ function App() {
     <ProveedorAutenticacion>
       <ProveedorProductos>
         <ProveedorDeseos>
-          <ContenidoPrincipal />
+          <ProveedorCarrito>
+            <ContenidoPrincipal />
+          </ProveedorCarrito>
         </ProveedorDeseos>
       </ProveedorProductos>
     </ProveedorAutenticacion>

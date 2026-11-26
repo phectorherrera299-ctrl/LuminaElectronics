@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { Producto } from "../types/Producto";
 import { useDeseos } from "../context/ContextoDeseos";
+import { useCarrito } from "../context/ContextoCarrito";
 
 interface AccesorioRecomendado {
   id: string;
@@ -17,7 +18,8 @@ const ACCESORIOS_DEFECTO: AccesorioRecomendado[] = [
     nombre: "Estuche Rígido Reforzado ArmorCase",
     categoria: "Protección & Viajes",
     precio: 39.0,
-    imagen: "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=600&auto=format&fit=crop&q=80",
+    imagen:
+      "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=600&auto=format&fit=crop&q=80",
     etiqueta: "Accesorio Oficial",
   },
   {
@@ -25,7 +27,8 @@ const ACCESORIOS_DEFECTO: AccesorioRecomendado[] = [
     nombre: "Cable DAC USB-C a 3.5mm Hi-Res Audio",
     categoria: "Cables & Conversión",
     precio: 29.5,
-    imagen: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&auto=format&fit=crop&q=80",
+    imagen:
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&auto=format&fit=crop&q=80",
     etiqueta: "Audífilo",
   },
   {
@@ -33,7 +36,8 @@ const ACCESORIOS_DEFECTO: AccesorioRecomendado[] = [
     nombre: "Soporte de Escritorio en Aluminio CNC",
     categoria: "Soportes & Estaciones",
     precio: 49.0,
-    imagen: "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=600&auto=format&fit=crop&q=80",
+    imagen:
+      "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=600&auto=format&fit=crop&q=80",
     etiqueta: "Diseño Minimalista",
   },
 ];
@@ -54,20 +58,175 @@ export const DetalleProducto = ({
   productosRecomendados = [],
 }: PropiedadesDetalle) => {
   const { alternarDeseo, esDeseo } = useDeseos();
+  const { agregarAlCarrito } = useCarrito();
   const favorito = esDeseo(producto.id);
 
   const [cantidad, setCantidad] = useState(1);
   const [colorSeleccionado, setColorSeleccionado] = useState("Plata Platino");
   const [pestana, setPestana] = useState<PestanaActiva>("descripcion");
 
-  const fotosMiniatura = [
+  const obtenerMiniaturasPorProducto = (
+    nombre: string,
+    cat: string,
+    imgPrincipal: string,
+  ) => {
+    const texto = `${nombre} ${cat}`.toLowerCase();
+
+    if (
+      texto.includes("echo") ||
+      texto.includes("speaker") ||
+      texto.includes("parlante") ||
+      texto.includes("altavoz") ||
+      texto.includes("alexa") ||
+      texto.includes("homepod")
+    ) {
+      return [
+        imgPrincipal,
+        "https://images.unsplash.com/photo-1543512214-318c7553f230?w=800&q=80",
+        "https://images.unsplash.com/photo-1589492477829-5e65395b66cc?w=800&q=80",
+        "https://images.unsplash.com/photo-1507646227500-4d389b0012be?w=800&q=80",
+      ];
+    }
+
+    if (
+      texto.includes("phone") ||
+      texto.includes("celular") ||
+      texto.includes("iphone") ||
+      texto.includes("galaxy") ||
+      texto.includes("pixel") ||
+      texto.includes("smartphone")
+    ) {
+      return [
+        imgPrincipal,
+        "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&q=80",
+        "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=800&q=80",
+        "https://images.unsplash.com/photo-1580910051074-3eb694886505?w=800&q=80",
+      ];
+    }
+
+    if (
+      texto.includes("tablet") ||
+      texto.includes("ipad") ||
+      texto.includes("kindle") ||
+      texto.includes("paperwhite")
+    ) {
+      return [
+        imgPrincipal,
+        "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=800&q=80",
+        "https://images.unsplash.com/photo-1561154464-82e9adf32764?w=800&q=80",
+        "https://images.unsplash.com/photo-1585790050230-5dd28404ccb9?w=800&q=80",
+      ];
+    }
+
+    if (
+      texto.includes("watch") ||
+      texto.includes("reloj") ||
+      texto.includes("band") ||
+      texto.includes("wearable")
+    ) {
+      return [
+        imgPrincipal,
+        "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80",
+        "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=800&q=80",
+        "https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?w=800&q=80",
+      ];
+    }
+
+    if (texto.includes("mouse") || texto.includes("raton")) {
+      return [
+        imgPrincipal,
+        "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=800&q=80",
+        "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=800&q=80",
+        "https://images.unsplash.com/photo-1605792657660-596af9009e82?w=800&q=80",
+      ];
+    }
+
+    if (
+      texto.includes("teclado") ||
+      texto.includes("keyboard") ||
+      texto.includes("keychron")
+    ) {
+      return [
+        imgPrincipal,
+        "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800&q=80",
+        "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=800&q=80",
+        "https://images.unsplash.com/photo-1595225476474-87563907a212?w=800&q=80",
+      ];
+    }
+
+    if (
+      texto.includes("macbook") ||
+      texto.includes("laptop") ||
+      texto.includes("notebook") ||
+      texto.includes("computación")
+    ) {
+      return [
+        imgPrincipal,
+        "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800&q=80",
+        "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=800&q=80",
+        "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=800&q=80",
+      ];
+    }
+
+    if (
+      texto.includes("monitor") ||
+      texto.includes("pantalla") ||
+      texto.includes("ultrawide")
+    ) {
+      return [
+        imgPrincipal,
+        "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=800&q=80",
+        "https://images.unsplash.com/photo-1585792180666-f7347c490ee2?w=800&q=80",
+        "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=800&q=80",
+      ];
+    }
+
+    if (
+      texto.includes("bulb") ||
+      texto.includes("luz") ||
+      texto.includes("hue") ||
+      texto.includes("hogar")
+    ) {
+      return [
+        imgPrincipal,
+        "https://images.unsplash.com/photo-1550985616-10810253b84d?w=800&q=80",
+        "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=800&q=80",
+        "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=800&q=80",
+      ];
+    }
+
+    if (
+      texto.includes("auricular") ||
+      texto.includes("headphone") ||
+      texto.includes("audio") ||
+      texto.includes("sony")
+    ) {
+      return [
+        imgPrincipal,
+        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80",
+        "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=800&q=80",
+        "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=800&q=80",
+      ];
+    }
+
+    return [
+      imgPrincipal,
+      "https://images.unsplash.com/photo-1526738549149-8e07eca6c147?w=800&q=80",
+      "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80",
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80",
+    ];
+  };
+
+  const fotosMiniatura = obtenerMiniaturasPorProducto(
+    producto.nombre,
+    producto.categoria,
     producto.imagen,
-    "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=800&auto=format&fit=crop&q=80",
-    "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=800&auto=format&fit=crop&q=80",
-    "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=800&auto=format&fit=crop&q=80",
-  ];
+  );
 
   const [fotoActiva, setFotoActiva] = useState(fotosMiniatura[0]);
+  useEffect(() => {
+    setFotoActiva(producto.imagen);
+  }, [producto.id, producto.imagen]);
 
   const precioFinal = producto.descuento
     ? (producto.precio * (1 - producto.descuento / 100)).toFixed(2)
@@ -92,10 +251,10 @@ export const DetalleProducto = ({
   };
 
   const manejarCarrito = (prod: Producto, cant: number = 1) => {
+    agregarAlCarrito(prod.id, cant);
     if (alAgregarAlCarrito) {
       alAgregarAlCarrito(prod, cant);
     }
-    alert(`¡Agregaste ${cant} unidad(es) de ${prod.nombre} al carrito!`);
   };
 
   const accesoriosAMostrar =
@@ -170,7 +329,9 @@ export const DetalleProducto = ({
               onClick={() => alternarDeseo(producto.id)}
               aria-label="Agregar a lista de deseos"
               className={`absolute top-4 right-4 w-10 h-10 rounded-full bg-white/90 backdrop-blur-xs border border-secondary-200 flex items-center justify-center shadow-xs transition-all cursor-pointer ${
-                favorito ? "text-error scale-110" : "text-secondary-400 hover:text-error"
+                favorito
+                  ? "text-error scale-110"
+                  : "text-secondary-400 hover:text-error"
               }`}
             >
               <svg
@@ -249,23 +410,27 @@ export const DetalleProducto = ({
           <div className="space-y-2">
             <span className="text-xs font-bold text-secondary-900 uppercase tracking-wider block">
               Acabado Premium:{" "}
-              <span className="text-secondary-600 font-normal">{colorSeleccionado}</span>
+              <span className="text-secondary-600 font-normal">
+                {colorSeleccionado}
+              </span>
             </span>
             <div className="flex gap-2">
-              {["Plata Platino", "Negro Mate", "Azul Medianoche"].map((color) => (
-                <button
-                  key={color}
-                  type="button"
-                  onClick={() => setColorSeleccionado(color)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
-                    colorSeleccionado === color
-                      ? "border-primary-500 bg-primary-50 text-primary-700 shadow-xs"
-                      : "border-secondary-200 bg-white text-secondary-700 hover:bg-secondary-50"
-                  }`}
-                >
-                  {color}
-                </button>
-              ))}
+              {["Plata Platino", "Negro Mate", "Azul Medianoche"].map(
+                (color) => (
+                  <button
+                    key={color}
+                    type="button"
+                    onClick={() => setColorSeleccionado(color)}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
+                      colorSeleccionado === color
+                        ? "border-primary-500 bg-primary-50 text-primary-700 shadow-xs"
+                        : "border-secondary-200 bg-white text-secondary-700 hover:bg-secondary-50"
+                    }`}
+                  >
+                    {color}
+                  </button>
+                ),
+              )}
             </div>
           </div>
           <div className="space-y-3 pt-2">
@@ -318,14 +483,18 @@ export const DetalleProducto = ({
             <div className="flex items-center gap-2">
               <span className="text-base">🛡️</span>
               <div>
-                <span className="font-bold text-secondary-800 block">Garantía 2 Años</span>
+                <span className="font-bold text-secondary-800 block">
+                  Garantía 2 Años
+                </span>
                 <span className="text-[11px]">Soporte oficial directo</span>
               </div>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-base">🔄</span>
               <div>
-                <span className="font-bold text-secondary-800 block">Devolución 30 Días</span>
+                <span className="font-bold text-secondary-800 block">
+                  Devolución 30 Días
+                </span>
                 <span className="text-[11px]">Reembolso sin preguntas</span>
               </div>
             </div>
@@ -339,7 +508,8 @@ export const DetalleProducto = ({
             Auto NC Optimizer
           </h3>
           <p className="text-xs text-secondary-500 leading-relaxed">
-            Calibración de presión atmosférica constante y 8 micrófonos que aíslan las frecuencias vocales y agudas.
+            Calibración de presión atmosférica constante y 8 micrófonos que
+            aíslan las frecuencias vocales y agudas.
           </p>
         </div>
         <div className="p-5 rounded-2xl bg-white border border-secondary-200 shadow-xs space-y-2">
@@ -348,7 +518,8 @@ export const DetalleProducto = ({
             Autonomía de 30h
           </h3>
           <p className="text-xs text-secondary-500 leading-relaxed">
-            Batería masiva para viajes largos. Carga ultrarrápida USB-PD: 3 minutos otorgan 3 horas completas de uso.
+            Batería masiva para viajes largos. Carga ultrarrápida USB-PD: 3
+            minutos otorgan 3 horas completas de uso.
           </p>
         </div>
         <div className="p-5 rounded-2xl bg-white border border-secondary-200 shadow-xs space-y-2">
@@ -357,7 +528,8 @@ export const DetalleProducto = ({
             Diafragma 30mm en Carbono
           </h3>
           <p className="text-xs text-secondary-500 leading-relaxed">
-            Cúpula de fibra de carbono ultra-rígida para una claridad acústica superior y graves profundos sin distorsión.
+            Cúpula de fibra de carbono ultra-rígida para una claridad acústica
+            superior y graves profundos sin distorsión.
           </p>
         </div>
         <div className="p-5 rounded-2xl bg-white border border-secondary-200 shadow-xs space-y-2">
@@ -366,7 +538,8 @@ export const DetalleProducto = ({
             Conexión Multipunto
           </h3>
           <p className="text-xs text-secondary-500 leading-relaxed">
-            Emparejamiento simultáneo con dos dispositivos Bluetooth®. Pasa del portátil al smartphone con total fluidez.
+            Emparejamiento simultáneo con dos dispositivos Bluetooth®. Pasa del
+            portátil al smartphone con total fluidez.
           </p>
         </div>
       </section>
@@ -413,26 +586,42 @@ export const DetalleProducto = ({
                 Silencio Redefinido
               </span>
               <h3 className="text-xl sm:text-2xl font-heading font-bold text-secondary-900">
-                Un nuevo estándar de cancelación activa de ruido líder en la industria.
+                Un nuevo estándar de cancelación activa de ruido líder en la
+                industria.
               </h3>
               <p className="text-xs sm:text-sm text-secondary-600 leading-relaxed">
                 {producto.descripcion}
               </p>
               <p className="text-xs text-secondary-500 leading-relaxed">
-                El controlador de 30 mm diseñado con precisión, que cuenta con una cúpula ligera y rígida con material compuesto de fibra de carbono, mejora la sensibilidad en las frecuencias altas para lograr una tonalidad mucho más natural y cristalina.
+                El controlador de 30 mm diseñado con precisión, que cuenta con
+                una cúpula ligera y rígida con material compuesto de fibra de
+                carbono, mejora la sensibilidad en las frecuencias altas para
+                lograr una tonalidad mucho más natural y cristalina.
               </p>
               <div className="grid grid-cols-3 gap-4 pt-4 border-t border-secondary-100 max-w-md">
                 <div>
-                  <span className="font-heading font-bold text-secondary-900 text-sm block">8 Mics</span>
-                  <span className="text-[11px] text-secondary-400 block">Array beamforming</span>
+                  <span className="font-heading font-bold text-secondary-900 text-sm block">
+                    8 Mics
+                  </span>
+                  <span className="text-[11px] text-secondary-400 block">
+                    Array beamforming
+                  </span>
                 </div>
                 <div>
-                  <span className="font-heading font-bold text-secondary-900 text-sm block">LDAC</span>
-                  <span className="text-[11px] text-secondary-400 block">Hi-Res Audio 990kbps</span>
+                  <span className="font-heading font-bold text-secondary-900 text-sm block">
+                    LDAC
+                  </span>
+                  <span className="text-[11px] text-secondary-400 block">
+                    Hi-Res Audio 990kbps
+                  </span>
                 </div>
                 <div>
-                  <span className="font-heading font-bold text-secondary-900 text-sm block">250g</span>
-                  <span className="text-[11px] text-secondary-400 block">Ultralivianos</span>
+                  <span className="font-heading font-bold text-secondary-900 text-sm block">
+                    250g
+                  </span>
+                  <span className="text-[11px] text-secondary-400 block">
+                    Ultralivianos
+                  </span>
                 </div>
               </div>
             </div>
@@ -453,27 +642,39 @@ export const DetalleProducto = ({
             <div className="divide-y divide-secondary-100 text-xs">
               <div className="py-2.5 flex justify-between">
                 <span className="text-secondary-500">Identificador SKU:</span>
-                <span className="font-mono font-bold text-secondary-900">{producto.id}</span>
+                <span className="font-mono font-bold text-secondary-900">
+                  {producto.id}
+                </span>
               </div>
               <div className="py-2.5 flex justify-between">
                 <span className="text-secondary-500">Categoría:</span>
-                <span className="font-semibold text-secondary-900">{producto.categoria}</span>
+                <span className="font-semibold text-secondary-900">
+                  {producto.categoria}
+                </span>
               </div>
               <div className="py-2.5 flex justify-between">
                 <span className="text-secondary-500">Fabricante / Marca:</span>
-                <span className="font-semibold text-secondary-900">{producto.marca || "Lumina"}</span>
+                <span className="font-semibold text-secondary-900">
+                  {producto.marca || "Lumina"}
+                </span>
               </div>
               <div className="py-2.5 flex justify-between">
                 <span className="text-secondary-500">Peso:</span>
-                <span className="font-semibold text-secondary-900">250 gramos</span>
+                <span className="font-semibold text-secondary-900">
+                  250 gramos
+                </span>
               </div>
               <div className="py-2.5 flex justify-between">
                 <span className="text-secondary-500">Conectividad:</span>
-                <span className="font-semibold text-secondary-900">Bluetooth 5.2 / Jack 3.5mm</span>
+                <span className="font-semibold text-secondary-900">
+                  Bluetooth 5.2 / Jack 3.5mm
+                </span>
               </div>
               <div className="py-2.5 flex justify-between">
                 <span className="text-secondary-500">Garantía Oficial:</span>
-                <span className="font-semibold text-tertiary-600">24 meses internacional</span>
+                <span className="font-semibold text-tertiary-600">
+                  24 meses internacional
+                </span>
               </div>
             </div>
           </div>
@@ -494,22 +695,29 @@ export const DetalleProducto = ({
             <div className="space-y-3 pt-2">
               <div className="p-4 rounded-xl border border-secondary-100 space-y-1">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-secondary-900">Federico Gómez</span>
+                  <span className="font-bold text-secondary-900">
+                    Federico Gómez
+                  </span>
                   <span className="text-secondary-400">Hace 3 días</span>
                 </div>
                 <div className="text-advertencia text-xs">★★★★★</div>
                 <p className="text-xs text-secondary-600">
-                  La calidad acústica es impresionante y la cancelación de ruido en la oficina supera todo lo que probé antes. Vale cada centavo.
+                  La calidad acústica es impresionante y la cancelación de ruido
+                  en la oficina supera todo lo que probé antes. Vale cada
+                  centavo.
                 </p>
               </div>
               <div className="p-4 rounded-xl border border-secondary-100 space-y-1">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-secondary-900">Lucía Fernández</span>
+                  <span className="font-bold text-secondary-900">
+                    Lucía Fernández
+                  </span>
                   <span className="text-secondary-400">Hace 1 semana</span>
                 </div>
                 <div className="text-advertencia text-xs">★★★★★</div>
                 <p className="text-xs text-secondary-600">
-                  La batería dura semanas con uso moderado y el peso es imperceptible. Compré en cuotas y llegó en menos de 24 horas.
+                  La batería dura semanas con uso moderado y el peso es
+                  imperceptible. Compré en cuotas y llegó en menos de 24 horas.
                 </p>
               </div>
             </div>
@@ -525,7 +733,8 @@ export const DetalleProducto = ({
             Accesorios recomendados por Lumina
           </h2>
           <p className="text-xs text-secondary-500 mt-1">
-            Componentes optimizados para extender la vida útil y el rendimiento de tu equipo.
+            Componentes optimizados para extender la vida útil y el rendimiento
+            de tu equipo.
           </p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
@@ -557,13 +766,15 @@ export const DetalleProducto = ({
               <div className="flex items-center justify-between pt-3 border-t border-secondary-100">
                 <span className="text-base font-heading font-extrabold text-secondary-900">
                   ${acc.precio.toFixed(2)}{" "}
-                  <span className="text-[10px] font-normal text-secondary-400">USD</span>
+                  <span className="text-[10px] font-normal text-secondary-400">
+                    USD
+                  </span>
                 </span>
                 <button
                   type="button"
-                  onClick={() =>
-                    alert(`¡Agregaste ${acc.nombre} al carrito por $${acc.precio.toFixed(2)}!`)
-                  }
+                  onClick={() => {
+                    agregarAlCarrito(acc.id, 1);
+                  }}
                   title="Añadir accesorio al carrito"
                   className="w-8 h-8 rounded-xl bg-primary-50 text-primary-600 hover:bg-primary-500 hover:text-white flex items-center justify-center transition-colors cursor-pointer"
                 >
