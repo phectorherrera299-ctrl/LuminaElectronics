@@ -13,10 +13,12 @@ import { TablaProductosAdmin } from "./components/TablaProductosAdmin";
 import { Pagina404 } from "./pages/Pagina404";
 import { PaginaNosotros } from "./pages/PaginaSobreNosotros";
 import { DetalleProducto } from "./pages/DetalleProducto";
+import { LoginPage } from "./pages/LoginPage";
 import type { Producto } from "./types/Producto";
 import { HeroBanner } from "./components/HeroBanner";
 import { TablaGestionUsuarios } from "./components/TablaGestionUsuarios";
 import RegistroCuenta from "./pages/RegistroCuenta";
+import { ModalProducto } from "./components/ModalProducto";
 
 const PRECIO_LIMITE = 2500;
 
@@ -131,31 +133,14 @@ function VistaCatalogo({ alVerDetalle }: PropiedadesVistaCatalogo) {
           criterioOrden={criterioOrden}
           alCambiarOrden={setCriterioOrden}
         />
-        <div className="flex flex-col lg:flex-row gap-8 items-start">
-          <FiltrosLaterales
-            marcasDisponibles={marcasDisponibles}
-            marcasSeleccionadas={marcasSeleccionadas}
-            alCambiarMarca={alternarMarca}
-            precioMaximo={precioMaximo}
-            precioLimite={PRECIO_LIMITE}
-            alCambiarPrecioMaximo={setPrecioMaximo}
-            soloEnStock={soloEnStock}
-            alCambiarSoloEnStock={setSoloEnStock}
-            soloConDescuento={soloConDescuento}
-            alCambiarSoloConDescuento={setSoloConDescuento}
-            calificacionMinima={calificacionMinima}
-            alCambiarCalificacionMinima={setCalificacionMinima}
-            alReiniciarFiltros={reiniciarFiltros}
+        <div className="flex-1 w-full">
+          <GrillaProductos
+            productos={productosFiltrados}
+            alVerDetalle={alVerDetalle}
           />
-          <div className="flex-1 w-full">
-            <GrillaProductos
-              productos={productosFiltrados}
-              alVerDetalle={alVerDetalle}
-            />
-          </div>
         </div>
-      </main>
-    </>
+      </div>
+    </main>
   );
 }
 
@@ -167,6 +152,18 @@ function ContenidoPrincipal() {
   const { productos } = useProductos();
   const [productoSeleccionado, setProductoSeleccionado] =
     useState<Producto | null>(null);
+
+  const [modalAbierto, setModalAbierto] = useState(false);
+  const [productoAEditar, setProductoAEditar] = useState<Producto | null>(null);
+
+  const abrirCrear = () => {
+    setProductoAEditar(null);
+    setModalAbierto(true);
+  };
+  const abrirEditar = (prod: Producto) => {
+    setProductoAEditar(prod);
+    setModalAbierto(true);
+  };
 
   const verDetalleDeProducto = (prod: Producto) => {
     setProductoSeleccionado(prod);
@@ -209,15 +206,19 @@ function ContenidoPrincipal() {
           />
         )}
         {seccion === "nosotros" && <PaginaNosotros alNavegar={setSeccion} />}
+        {seccion === "login" && <LoginPage alNavegar={setSeccion} />}
         {seccion === "admin" &&
           (esAdmin ? (
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
               <MetricasAdmin productos={productos} />
               <TablaProductosAdmin
-                alCrearNuevo={() => alert("solo para ver si funciona")}
-                alEditarProducto={(prod) =>
-                  alert(`solo para ver si funciona: ${prod.nombre}`)
-                }
+                alCrearNuevo={abrirCrear}
+                alEditarProducto={abrirEditar}
+              />
+              <ModalProducto
+                abierto={modalAbierto}
+                alCerrar={() => setModalAbierto(false)}
+                productoAEditar={productoAEditar}
               />
               <TablaGestionUsuarios />
             </main>
