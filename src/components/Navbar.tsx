@@ -38,9 +38,11 @@ export const Navbar = ({
             onClick={() => manejarNavegacion("catalogo")}
             className="flex items-center gap-2 text-left cursor-pointer"
           >
-            <div className="w-9 h-9 rounded-xl bg-primary-500 text-white font-heading font-extrabold flex items-center justify-center text-lg shadow-xs">
-              L
-            </div>
+            <img
+              src="/logo/logoLumina.png"
+              alt="Lumina Electronics Logo"
+              className="w-15 h-15 object-contain drop-shadow-sm transition-transform hover:scale-105"
+            />
             <div>
               <span className="font-heading font-extrabold text-secondary-900 text-base leading-none block">
                 Lumina
