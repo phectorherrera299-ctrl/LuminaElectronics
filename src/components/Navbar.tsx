@@ -99,30 +99,32 @@ export const Navbar = ({
           >
             Iniciar sesión
           </button>
-          <div className="flex items-center bg-secondary-100 p-0.5 rounded-xl text-xs font-semibold">
-            <button
-              type="button"
-              onClick={() => cambiarRol("Invitado")}
-              className={`px-3 py-1 rounded-lg transition-all cursor-pointer ${
-                !esAdmin
-                  ? "bg-white text-secondary-900 shadow-xs"
-                  : "text-secondary-500 hover:text-secondary-900"
-              }`}
-            >
-              Invitado
-            </button>
-            <button
-              type="button"
-              onClick={() => cambiarRol("Admin")}
-              className={`px-3 py-1 rounded-lg transition-all cursor-pointer ${
-                esAdmin
-                  ? "bg-primary-500 text-white shadow-xs"
-                  : "text-secondary-500 hover:text-secondary-900"
-              }`}
-            >
-              Admin
-            </button>
-          </div>
+          {usuario.email === "admin@lumina.dev" && (
+            <div className="flex items-center bg-secondary-100 p-0.5 rounded-xl text-xs font-semibold">
+              <button
+                type="button"
+                onClick={() => cambiarRol("Invitado")}
+                className={`px-3 py-1 rounded-lg transition-all cursor-pointer ${
+                  !esAdmin
+                    ? "bg-white text-secondary-900 shadow-xs"
+                    : "text-secondary-500 hover:text-secondary-900"
+                }`}
+              >
+                Invitado
+              </button>
+              <button
+                type="button"
+                onClick={() => cambiarRol("Admin")}
+                className={`px-3 py-1 rounded-lg transition-all cursor-pointer ${
+                  esAdmin
+                    ? "bg-primary-500 text-white shadow-xs"
+                    : "text-secondary-500 hover:text-secondary-900"
+                }`}
+              >
+                Admin
+              </button>
+            </div>
+          )}
           <button
             type="button"
             aria-label="Lista de deseos"
