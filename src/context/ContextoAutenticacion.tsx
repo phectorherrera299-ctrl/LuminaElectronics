@@ -40,6 +40,7 @@ interface TipoContextoAutenticacion {
     tipoCuenta: TipoCuenta,
   ) => { exito: boolean; mensaje: string };
   usuariosRegistrados: UsuarioRegistrado[];
+  actualizarUsuario: (nuevoNombre: string) => void;
   eliminarUsuario: (id: string) => void;
 }
 
@@ -125,6 +126,17 @@ export const ProveedorAutenticacion = ({
             }
           : USUARIO_DEFECTO,
     );
+  };
+
+  const actualizarUsuario = (nuevoNombre: string) => {
+    setUsuario((prev) => {
+      const actualizado = { ...prev, nombre: nuevoNombre.trim() };
+      localStorage.setItem(
+        CLAVE_LOCALSTORAGE_AUTH,
+        JSON.stringify(actualizado),
+      );
+      return actualizado;
+    });
   };
 
   const registrarUsuario = (
@@ -247,6 +259,7 @@ export const ProveedorAutenticacion = ({
         registrarUsuario,
         usuariosRegistrados,
         eliminarUsuario,
+        actualizarUsuario,
         esAdmin: usuario.rol === "Admin",
       }}
     >
