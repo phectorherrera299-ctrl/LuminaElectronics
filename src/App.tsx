@@ -16,6 +16,8 @@ import { DetalleProducto } from "./pages/DetalleProducto";
 import { LoginPage } from "./pages/LoginPage";
 import type { Producto } from "./types/Producto";
 import { HeroBanner } from "./components/HeroBanner";
+import { TablaGestionUsuarios } from "./components/TablaGestionUsuarios";
+import RegistroCuenta from "./pages/RegistroCuenta";
 import { ModalProducto } from "./components/ModalProducto";
 
 const PRECIO_LIMITE = 2500;
@@ -161,6 +163,7 @@ function VistaCatalogo({ alVerDetalle }: PropiedadesVistaCatalogo) {
 
 function ContenidoPrincipal() {
   const [seccion, setSeccion] = useState("catalogo");
+
   const { cantidadDeseos } = useDeseos();
   const { esAdmin } = useAutenticacion();
   const { productos } = useProductos();
@@ -193,7 +196,25 @@ function ContenidoPrincipal() {
           cantidadDeseos={cantidadDeseos}
         />
         {seccion === "catalogo" && (
+          <div className="flex justify-end px-6 py-3">
+            <button
+              onClick={() => setSeccion("registro")}
+              className="rounded-xl bg-indigo-600 px-5 py-3 font-semibold text-white hover:bg-indigo-700"
+            >
+              Crear cuenta
+            </button>
+          </div>
+        )}
+        {seccion === "catalogo" && (
           <VistaCatalogo alVerDetalle={verDetalleDeProducto} />
+        )}
+        {seccion === "registro" && (
+          <RegistroCuenta
+            onIrLogin={() => {
+              setSeccion("catalogo");
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+          />
         )}
         {seccion === "detalle" && productoSeleccionado && (
           <DetalleProducto
@@ -211,6 +232,7 @@ function ContenidoPrincipal() {
                 alCrearNuevo={abrirCrear}
                 alEditarProducto={abrirEditar}
               />
+              <TablaGestionUsuarios />
               <ModalProducto
                 abierto={modalAbierto}
                 alCerrar={() => setModalAbierto(false)}
